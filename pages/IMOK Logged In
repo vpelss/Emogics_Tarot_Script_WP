@@ -1,0 +1,46 @@
+<!-- wp:shortcode -->
+[imok_redirector]
+<!-- /wp:shortcode -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[imok_commands]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"align":"center"} -->
+<div class="wp-block-button aligncenter"><a class="wp-block-button__link" href="?command=imok">IMOK</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"align":"center"} -->
+<div class="wp-block-button aligncenter"><a class="wp-block-button__link" href="[imok_settings_url]">Settings</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"align":"center"} -->
+<div class="wp-block-button aligncenter" id="imnotok"><a class="wp-block-button__link" href="?command=imnotok">IM NOT OK</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"align":"center"} -->
+<div class="wp-block-button aligncenter"><a class="wp-block-button__link" href="https://github.com/vpelss/imok_wp/blob/master/imok.md#about" target="_blank" rel="noopener">About / Help</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"align":"center"} -->
+<div class="wp-block-button aligncenter"><a class="wp-block-button__link" href="[wp_logout_url]">Logout</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button /--></div>
+<!-- /wp:buttons -->
+
+<!-- wp:html -->
+<script>
+elemm = document.getElementById("imnotok");
+elemm.onclick = function() { return confirm('Send ImNotOK alert to your email list? Are you sure?'); };
+</script>
+<!-- /wp:html -->
