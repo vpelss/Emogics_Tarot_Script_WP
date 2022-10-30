@@ -11,6 +11,6 @@ class activate{
 
 }
 
-register_activation_hook( IMOK_PLUGIN_PATH_AND_FILENAME , array( 'activate' , 'activate_plugin') );
+register_activation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , array( 'activate' , 'activate_plugin') );
 
 ?>
