@@ -51,4 +51,5 @@ if( class_exists('emogic_tarot') ){
 	}
 
 
+
 ?>
