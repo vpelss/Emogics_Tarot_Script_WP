@@ -50,6 +50,7 @@ if( class_exists('emogic_tarot') ){
 	$emogic_tarot = new emogic_tarot();
 	}
 
-
+//name in cookie?
+//name in blurb?
 
 ?>
