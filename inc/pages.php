@@ -14,7 +14,9 @@ $dir = EMOGIC_TAROT_PLUGIN_PATH . "/" . $folder . "/";
 $file = 'Emogic Tarot';
 $data = file_get_contents($dir . $file , true);
 
-post_page_if_required( 0 , $file , '' , $dir , 1);
+$post_id = post_page_if_required( 0 , $file , '' , $dir , 1);
+if($post_id) wp_publish_post( $post_id );
+
 //post_page_if_required( 0 , $file , '' , $data);
 
 //load subfolders and contents
@@ -52,6 +54,9 @@ function post_page_if_required( $post_parent_ID , $file , $path_parent , $dir , 
 		if($load_data){
 			$data = file_get_contents($dir . $file , true);
 		}
+		else{
+			$data = '';
+		}
 		$wordpress_page = array(
 			'post_title'    => $file,
 			'post_name' => $file,
@@ -60,7 +65,7 @@ function post_page_if_required( $post_parent_ID , $file , $path_parent , $dir , 
 			'post_type' => 'page',
 			'post_parent' => $post_parent_ID
 			);
-		wp_insert_post( $wordpress_page );
+		return wp_insert_post( $wordpress_page );
 }
 
 ?>
