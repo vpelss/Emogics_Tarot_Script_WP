@@ -24,24 +24,14 @@ define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url( '', __FILE__ ) ); // ht
 define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // EMOGIC_TAROT_wp (or other if renamed)
 define( 'EMOGIC_TAROT_ROOT_URL' , home_url() ); // http://wp_url/
 
-class emogic_tarot {
-
-	public $tt = 77;
+class emogic_tarot {//keep variables and routines from going wp global
 
 	function __construct() {
 
-		//keep variables and routines from going wp global
-		require_once plugin_dir_path(__file__) . 'inc/activate.php' ; //set up pages
-		require_once plugin_dir_path(__file__) . 'inc/deactivate.php' ; //remove created pages
-		require_once plugin_dir_path(__file__) . 'inc/enqueue.php' ;//add js and styles : none
+		require_once plugin_dir_path(__file__) . 'inc/activate.php' ; //set up pages : class
+		require_once plugin_dir_path(__file__) . 'inc/deactivate.php' ; //remove created pages : class
+		require_once plugin_dir_path(__file__) . 'inc/enqueue.php' ;//add js and styles : class
 		//require_once plugin_dir_path(__file__) . 'inc/admin.php' ;//add admin page (?empty) , settings links , MOVE TO imok/settings add meta type , user fields , user field write
-
-		require_once plugin_dir_path(__file__) . 'inc/shuffle.php' ; //main page redirects to page based on status
-		//require_once plugin_dir_path(__file__) . 'inc/login_logout.php' ; //logging in logging out page functions
-		//require_once plugin_dir_path(__file__) . 'inc/settings.php' ; //settings page functions
-		//require_once plugin_dir_path(__file__) . 'inc/cron.php' ; //cron page functions
-		//require_once plugin_dir_path(__file__) . 'inc/commands.php' ; //functions for IMOK Logged In page
-		require_once plugin_dir_path(__file__) . 'inc/pages.php' ; //auto setup pages
 
 	}
 
@@ -54,10 +44,16 @@ class emogic_tarot {
 	}
 
 	function uninstall(){
-		
+
 	}
 
 	function init(){
+		require_once plugin_dir_path(__file__) . 'inc/shuffle.php' ; //main page redirects to page based on status
+		//require_once plugin_dir_path(__file__) . 'inc/login_logout.php' ; //logging in logging out page functions
+		//require_once plugin_dir_path(__file__) . 'inc/settings.php' ; //settings page functions
+		//require_once plugin_dir_path(__file__) . 'inc/cron.php' ; //cron page functions
+		//require_once plugin_dir_path(__file__) . 'inc/commands.php' ; //functions for IMOK Logged In page
+		require_once plugin_dir_path(__file__) . 'inc/pages.php' ; //auto setup pages
 
 	}
 
@@ -67,6 +63,8 @@ if( class_exists('emogic_tarot') ){
 	$emogic_tarot = new emogic_tarot();
 	//add_action( 'wp_loaded', array($emogic_tarot, 'init') );
 	}
+
+$emogic_tarot->init();
 
 	$r = 99;
 

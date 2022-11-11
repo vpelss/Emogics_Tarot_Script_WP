@@ -33,7 +33,7 @@ class deactivate{
 
 }
 
-$t = EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME;
+//$t = EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME;
 
 //register_deactivation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , array( 'deactivate' , 'deactivate_plugin') );
 
