@@ -6,18 +6,21 @@ add_action( 'wp_loaded', 'read_and_create_pages' ); //maybe move to activate.php
 
 //load default pages and create them if they do not already exist/ place them as sub pages under main tarot page
 function read_and_create_pages(){
-//load main page
-$path_parent = 'emogic-tarot';
-$post_parent = get_page_by_path($path_parent , OBJECT , 'page');
+//load main pages
 $folder = 'pages';
 $dir = EMOGIC_TAROT_PLUGIN_PATH . "/" . $folder . "/";
-$file = 'Emogic Tarot';
-$data = file_get_contents($dir . $file , true);
+$files = scandir($dir);
+foreach ($files as $file) {
+		if($file == "."){continue;}
+		if($file == ".."){continue;}
+		//$data = file_get_contents($dir . $file , true);
+		//post_page_if_required( $post_parent_ID , $file , $path_parent , $data);
+		//post_page_if_required( $post_parent_ID , $file , $path_parent , $dir , 1);
 
-$post_id = post_page_if_required( 0 , $file , '' , $dir , 1);
-if($post_id) wp_publish_post( $post_id );
-
-//post_page_if_required( 0 , $file , '' , $data);
+		$data = file_get_contents($dir . $file , true);
+		$post_id = post_page_if_required( 0 , $file , '' , $dir , 1);
+		if($post_id) wp_publish_post( $post_id );
+		}
 
 //load subfolders and contents
 $deck_folder = 'Decks';
@@ -48,16 +51,17 @@ foreach( $folders as $folder ){
 
 function post_page_if_required( $post_parent_ID , $file , $path_parent , $dir , $load_data = 0){//$file is pagename, $path is page path with parents, $data is data for the page
 		$path_file = $path_parent . '/' . $file;
-		$page_test = get_page_by_path($path_file);
+		$page_test = get_page_by_path($path_file); //post object or null
 		if( $page_test ){return 0;} //skip if this file page already exists
-		//create page
 		if($load_data){
 			$data = file_get_contents($dir . $file , true);
 		}
 		else{
 			$data = '';
 		}
+		//create
 		$wordpress_page = array(
+			//'ID' => $page_id,
 			'post_title'    => $file,
 			'post_name' => $file,
 			'post_content'  => $data,

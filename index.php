@@ -30,7 +30,7 @@ class emogic_tarot {//keep variables and routines from going wp global
 
 		require_once plugin_dir_path(__file__) . 'inc/activate.php' ; //set up pages : class
 		require_once plugin_dir_path(__file__) . 'inc/deactivate.php' ; //remove created pages : class
-		require_once plugin_dir_path(__file__) . 'inc/enqueue.php' ;//add js and styles : class
+		//require_once plugin_dir_path(__file__) . 'inc/enqueue.php' ;//add js and styles : class
 		//require_once plugin_dir_path(__file__) . 'inc/admin.php' ;//add admin page (?empty) , settings links , MOVE TO imok/settings add meta type , user fields , user field write
 
 	}
