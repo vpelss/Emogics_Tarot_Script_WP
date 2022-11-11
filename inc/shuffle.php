@@ -1,5 +1,9 @@
 <?php
 
+//as a class
+//ip: path to deck or deck data : cookies for daily cards
+//op: shortcodes
+
 $dir = EMOGIC_TAROT_PLUGIN_PATH . "/decks/";
 $file_name = "emogic";
 $file_string = file_get_contents($dir . $file_name , true);

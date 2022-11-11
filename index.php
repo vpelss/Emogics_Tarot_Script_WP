@@ -24,12 +24,13 @@ define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url( '', __FILE__ ) ); // ht
 define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // EMOGIC_TAROT_wp (or other if renamed)
 define( 'EMOGIC_TAROT_ROOT_URL' , home_url() ); // http://wp_url/
 
-//$e = EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME;
-
 class emogic_tarot {
+
+	public $tt = 77;
 
 	function __construct() {
 
+		//keep variables and routines from going wp global
 		require_once plugin_dir_path(__file__) . 'inc/activate.php' ; //set up pages
 		require_once plugin_dir_path(__file__) . 'inc/deactivate.php' ; //remove created pages
 		require_once plugin_dir_path(__file__) . 'inc/enqueue.php' ;//add js and styles : none
@@ -40,7 +41,23 @@ class emogic_tarot {
 		//require_once plugin_dir_path(__file__) . 'inc/settings.php' ; //settings page functions
 		//require_once plugin_dir_path(__file__) . 'inc/cron.php' ; //cron page functions
 		//require_once plugin_dir_path(__file__) . 'inc/commands.php' ; //functions for IMOK Logged In page
-		//require_once plugin_dir_path(__file__) . 'inc/pages.php' ; //auto setup pages
+		require_once plugin_dir_path(__file__) . 'inc/pages.php' ; //auto setup pages
+
+	}
+
+	function activate(){
+
+	}
+
+	function deactivate(){
+
+	}
+
+	function uninstall(){
+		
+	}
+
+	function init(){
 
 	}
 
@@ -48,9 +65,32 @@ class emogic_tarot {
 
 if( class_exists('emogic_tarot') ){
 	$emogic_tarot = new emogic_tarot();
+	//add_action( 'wp_loaded', array($emogic_tarot, 'init') );
 	}
+
+	$r = 99;
+
+	//add_action( 'wp_loaded', array($emogic_tarot,'read_and_create_pages') );
 
 //name in cookie?
 //name in blurb?
+//main call page
+//fb with spread_deck_name for cookie
+//build spread list?
+//build deck list?
+
+//spreads ,modifiable but loaded from folder? edit and manually save to folder?
+//backup/restore spreads?
+//deck edit page?
+//backup/restore decks
+
+//hide spreads pages??
+
+//how do I choose deck? maybe by parent page name?
+
+
+//maybe menu goes main (name,question) , deck, spreads
+
+//reading deck, fix blank lines, etc...
 
 ?>
