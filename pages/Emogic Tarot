@@ -1,8 +1,9 @@
 <!-- wp:html -->
 <link rel="stylesheet" href="../wp-admin/css/forms.css?ver=6.0.2.2">
 <link rel="stylesheet" href="../wp-admin/css/forms.min.css?ver=6.0.2.2">
-<form method="post" action="see js script below" id="imok_form_settings">
-<input type="hidden" name="action" value="imok_process_form">
+
+<form method="post" action="see js script below" id="ETSWP_form_settings">
+<input type="hidden" name="action" value="ETSWP_process_form">
 <center>
 <p>
 <input type="text" name="first_name" id="first_name" placeholder="First Name">
@@ -11,20 +12,14 @@
 <p>
 <label for="emogic_deck">Choose a deck:</label>
 <select name="emogic_deck" id="emogic_deck">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
+[ETSWP_deck_options]
 </select>
 </p>
 
 <p>
 <label for="emogic_spread">Choose a spread:</label>
 <select name="emogic_spread" id="emogic_spread">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
+[ETSWP_spread_options]
 </select>
 </p>
 

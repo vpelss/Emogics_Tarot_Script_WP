@@ -86,6 +86,7 @@ if(!isset($_COOKIE['ETSWP_items'])) {//no cookies, shuffle cards
 wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
 wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
 
+//allows us to paste cards on spreads [ETSWP item='1' column='itemname']
 add_shortcode( 'ETSWP', 'ETSWP_function' );
 function ETSWP_function( $atts = array(), $content = null ) {
 	//$this->ETSWP_items_array;
@@ -101,6 +102,34 @@ add_shortcode( 'pluginpath', 'pluginpath_function' );
 function pluginpath_function( $atts = array(), $content = null ) {
 	return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 	};
+
+add_shortcode( 'ETSWP_deck_options', 'ETSWP_deck_options_function' );
+function ETSWP_deck_options_function() {
+	$page_path = 'decks';
+	$files = wp_cache_get('ETSWP_'.$page_path);
+	$keys= array_keys($files);
+	//$html = '<select name="emogic_deck" id="emogic_deck">';
+	$html = '';
+	foreach($keys as $file){
+		$html = $html .  "<option value='$files[$file]'>$file</option>";
+	}
+	//$html = $html . '</select>';
+	return $html;
+}
+
+add_shortcode( 'ETSWP_spread_options', 'ETSWP_spread_options_function' );
+function ETSWP_spread_options_function() {
+	$page_path = 'spreads';
+	$files = wp_cache_get('ETSWP_'.$page_path);
+	$keys= array_keys($files);
+	//$html = '<select name="emogic_spreads" id="emogic_spreads">';
+	$html = '';
+	foreach($keys as $file){
+		$html = $html .  "<option value='$files[$file]'>$file</option>";
+	}
+	//$html = $html . '</select>';
+	return $html;
+}
 
 add_action( 'init', 'set_tarot_cookie');
 function set_tarot_cookie() {
