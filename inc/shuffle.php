@@ -6,6 +6,7 @@
 
 $page_path = 'decks';
 $wp_post = get_page_by_path($page_path); //returns post object or null
+if(! isset($wp_post)){return;}//no decks stop everything
 $wp_children = get_children( $wp_post->ID  );
 //build associative array : page_id by deck names
 $decks = array();
@@ -14,15 +15,11 @@ foreach($wp_children as $wp_post){
 }
 
 $deck_chosen = 'emogic';
+if(! isset($decks[$deck_chosen])){return;} //no deck stop everything.
+
+//get deck text and put in array
 $file_string = $wp_children[ $decks[$deck_chosen] ]->post_content;
-//$file_lines = explode(PHP_EOL, $file_string);
-$file_lines = preg_split("/\r\n|\n|\r/", $file_string);
-
-//$dir = EMOGIC_TAROT_PLUGIN_PATH . "/decks/";
-//$file_name = "emogic";
-//$file_string = file_get_contents($dir . $file_name , true);
-
-//$file = fopen($dir . $file_name , "r");
+$file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
 
 $ETSWP_items_array = array(); //will be complete array read in order.
 //we will shuffle a separate keys array,
@@ -31,16 +28,13 @@ $ETSWP_items_array = array(); //will be complete array read in order.
 $ETSWP_keys_shuffled = array();
 
 //1st line is the column text description
-//$line_string = trim( fgets($file) );
 $line_string = array_shift( $file_lines );
 $columns_array = explode("|" , $line_string);
 
 $number_of_same_item_array = array(); //so we can see if this item has another version of it in the database, and roll to see which to keep
 
 //get all items in order
-//while(! feof($file)){
 while( count($file_lines) ){
-	//$line_string = trim( fgets($file) );
 	$line_string = array_shift( $file_lines );
 	if( ctype_space($line_string) ){//ignore whitespace lines
 		continue;
@@ -54,7 +48,6 @@ while( count($file_lines) ){
 
 	array_push($ETSWP_items_array , $item_array);
 	}
-//fclose($file);
 
 if(!isset($_COOKIE['ETSWP_items'])) {//no cookies, shuffle cards
 	//create a key array and shuffle it

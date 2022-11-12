@@ -6,7 +6,7 @@ Emocic Tarot Script for Wordpress : work in progress
 
 ## Benefits
 
-
+See the future
 
 ## Liabilty
 
