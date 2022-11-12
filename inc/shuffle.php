@@ -4,21 +4,34 @@
 //ip: path to deck or deck data : cookies for daily cards
 //op: shortcodes
 
-$page_path = 'decks';
-$wp_post = get_page_by_path($page_path); //returns post object or null
-if(! isset($wp_post)){return;}//no decks stop everything
-$wp_children = get_children( $wp_post->ID  );
-//build associative array : page_id by deck names
-$decks = array();
-foreach($wp_children as $wp_post){
-	$decks[$wp_post->post_name] = $wp_post->ID;
+
+//save deck list with page_paths to EMOGIC_DECKS
+//wp_cache_set('ETSWP_decks' , $decks);
+
+//save spread list with page_paths to EMOGIC_SPREADS
+
+//get file pages under folders: decks and spreads
+$page_paths = ['decks' , 'spreads'];
+foreach($page_paths as $page_path){
+	$wp_post = get_page_by_path($page_path); //returns post object or null
+	if(! isset($wp_post)){return;}//no $page_path stop everything
+	$wp_children[$page_path] = get_children( $wp_post->ID  );
+	//build associative array : keys $filenames , value page_id
+	$files[$page_path] = array();
+	foreach($wp_children[$page_path] as $wp_post){
+		$files[$page_path][$wp_post->post_name] = $wp_post->ID;
+	}
+	//save $files[$page_path] with page_ids to 'ETSWP_'.$page_path
+	wp_cache_set('ETSWP_'.$page_path , $files[$page_path]); //uesd to build select drop-downs and also to find deck page (already in memory) below
 }
 
-$deck_chosen = 'emogic';
-if(! isset($decks[$deck_chosen])){return;} //no deck stop everything.
+$deck_chosen = 'emogic'; //will be chosen by visitor
+
+if(! isset( $files['decks'][$deck_chosen] )){return;} //no deck stop everything.
+else{$page_id =  $files['decks'][$deck_chosen];}
 
 //get deck text and put in array
-$file_string = $wp_children[ $decks[$deck_chosen] ]->post_content;
+$file_string = $wp_children['decks'][ $page_id ]->post_content;
 $file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
 
 $ETSWP_items_array = array(); //will be complete array read in order.

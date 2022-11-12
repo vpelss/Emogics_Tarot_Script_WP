@@ -74,22 +74,18 @@ $emogic_tarot->init();
 
 	//add_action( 'wp_loaded', array($emogic_tarot,'read_and_create_pages') );
 
+//main call page
 //name in cookie?
 //name in blurb?
-//main call page
 //fb with spread_deck_name for cookie
 //build spread list?
 //build deck list?
 
-//spreads ,modifiable but loaded from folder? edit and manually save to folder?
 //backup/restore spreads?
 //deck edit page?
 //backup/restore decks
 
-//hide spreads pages??
-
 //how do I choose deck? maybe by parent page name?
-
 
 //maybe menu goes main (name,question) , deck, spreads
 

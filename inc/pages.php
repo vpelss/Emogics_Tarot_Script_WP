@@ -9,6 +9,11 @@ function read_and_create_pages(){
 	$parent_id = 0;
 	$page_path_parent = '';
 	add_pages($dir,$parent_id,$page_path_parent);
+
+	//save deck list with page_paths to EMOGIC_DECKS
+
+	//save spread list with page_paths to EMOGIC_SPREADS
+	
 }
 
 function add_pages($dir,$parent_id,$page_path_parent){
