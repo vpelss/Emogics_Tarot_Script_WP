@@ -4,12 +4,21 @@
 //ip: path to deck or deck data : cookies for daily cards
 //op: shortcodes
 
+//fix: maybe action on post , so we can determine what page we are on then only cache required??
 //get file pages under folders: decks and spreads : needs to be accessed / called by spreads also so ether require_once in spreads.php or other option?
+function options(){
 $page_paths = ['decks' , 'spreads'];
 foreach($page_paths as $page_path){
 	$wp_post = get_page_by_path($page_path); //returns post object or null
 	if(! isset($wp_post)){return;}//no $page_path stop everything
-	$wp_children[$page_path] = get_children( $wp_post->ID  );
+	$wp_children[$page_path] = get_children( $wp_post->ID );
+	//do we need to download the objects?
+	//$wp_children[$page_path] = get_children( [	'post_parent' => $wp_post->ID , 'fields' => 'ids', ]);
+	//$wp_children[$page_path] = get_children( [	'post_parent' => $wp_post->ID , 'fields' => 'id=>parent', ]);
+	//$wp_children[$page_path] = get_children( [	'post_parent' => $wp_post->ID , 'fields' => 'post_name', ]);
+	//get_children( [	'post_parent' 	=> $post_id, 'fields'        => 'ids', ] ); post_name id=>parent
+	//get_the_title
+
 	wp_cache_set('ETSWP_wp_children_'.$page_path , $wp_children[$page_path]); //need for shuffle and spreads shortcodes on main page
 	//build associative array : keys $filenames , value page_id
 	$files[$page_path] = array();
@@ -19,6 +28,7 @@ foreach($page_paths as $page_path){
 	//save $files[$page_path] with page_ids to 'ETSWP_'.$page_path
 	wp_cache_set('ETSWP_'.$page_path , $files[$page_path]); //uesd to build select drop-downs in shortcodes and also to find deck page (already in memory) below
 	}
+}
 
 add_shortcode( 'ETSWP_deck_options', 'ETSWP_deck_options_function' ); //for main page
 function ETSWP_deck_options_function() {
@@ -46,27 +56,29 @@ function ETSWP_spread_options_function() {
 
 //----------shuffle stuff
 
-//ETSWP_shuffle( $files , $wp_children ); //will be called by shortcode? so need cache vars
+add_action( 'the_post', 'ETSWP_shuffle' ); //shuufle after we can determine if we are on a spread page
+//add_shortcode( 'shuffle', 'ETSWP_shuffle' ); //cant run as shortcodes are async, and this is too slow!
+function ETSWP_shuffle(){
 
-//ETSWP_shuffle( $files , $wp_children );
-//ETSWP_shuffle(  );
-//add_shortcode( 'shuffle', 'ETSWP_shuffle' ); //for reading page
-//function ETSWP_shuffle(&$files , &$wp_children){
-//function ETSWP_shuffle(){
+if ( is_page('emogic-tarot') ) { options(); } //build options for page
 
-//$files = wp_cache_get('ETSWP_decks' );
-//$wp_children = wp_cache_get('ETSWP_wp_children_decks' );
+//are we child of spreads?
+$ancs = get_ancestors($post->ID, 'page');
+if(! isset($ancs[0])){$ancs[0]='foo';}
+$spreads_page_id =  get_page_by_path('spreads')->ID;
+if ( $ancs[0] == $spreads_page_id || $post->post_parent == "$spreads_page_id" ) { options(); }
+else{ return; }
 
+//choose our deck
 $deck_chosen = 'emogic'; //default, will normally be chosen by visitor
 if( isset($_REQUEST["deck"]) ) {
     $deck_chosen = $_REQUEST["deck"];
 	}
-
-if(! isset( $files['decks'][$deck_chosen] )){return;} //no deck stop everything.
-else{$page_id =  $files['decks'][$deck_chosen];}
+$wp_post = get_page_by_path('decks/'.$deck_chosen); //returns post object or null
+if(! isset( $wp_post )) {return;} //if no deck stop everything.
 
 //get deck text and put in array
-$file_string = $wp_children['decks'][ $page_id ]->post_content;
+$file_string = $wp_post->post_content;
 $file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
 
 $ETSWP_items_array = array(); //will be complete array read in order.
@@ -120,7 +132,7 @@ if( isset($_COOKIE['ETSWP_items']) ){//simply convert cookie to cards
 
 wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
 wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
-
+}
 
 //this is how we place cards on spreads [ETSWP item='1' column='itemname']
 add_shortcode( 'ETSWP', 'ETSWP_function' );
