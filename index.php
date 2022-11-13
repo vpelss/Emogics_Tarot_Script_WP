@@ -76,14 +76,12 @@ $emogic_tarot->init();
 
 	$r = 99;
 
-	//add_action( 'wp_loaded', array($emogic_tarot,'read_and_create_pages') );
+//add_action( 'wp_loaded', array($emogic_tarot,'read_and_create_pages') );
 
 //main call page
 //name in cookie?
 //name in blurb?
 //fb with spread_deck_name for cookie
-//build spread list?
-//build deck list?
 
 //backup/restore spreads?
 //deck edit page?

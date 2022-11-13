@@ -60,9 +60,12 @@ add_action( 'the_post', 'ETSWP_shuffle' ); //shuufle after we can determine if w
 //add_shortcode( 'shuffle', 'ETSWP_shuffle' ); //cant run as shortcodes are async, and this is too slow!
 function ETSWP_shuffle(){
 
+if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ options(); } //if we don't do this for edit pages, oddly enough shortcodes trigger and give errors.
 if ( is_page('emogic-tarot') ) { options(); } //build options for page
+if ( is_page('emogic-your-tarot-reading') ) { options(); } //build options for page //need to do for shortcode
 
-//are we child of spreads?
+//are we child of spreads? use this as options() has not run
+global $post;
 $ancs = get_ancestors($post->ID, 'page');
 if(! isset($ancs[0])){$ancs[0]='foo';}
 $spreads_page_id =  get_page_by_path('spreads')->ID;
@@ -170,7 +173,8 @@ $wp_children = wp_cache_get('ETSWP_wp_children_spreads' );
 //$page_id = $files[$spread];
 //$page =  $wp_children[ $files[$spread] ];
 //$html = $page->post_content;
-$html = $wp_children[ $files[$spread] ]->post_content;
+$html2 = $wp_children[ $files[$spread] ]->post_content;
+$html = do_shortcode ( $html2 ); //not working
 return $html;
 }
 
