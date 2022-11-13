@@ -4,28 +4,63 @@
 //ip: path to deck or deck data : cookies for daily cards
 //op: shortcodes
 
-
-//save deck list with page_paths to EMOGIC_DECKS
-//wp_cache_set('ETSWP_decks' , $decks);
-
-//save spread list with page_paths to EMOGIC_SPREADS
-
-//get file pages under folders: decks and spreads
+//get file pages under folders: decks and spreads : needs to be accessed / called by spreads also so ether require_once in spreads.php or other option?
 $page_paths = ['decks' , 'spreads'];
 foreach($page_paths as $page_path){
 	$wp_post = get_page_by_path($page_path); //returns post object or null
 	if(! isset($wp_post)){return;}//no $page_path stop everything
 	$wp_children[$page_path] = get_children( $wp_post->ID  );
+	wp_cache_set('ETSWP_wp_children_'.$page_path , $wp_children[$page_path]); //need for shuffle and spreads shortcodes on main page
 	//build associative array : keys $filenames , value page_id
 	$files[$page_path] = array();
 	foreach($wp_children[$page_path] as $wp_post){
 		$files[$page_path][$wp_post->post_name] = $wp_post->ID;
 	}
 	//save $files[$page_path] with page_ids to 'ETSWP_'.$page_path
-	wp_cache_set('ETSWP_'.$page_path , $files[$page_path]); //uesd to build select drop-downs and also to find deck page (already in memory) below
+	wp_cache_set('ETSWP_'.$page_path , $files[$page_path]); //uesd to build select drop-downs in shortcodes and also to find deck page (already in memory) below
+	}
+
+add_shortcode( 'ETSWP_deck_options', 'ETSWP_deck_options_function' ); //for main page
+function ETSWP_deck_options_function() {
+	$page_path = 'decks';
+	$files = wp_cache_get('ETSWP_'.$page_path);
+	$keys= array_keys($files);
+	$html = '';
+	foreach($keys as $file){
+		$html = $html .  "<option value='$files[$file]'>$file</option>";
+	}
+	return $html;
 }
 
-$deck_chosen = 'emogic'; //will be chosen by visitor
+add_shortcode( 'ETSWP_spread_options', 'ETSWP_spread_options_function' ); //for main page
+function ETSWP_spread_options_function() {
+	$page_path = 'spreads';
+	$files = wp_cache_get('ETSWP_'.$page_path);
+	$keys= array_keys($files);
+	$html = '';
+	foreach($keys as $file){
+		$html = $html .  "<option value='$files[$file]'>$file</option>";
+	}
+	return $html;
+}
+
+//----------shuffle stuff
+
+//ETSWP_shuffle( $files , $wp_children ); //will be called by shortcode? so need cache vars
+
+//ETSWP_shuffle( $files , $wp_children );
+//ETSWP_shuffle(  );
+//add_shortcode( 'shuffle', 'ETSWP_shuffle' ); //for reading page
+//function ETSWP_shuffle(&$files , &$wp_children){
+//function ETSWP_shuffle(){
+
+//$files = wp_cache_get('ETSWP_decks' );
+//$wp_children = wp_cache_get('ETSWP_wp_children_decks' );
+
+$deck_chosen = 'emogic'; //default, will normally be chosen by visitor
+if( isset($_REQUEST["deck"]) ) {
+    $deck_chosen = $_REQUEST["deck"];
+	}
 
 if(! isset( $files['decks'][$deck_chosen] )){return;} //no deck stop everything.
 else{$page_id =  $files['decks'][$deck_chosen];}
@@ -62,7 +97,11 @@ while( count($file_lines) ){
 	array_push($ETSWP_items_array , $item_array);
 	}
 
-if(!isset($_COOKIE['ETSWP_items'])) {//no cookies, shuffle cards
+if( isset($_COOKIE['ETSWP_items']) ){//simply convert cookie to cards
+		$json = $_COOKIE['ETSWP_items'];
+		$ETSWP_keys_shuffled = json_decode($json);
+	}
+	else{//no cookies, shuffle cards
 	//create a key array and shuffle it
 	$ETSWP_keys_shuffled = array_keys($ETSWP_items_array); //$ETSWP_keys_shuffled is in order at this time
 	shuffle($ETSWP_keys_shuffled);
@@ -78,15 +117,12 @@ if(!isset($_COOKIE['ETSWP_items'])) {//no cookies, shuffle cards
 	//re-index $ETSWP_keys_shuffled as there are random holes in index
 	$ETSWP_keys_shuffled = array_values($ETSWP_keys_shuffled);
 	}
-	else{//simply convert cookie to cards
-		$json = $_COOKIE['ETSWP_items'];
-		$ETSWP_keys_shuffled = json_decode($json);
-	}
 
 wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
 wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
 
-//allows us to paste cards on spreads [ETSWP item='1' column='itemname']
+
+//this is how we place cards on spreads [ETSWP item='1' column='itemname']
 add_shortcode( 'ETSWP', 'ETSWP_function' );
 function ETSWP_function( $atts = array(), $content = null ) {
 	//$this->ETSWP_items_array;
@@ -103,35 +139,7 @@ function pluginpath_function( $atts = array(), $content = null ) {
 	return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 	};
 
-add_shortcode( 'ETSWP_deck_options', 'ETSWP_deck_options_function' );
-function ETSWP_deck_options_function() {
-	$page_path = 'decks';
-	$files = wp_cache_get('ETSWP_'.$page_path);
-	$keys= array_keys($files);
-	//$html = '<select name="emogic_deck" id="emogic_deck">';
-	$html = '';
-	foreach($keys as $file){
-		$html = $html .  "<option value='$files[$file]'>$file</option>";
-	}
-	//$html = $html . '</select>';
-	return $html;
-}
-
-add_shortcode( 'ETSWP_spread_options', 'ETSWP_spread_options_function' );
-function ETSWP_spread_options_function() {
-	$page_path = 'spreads';
-	$files = wp_cache_get('ETSWP_'.$page_path);
-	$keys= array_keys($files);
-	//$html = '<select name="emogic_spreads" id="emogic_spreads">';
-	$html = '';
-	foreach($keys as $file){
-		$html = $html .  "<option value='$files[$file]'>$file</option>";
-	}
-	//$html = $html . '</select>';
-	return $html;
-}
-
-add_action( 'init', 'set_tarot_cookie');
+add_action( 'init', 'set_tarot_cookie'); //set out cookie at the appropriate time
 function set_tarot_cookie() {
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 	$visit_time = date('F j, Y  g:i a');
@@ -141,5 +149,17 @@ function set_tarot_cookie() {
 	}
 }
 
+add_shortcode( 'spread', 'spread_function' ); //for reading display page
+function spread_function(){
+
+$files = wp_cache_get('ETSWP_spreads');
+$spread = 'three-card';
+$wp_children = wp_cache_get('ETSWP_wp_children_spreads' );
+//$page_id = $files[$spread];
+//$page =  $wp_children[ $files[$spread] ];
+//$html = $page->post_content;
+$html = $wp_children[ $files[$spread] ]->post_content;
+return $html;
+}
 
 ?>

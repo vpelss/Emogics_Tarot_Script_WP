@@ -2,7 +2,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
-add_action( 'wp_loaded', 'read_and_create_pages' ); //maybe move to activate.php later
+add_action( 'wp_loaded', 'read_and_create_pages' ); //fix: just run when we delete a page and once on activate?
+
+//pages can also be accessed ?pagename=parent-page/sub-page
 
 function read_and_create_pages(){
 	$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
