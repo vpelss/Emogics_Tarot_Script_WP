@@ -86,11 +86,11 @@ if(! isset( $wp_post )) {return;} //if no deck stop everything.
 $file_string = $wp_post->post_content;
 $file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
 
-$ETSWP_items_array = array(); //will be complete array read in order.
-//we will shuffle a separate keys array,
-//then ensure that none of the key array points to another item in $ETSWP_items_array with a duplicate itemnumber
-
+$ETSWP_items_array = array();
 $ETSWP_keys_shuffled = array();
+//$ETSWP_items_array will be complete array read in order.
+//we will shuffle a separate keys array, $ETSWP_keys_shuffled
+//then ensure that none of the key array points to another item in $ETSWP_items_array with a duplicate itemnumber
 
 //1st line is the column text description
 $line_string = array_shift( $file_lines );
@@ -156,8 +156,16 @@ function pluginpath_function( $atts = array(), $content = null ) {
 	return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 	};
 
-add_action( 'init', 'set_tarot_cookie'); //set out cookie at the appropriate time
+//add_action( 'init', 'set_tarot_cookie'); //set out cookie at the appropriate time
+add_action( 'the_post', 'set_tarot_cookie'); //set out cookie at the appropriate time, but late enoght to have $post data
 function set_tarot_cookie() {
+	//only do this if we are on a spread page
+	global $post;
+	$ancs = get_ancestors($post->ID, 'page');
+	if(! isset($ancs[0])){$ancs[0]='foo';}
+	$spreads_page_id =  get_page_by_path('spreads')->ID;
+	if (! ( $ancs[0] == $spreads_page_id || $post->post_parent == "$spreads_page_id" ) ) { return; }
+
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 	$visit_time = date('F j, Y  g:i a');
 	if(!isset($_COOKIE['ETSWP_items'])) {
