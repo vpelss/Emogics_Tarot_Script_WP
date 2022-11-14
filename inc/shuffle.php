@@ -37,7 +37,8 @@ function ETSWP_deck_options_function() {
 	$keys= array_keys($files);
 	$html = '';
 	foreach($keys as $file){
-		$html = $html .  "<option value='$files[$file]'>$file</option>";
+		//$html = $html .  "<option value='$files[$file]'>$file</option>";
+		$html = $html .  "<option value='$file'>$file</option>";
 	}
 	return $html;
 }
@@ -49,7 +50,8 @@ function ETSWP_spread_options_function() {
 	$keys= array_keys($files);
 	$html = '';
 	foreach($keys as $file){
-		$html = $html .  "<option value='$files[$file]'>$file</option>";
+		//$html = $html .  "<option value='$files[$file]'>$file</option>";
+		$html = $html .  "<option value='$file'>$file</option>";
 	}
 	return $html;
 }
@@ -74,8 +76,8 @@ else{ return; }
 
 //choose our deck
 $deck_chosen = 'emogic'; //default, will normally be chosen by visitor
-if( isset($_REQUEST["deck"]) ) {
-    $deck_chosen = $_REQUEST["deck"];
+if( isset($_REQUEST["emogic_deck"]) ) {
+    $deck_chosen = $_REQUEST["emogic_deck"];
 	}
 $wp_post = get_page_by_path('decks/'.$deck_chosen); //returns post object or null
 if(! isset( $wp_post )) {return;} //if no deck stop everything.

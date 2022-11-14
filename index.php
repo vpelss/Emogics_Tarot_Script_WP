@@ -83,11 +83,11 @@ $emogic_tarot->init();
 //name in blurb?
 //fb with spread_deck_name for cookie
 
+//sub sub folders
+
 //backup/restore spreads?
 //deck edit page?
 //backup/restore decks
-
-//how do I choose deck? maybe by parent page name?
 
 //maybe menu goes main (name,question) , deck, spreads
 

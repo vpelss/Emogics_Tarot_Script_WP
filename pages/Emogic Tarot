@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="../wp-admin/css/forms.css?ver=6.0.2.2">
 <link rel="stylesheet" href="../wp-admin/css/forms.min.css?ver=6.0.2.2">
 
-<form method="post" action="see js script below" id="ETSWP_form_settings">
+<form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
 <input type="hidden" name="action" value="ETSWP_process_form">
 <center>
 <p>
@@ -24,8 +24,14 @@
 </p>
 
 <p>
-<input type="submit" name="submit" id="submit" value="Save Settings">
+<input type="submit" name="submit" id="submit" value="Get Tarot Reading">
 </p>
 </center>
 </form>
+
+<script>
+function setAction(form){
+form.action = '?pagename=spreads/' + document.getElementById("emogic_spread").value;
+}
+</script>
 <!-- /wp:html -->
