@@ -4,21 +4,12 @@
 //ip: path to deck or deck data : cookies for daily cards
 //op: shortcodes
 
-//fix: maybe action on post , so we can determine what page we are on then only cache required??
-//get file pages under folders: decks and spreads : needs to be accessed / called by spreads also so ether require_once in spreads.php or other option?
-function options(){
+function options_old(){
 $page_paths = ['decks' , 'spreads'];
 foreach($page_paths as $page_path){
 	$wp_post = get_page_by_path($page_path); //returns post object or null
 	if(! isset($wp_post)){return;}//no $page_path stop everything
 	$wp_children[$page_path] = get_children( $wp_post->ID );
-	//do we need to download the objects?
-	//$wp_children[$page_path] = get_children( [	'post_parent' => $wp_post->ID , 'fields' => 'ids', ]);
-	//$wp_children[$page_path] = get_children( [	'post_parent' => $wp_post->ID , 'fields' => 'id=>parent', ]);
-	//$wp_children[$page_path] = get_children( [	'post_parent' => $wp_post->ID , 'fields' => 'post_name', ]);
-	//get_children( [	'post_parent' 	=> $post_id, 'fields'        => 'ids', ] ); post_name id=>parent
-	//get_the_title
-
 	wp_cache_set('ETSWP_wp_children_'.$page_path , $wp_children[$page_path]); //need for shuffle and spreads shortcodes on main page
 	//build associative array : keys $filenames , value page_id
 	$files[$page_path] = array();
@@ -30,9 +21,46 @@ foreach($page_paths as $page_path){
 	}
 }
 
+//fix: maybe action on post , so we can determine what page we are on then only cache required??
+//get file pages under folders: decks and spreads : needs to be accessed / called by spreads also so ether require_once in spreads.php or other option?
+
+//add sub sub folder options
+
+function options(){
+$page_paths = ['decks' , 'spreads'];
+foreach($page_paths as $page_path){
+	$wp_post = get_page_by_path($page_path); //returns post object or null
+	if(! isset($wp_post)){return;}//no $page_path stop everything
+	$parent_id = $wp_post->ID;
+	$page_path_parent = $page_path;
+	$html = options_recursive_pages($parent_id,$page_path_parent); //result will be the options text. then we can get rid off the fancy shortcode and simplify. no longer need $files
+
+	wp_cache_set('ETSWP_'.$page_path.'_options' , $html);
+	return;
+	}
+}
+
+function options_recursive_pages($parent_id,$page_path_parent){ //note: recursive routine, do not change arg values here!!!
+	$html = '';
+	$html_children = '';
+	$children = get_children( $parent_id );
+	if( ! isset($children) ) {return $html;} //no branch $html = ''
+	foreach ($children as $child) {
+		$path = $page_path_parent . '/' . $child->post_name;
+		$html = $html . "<option value='$path'>$path</option>";
+		$html_children = options_recursive_pages($child->ID,$path);
+		$html = $html . $html_children;
+	}
+	return $html;
+}
+
 add_shortcode( 'ETSWP_deck_options', 'ETSWP_deck_options_function' ); //for main page
 function ETSWP_deck_options_function() {
 	$page_path = 'decks';
+	$options = wp_cache_get('ETSWP_'.$page_path.'_options');
+	return $options;
+
+
 	$files = wp_cache_get('ETSWP_'.$page_path);
 	$keys= array_keys($files);
 	$html = '';
@@ -46,6 +74,9 @@ function ETSWP_deck_options_function() {
 add_shortcode( 'ETSWP_spread_options', 'ETSWP_spread_options_function' ); //for main page
 function ETSWP_spread_options_function() {
 	$page_path = 'spreads';
+	$options = wp_cache_get('ETSWP_'.$page_path.'_options');
+	return $options;
+
 	$files = wp_cache_get('ETSWP_'.$page_path);
 	$keys= array_keys($files);
 	$html = '';
@@ -174,12 +205,15 @@ function set_tarot_cookie() {
 	}
 }
 
+/*
 add_shortcode( 'spread', 'spread_function' ); //for reading display page
 function spread_function(){
-
 $files = wp_cache_get('ETSWP_spreads');
 $spread = 'three-card';
+
+do this another way. just download it here once when required. sure we have already done it in in options, but simplify
 $wp_children = wp_cache_get('ETSWP_wp_children_spreads' );
+
 //$page_id = $files[$spread];
 //$page =  $wp_children[ $files[$spread] ];
 //$html = $page->post_content;
@@ -187,5 +221,6 @@ $html2 = $wp_children[ $files[$spread] ]->post_content;
 $html = do_shortcode ( $html2 ); //not working
 return $html;
 }
+*/
 
 ?>
