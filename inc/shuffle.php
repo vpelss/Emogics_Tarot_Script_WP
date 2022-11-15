@@ -1,31 +1,10 @@
 <?php
-
 //as a class, not required
 //ip: path to deck or deck data : cookies for daily cards
 //op: shortcodes
 
-function options_old(){
-$page_paths = ['decks' , 'spreads'];
-foreach($page_paths as $page_path){
-	$wp_post = get_page_by_path($page_path); //returns post object or null
-	if(! isset($wp_post)){return;}//no $page_path stop everything
-	$wp_children[$page_path] = get_children( $wp_post->ID );
-	wp_cache_set('ETSWP_wp_children_'.$page_path , $wp_children[$page_path]); //need for shuffle and spreads shortcodes on main page
-	//build associative array : keys $filenames , value page_id
-	$files[$page_path] = array();
-	foreach($wp_children[$page_path] as $wp_post){
-		$files[$page_path][$wp_post->post_name] = $wp_post->ID;
-	}
-	//save $files[$page_path] with page_ids to 'ETSWP_'.$page_path
-	wp_cache_set('ETSWP_'.$page_path , $files[$page_path]); //uesd to build select drop-downs in shortcodes and also to find deck page (already in memory) below
-	}
-}
-
 //fix: maybe action on post , so we can determine what page we are on then only cache required??
-//get file pages under folders: decks and spreads : needs to be accessed / called by spreads also so ether require_once in spreads.php or other option?
-
-//add sub sub folder options
-
+//get file pages under folders: decks and spreads : needs to be accessed
 function options(){
 $page_paths = ['decks' , 'spreads'];
 foreach($page_paths as $page_path){
@@ -33,10 +12,9 @@ foreach($page_paths as $page_path){
 	if(! isset($wp_post)){return;}//no $page_path stop everything
 	$parent_id = $wp_post->ID;
 	$page_path_parent = $page_path;
-	$html = options_recursive_pages($parent_id,$page_path_parent); //result will be the options text. then we can get rid off the fancy shortcode and simplify. no longer need $files
+	$html = options_recursive_pages($parent_id,''); //result will be the options text. then we can get rid off the fancy shortcode and simplify. no longer need $files
 
 	wp_cache_set('ETSWP_'.$page_path.'_options' , $html);
-	return;
 	}
 }
 
@@ -46,7 +24,8 @@ function options_recursive_pages($parent_id,$page_path_parent){ //note: recursiv
 	$children = get_children( $parent_id );
 	if( ! isset($children) ) {return $html;} //no branch $html = ''
 	foreach ($children as $child) {
-		$path = $page_path_parent . '/' . $child->post_name;
+		if($page_path_parent == '') $path = $child->post_name;
+		else $path = $page_path_parent . '/' . $child->post_name;
 		$html = $html . "<option value='$path'>$path</option>";
 		$html_children = options_recursive_pages($child->ID,$path);
 		$html = $html . $html_children;
@@ -59,16 +38,6 @@ function ETSWP_deck_options_function() {
 	$page_path = 'decks';
 	$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 	return $options;
-
-
-	$files = wp_cache_get('ETSWP_'.$page_path);
-	$keys= array_keys($files);
-	$html = '';
-	foreach($keys as $file){
-		//$html = $html .  "<option value='$files[$file]'>$file</option>";
-		$html = $html .  "<option value='$file'>$file</option>";
-	}
-	return $html;
 }
 
 add_shortcode( 'ETSWP_spread_options', 'ETSWP_spread_options_function' ); //for main page
@@ -76,15 +45,6 @@ function ETSWP_spread_options_function() {
 	$page_path = 'spreads';
 	$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 	return $options;
-
-	$files = wp_cache_get('ETSWP_'.$page_path);
-	$keys= array_keys($files);
-	$html = '';
-	foreach($keys as $file){
-		//$html = $html .  "<option value='$files[$file]'>$file</option>";
-		$html = $html .  "<option value='$file'>$file</option>";
-	}
-	return $html;
 }
 
 //----------shuffle stuff
@@ -102,7 +62,7 @@ global $post;
 $ancs = get_ancestors($post->ID, 'page');
 if(! isset($ancs[0])){$ancs[0]='foo';}
 $spreads_page_id =  get_page_by_path('spreads')->ID;
-if ( $ancs[0] == $spreads_page_id || $post->post_parent == "$spreads_page_id" ) { options(); }
+if ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) { options(); }
 else{ return; }
 
 //choose our deck
@@ -188,15 +148,14 @@ function pluginpath_function( $atts = array(), $content = null ) {
 	};
 
 //add_action( 'init', 'set_tarot_cookie'); //set out cookie at the appropriate time
-add_action( 'the_post', 'set_tarot_cookie'); //set out cookie at the appropriate time, but late enoght to have $post data
+add_action( 'the_post', 'set_tarot_cookie'); //set out cookie at the appropriate time, but late enough to have $post data
 function set_tarot_cookie() {
 	//only do this if we are on a spread page
 	global $post;
 	$ancs = get_ancestors($post->ID, 'page');
 	if(! isset($ancs[0])){$ancs[0]='foo';}
 	$spreads_page_id =  get_page_by_path('spreads')->ID;
-	if (! ( $ancs[0] == $spreads_page_id || $post->post_parent == "$spreads_page_id" ) ) { return; }
-
+	if (! ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) ) { return; }
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 	$visit_time = date('F j, Y  g:i a');
 	if(!isset($_COOKIE['ETSWP_items'])) {
