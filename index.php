@@ -52,9 +52,9 @@ class emogic_tarot {//keep variables and routines from going wp global
 		//act similar to subroutines
 		require_once plugin_dir_path(__file__) . 'inc/pages.php' ; //auto setup pages
 
+//stop here if not on one of our pages
+
 		require_once plugin_dir_path(__file__) . 'inc/options.php' ; //get options for master page
-
-
 		require_once plugin_dir_path(__file__) . 'inc/shuffle.php' ; //main page redirects to page based on status
 
 		//require_once plugin_dir_path(__file__) . 'inc/login_logout.php' ; //logging in logging out page functions
@@ -74,23 +74,18 @@ if( class_exists('emogic_tarot') ){
 
 $emogic_tarot->init();
 
-	$r = 99;
-
-//add_action( 'wp_loaded', array($emogic_tarot,'read_and_create_pages') );
-
-//main call page
-//name in cookie?
-//name in blurb?
-//fb with spread_deck_name for cookie
-
-//sub sub folders
+// name deck spread in cookie name?
+// deactivate remove files!
+//more spreads
 
 //backup/restore spreads?
 //deck edit page?
 //backup/restore decks
 
-//maybe menu goes main (name,question) , deck, spreads
-
 //reading deck, fix blank lines, etc...
+
+//Numbers Speak reading
+
+//tarot, rune, other folder (all with main index page) to keeps decks separate?
 
 ?>

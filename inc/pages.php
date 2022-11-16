@@ -10,18 +10,28 @@ function read_and_create_pages(){
 	$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
 	$parent_id = 0;
 	$page_path_parent = '';
-	add_pages($dir,$parent_id,$page_path_parent);
+
+	//$pages = array();//will have $pages['file_paths'] (an array) and  $pages['dir_paths'] (an array) so we can ignore dir in options build. save wp_cache
+	//$pages['file_paths'] = [];
+	//$pages['dir_paths'] = [];
+
+	add_pages($dir,$parent_id,$page_path_parent);//$pages is by reference
+
+	//wp_cache_set('ETSWP_pages' , $pages);
+	$r = 9;
 }
 
 function add_pages($dir,$parent_id,$page_path_parent){
 	//note: recursive routine, do not change arg values here!!!
 	$files = array_diff(scandir($dir), array('..', '.'));
 	foreach ($files as $file) {
-
 		//does file exist?
 		$page_path = $page_path_parent.'/'.$file;
 		$wp_post = get_page_by_path($page_path); //returns post object or null
 		if(is_file($dir.'/'.$file)){
+
+			//array_push( $pages['file_paths'] , ltrim($page_path, '/') );
+
 			$post_status = 'draft';
 			if(! $parent_id){$post_status = 'publish';}//only publish if root pages and files
 			$load_data = 1;
@@ -30,6 +40,9 @@ function add_pages($dir,$parent_id,$page_path_parent){
 		}
 		if(is_dir($dir.'/'.$file)){
 			//create empty page
+
+			//array_push( $pages['dir_paths'] , ltrim($page_path, '/') );
+
 			$post_status = 'draft';
 			$load_data = 0;
 			if(isset($wp_post)){//dir exists
@@ -51,8 +64,8 @@ function post_page_if_required( $post_parent , $page_path_parent , $file_name , 
 		//create page
 		$postarr  = array(
 			//'ID' => $page_id,
-			'post_title'    => $file_name,
-			'post_name' => $file_name,
+			'post_title'    => $file_name, //can have spaces
+			'post_name' => $file_name, //slug, will have - not spaces
 			'post_content'  => $data,
 			'post_status'   => $post_status,
 			'post_type' => 'page',

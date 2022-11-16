@@ -8,25 +8,35 @@
 function options(){
 $page_paths = ['decks' , 'spreads'];
 foreach($page_paths as $page_path){
+	$html = '';
 	$wp_post = get_page_by_path($page_path); //returns post object or null
 	if(! isset($wp_post)){return;}//no $page_path stop everything
 	$parent_id = $wp_post->ID;
 	$page_path_parent = $page_path;
-	$html = options_recursive_pages($parent_id,''); //result will be the options text. then we can get rid off the fancy shortcode and simplify. no longer need $files
-
+	$html = options_recursive_pages($parent_id,$page_path); //result will be the options text. then we can get rid off the fancy shortcode and simplify. no longer need $files
 	wp_cache_set('ETSWP_'.$page_path.'_options' , $html);
 	}
 }
 
 function options_recursive_pages($parent_id,$page_path_parent){ //note: recursive routine, do not change arg values here!!!
+	//$pages = wp_cache_get('ETSWP_pages');
 	$html = '';
 	$html_children = '';
 	$children = get_children( $parent_id );
 	if( ! isset($children) ) {return $html;} //no branch $html = ''
 	foreach ($children as $child) {
-		if($page_path_parent == '') $path = $child->post_name;
-		else $path = $page_path_parent . '/' . $child->post_name;
-		$html = $html . "<option value='$path'>$path</option>";
+		if($page_path_parent == '') $path = $child->post_title;
+		else $path = $page_path_parent . '/' . $child->post_title;
+		//$fee = $pages['file_paths'];
+		//if( in_array($path , $fee) ){//only add files not directories
+		if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
+		//ctype_space($wp_post->post_content) or ($wp_post->post_content == '')
+			//not elegant
+			$path_tmp = preg_replace('/^decks\//', '', $path);
+			$path_tmp = preg_replace('/^spreads\//', '', $path_tmp);
+
+			$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
+		}
 		$html_children = options_recursive_pages($child->ID,$path);
 		$html = $html . $html_children;
 	}
@@ -57,7 +67,7 @@ if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ options(); } //if 
 if ( is_page('emogic-tarot') ) { options(); } //build options for page
 if ( is_page('emogic-your-tarot-reading') ) { options(); } //build options for page //need to do for shortcode
 
-//are we child of spreads? use this as options() has not run
+//are we a child or grandchild of spreads page? then we need to run options()
 global $post;
 $ancs = get_ancestors($post->ID, 'page');
 if(! isset($ancs[0])){$ancs[0]='foo';}
@@ -72,6 +82,7 @@ if( isset($_REQUEST["emogic_deck"]) ) {
 	}
 $wp_post = get_page_by_path('decks/'.$deck_chosen); //returns post object or null
 if(! isset( $wp_post )) {return;} //if no deck stop everything.
+if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) {return;} //deck is empty or maybe just a directory
 
 //get deck text and put in array
 $file_string = $wp_post->post_content;
@@ -133,13 +144,22 @@ wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize 
 //this is how we place cards on spreads [ETSWP item='1' column='itemname']
 add_shortcode( 'ETSWP', 'ETSWP_function' );
 function ETSWP_function( $atts = array(), $content = null ) {
-	//$this->ETSWP_items_array;
 	$ETSWP_items_array = wp_cache_get('ETSWP_items_array');
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 
 	$item = $atts['item'] - 1; //the array starts at 0 so we want item 1 to point to that
 	$column = $atts['column'];
-	return $ETSWP_items_array[ $ETSWP_keys_shuffled[$item] ][$column];
+	$output = $ETSWP_items_array[ $ETSWP_keys_shuffled[$item] ][$column];
+
+	//first_name replace
+	$first_name = 'Seeker';
+	$r = $_REQUEST["first_name"];
+	if( isset($_REQUEST["first_name"]) and ($_REQUEST["first_name"] != '') ) {
+		$first_name = $_REQUEST["first_name"];
+		}
+	$output = str_replace( '[first_name]' , $first_name , $output );
+
+	return $output;
 	};
 
 add_shortcode( 'pluginpath', 'pluginpath_function' );
@@ -150,7 +170,8 @@ function pluginpath_function( $atts = array(), $content = null ) {
 //add_action( 'init', 'set_tarot_cookie'); //set out cookie at the appropriate time
 add_action( 'the_post', 'set_tarot_cookie'); //set out cookie at the appropriate time, but late enough to have $post data
 function set_tarot_cookie() {
-	//only do this if we are on a spread page
+	if ( isset($_GET['post_type'])  && $_GET['post_type'] === 'page' ){ return; }//admin edit pages trigger this, why?
+	//only do this if we are a child or grand child of spread page
 	global $post;
 	$ancs = get_ancestors($post->ID, 'page');
 	if(! isset($ancs[0])){$ancs[0]='foo';}
