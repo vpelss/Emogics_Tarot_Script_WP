@@ -59,6 +59,21 @@ function ETSWP_spread_options_function() {
 
 //----------shuffle stuff
 
+function is_descendent_page_of( $path ){ //will only work when post is available. eg, after the_post hook
+
+	global $post;
+	$ancs = get_ancestors($post->ID, 'page'); //get array of ancestor pages of current page
+
+	//if(! isset($ancs[0])){$ancs[0]='foo';}
+
+	if(count($ancs) == 0){return 0;} //no ancestors
+
+	$page_id =  get_page_by_path($path)->ID;
+
+	if ( in_array($page_id , $ancs) || $post->post_parent == "$page_id" ) { return 1; }
+	else{ return 0; }
+}
+
 add_action( 'the_post', 'ETSWP_shuffle' ); //shuufle after we can determine if we are on a spread page
 //add_shortcode( 'shuffle', 'ETSWP_shuffle' ); //cant run as shortcodes are async, and this is too slow!
 function ETSWP_shuffle(){
@@ -68,12 +83,17 @@ if ( is_page('emogic-tarot') ) { options(); } //build options for page
 if ( is_page('emogic-your-tarot-reading') ) { options(); } //build options for page //need to do for shortcode
 
 //are we a child or grandchild of spreads page? then we need to run options()
-global $post;
-$ancs = get_ancestors($post->ID, 'page');
-if(! isset($ancs[0])){$ancs[0]='foo';}
-$spreads_page_id =  get_page_by_path('spreads')->ID;
-if ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) { options(); }
-else{ return; }
+//global $post;
+//$ancs = get_ancestors($post->ID, 'page');
+//if(! isset($ancs[0])){$ancs[0]='foo';}
+//$spreads_page_id =  get_page_by_path('spreads')->ID;
+//if ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) { options(); }
+//else{ return; }
+
+if( is_descendent_page_of( 'spreads' ) )
+	options();
+else
+	return;
 
 //choose our deck
 $deck_chosen = 'emogic'; //default, will normally be chosen by visitor
@@ -153,7 +173,7 @@ function ETSWP_function( $atts = array(), $content = null ) {
 
 	//first_name replace
 	$first_name = 'Seeker';
-	$r = $_REQUEST["first_name"];
+	//$r = $_REQUEST["first_name"];
 	if( isset($_REQUEST["first_name"]) and ($_REQUEST["first_name"] != '') ) {
 		$first_name = $_REQUEST["first_name"];
 		}
@@ -171,12 +191,19 @@ function pluginpath_function( $atts = array(), $content = null ) {
 add_action( 'the_post', 'set_tarot_cookie'); //set out cookie at the appropriate time, but late enough to have $post data
 function set_tarot_cookie() {
 	if ( isset($_GET['post_type'])  && $_GET['post_type'] === 'page' ){ return; }//admin edit pages trigger this, why?
+
 	//only do this if we are a child or grand child of spread page
-	global $post;
-	$ancs = get_ancestors($post->ID, 'page');
-	if(! isset($ancs[0])){$ancs[0]='foo';}
-	$spreads_page_id =  get_page_by_path('spreads')->ID;
-	if (! ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) ) { return; }
+
+	//global $post;
+	//$ancs = get_ancestors($post->ID, 'page');
+	//if(! isset($ancs[0])){$ancs[0]='foo';}
+	//$spreads_page_id =  get_page_by_path('spreads')->ID;
+	//if (! ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) ) { return; }
+
+	if( ! is_descendent_page_of( 'spreads' ) )
+		return;
+
+
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 	$visit_time = date('F j, Y  g:i a');
 	if(!isset($_COOKIE['ETSWP_items'])) {

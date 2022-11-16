@@ -54,7 +54,6 @@ class emogic_tarot {//keep variables and routines from going wp global
 
 //stop here if not on one of our pages
 
-		require_once plugin_dir_path(__file__) . 'inc/options.php' ; //get options for master page
 		require_once plugin_dir_path(__file__) . 'inc/shuffle.php' ; //main page redirects to page based on status
 
 		//require_once plugin_dir_path(__file__) . 'inc/login_logout.php' ; //logging in logging out page functions
