@@ -5,6 +5,7 @@
 <form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
 <input type="hidden" name="action" value="ETSWP_process_form">
 <center>
+
 <p>
 <input type="text" name="first_name" id="first_name" placeholder="First Name">
 </p>
@@ -24,14 +25,28 @@
 </p>
 
 <p>
+<input type="text" size="40" name="emogic_question" id="emogic_question" placeholder="Your Question">
+</p>
+
+<p>
 <input type="submit" name="submit" id="submit" value="Get Tarot Reading">
 </p>
+
 </center>
 </form>
 
 <script>
+
 function setAction(form){
 form.action = '?pagename=spreads/' + document.getElementById("emogic_spread").value;
 }
+
+document.getElementById("first_name").setAttribute('value','[cookie name='ETSWP_first_name']');
+
+//document.ETSWP_form_settings.first_name.value = "[cookie name='ETSWP_first_name']" ;
+
+//document.TarotForm.template.value = getCookie('template') || 'three_card';
+//document.TarotForm.database.value = getCookie('database') || 'emogic';
+
 </script>
 <!-- /wp:html -->

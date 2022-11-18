@@ -10,17 +10,13 @@ function read_and_create_pages(){
 	$parent_id = 0;
 	$page_path_parent = '';
 
-	//$pages = array();//will have $pages['file_paths'] (an array) and  $pages['dir_paths'] (an array) so we can ignore dir in options build. save wp_cache
-	//$pages['file_paths'] = [];
-	//$pages['dir_paths'] = [];
-
-	add_pages($dir,$parent_id,$page_path_parent);//$pages is by reference
-
-	//wp_cache_set('ETSWP_pages' , $pages);
-	$r = 9;
+	$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
+	add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
+	wp_cache_set('ETSWP_deactivate_file_array' , array_reverse($deactivate_file_array)); //efficient, nope. but easy on the eyes
+	$r= 6;
 }
 
-function add_pages($dir,$parent_id,$page_path_parent){
+function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){
 	//note: recursive routine, do not change arg values here!!!
 	$files = array_diff(scandir($dir), array('..', '.'));
 	foreach ($files as $file) {
@@ -28,36 +24,26 @@ function add_pages($dir,$parent_id,$page_path_parent){
 		$page_path = $page_path_parent.'/'.$file;
 		$wp_post = get_page_by_path($page_path); //returns post object or null
 		if(is_file($dir.'/'.$file)){
-
-			//array_push( $pages['file_paths'] , ltrim($page_path, '/') );
-
 			$post_status = 'draft';
 			if(! $parent_id)
 				$post_status = 'publish'; //only publish if root pages and files
 			if( str_starts_with($page_path , '/spreads') )
-				$post_status = 'publish'; //oh, and spread
-
-			//if( is_descendent_page_of( 'spreads' ) )
-				//$post_status = 'publish';
-
-			//$load_data = 1;
+				$post_status = 'publish'; //oh, and spreads too
 			if(! isset($wp_post)) //file does not exist
 				$parent_id_temp =  post_page_if_required( $parent_id , $page_path_parent , $file , $dir , $post_status);
+			array_push( $deactivate_file_array , $page_path_parent.'/'.$file );
 		}
 		if(is_dir($dir.'/'.$file)){
 			//create empty page
-
-			//array_push( $pages['dir_paths'] , ltrim($page_path, '/') );
-
 			$post_status = 'draft';
-			//$load_data = 0;
 			if(isset($wp_post)){//dir exists
 				$parent_id_temp = $wp_post->ID;
 			}
 			else{//dir does not exist
 				$parent_id_temp =  post_page_if_required( $parent_id , $page_path_parent , $file , $dir , $post_status);
 			}
-			add_pages($dir.'/'.$file , $parent_id_temp,$page_path_parent.'/'.$file);
+			array_push( $deactivate_file_array , $page_path_parent.'/'.$file );
+			add_pages($dir.'/'.$file , $parent_id_temp , $page_path_parent.'/'.$file , $deactivate_file_array);
 		}
 	}
 	return;

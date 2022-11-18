@@ -19,7 +19,6 @@ foreach($page_paths as $page_path){
 }
 
 function options_recursive_pages($parent_id,$page_path_parent){ //note: recursive routine, do not change arg values here!!!
-	//$pages = wp_cache_get('ETSWP_pages');
 	$html = '';
 	$html_children = '';
 	$children = get_children( $parent_id );
@@ -27,11 +26,8 @@ function options_recursive_pages($parent_id,$page_path_parent){ //note: recursiv
 	foreach ($children as $child) {
 		if($page_path_parent == '') $path = $child->post_title;
 		else $path = $page_path_parent . '/' . $child->post_title;
-		//$fee = $pages['file_paths'];
-		//if( in_array($path , $fee) ){//only add files not directories
 		if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
-		//ctype_space($wp_post->post_content) or ($wp_post->post_content == '')
-			//not elegant
+			//not elegant. remove drom options display
 			$path_tmp = preg_replace('/^decks\//', '', $path);
 			$path_tmp = preg_replace('/^spreads\//', '', $path_tmp);
 
@@ -57,22 +53,19 @@ function ETSWP_spread_options_function() {
 	return $options;
 }
 
-//----------shuffle stuff
-
 function is_descendent_page_of( $path ){ //will only work when post is available. eg, after the_post hook
-
 	global $post;
 	$ancs = get_ancestors($post->ID, 'page'); //get array of ancestor pages of current page
-
-	//if(! isset($ancs[0])){$ancs[0]='foo';}
-
-	if(count($ancs) == 0){return 0;} //no ancestors
-
+	if(count($ancs) == 0)
+		return 0; //no ancestors
 	$page_id =  get_page_by_path($path)->ID;
-
-	if ( in_array($page_id , $ancs) || $post->post_parent == "$page_id" ) { return 1; }
-	else{ return 0; }
+	if ( in_array($page_id , $ancs) || $post->post_parent == "$page_id" )
+		return 1;
+	else
+		return 0;
 }
+
+//----------shuffle stuff
 
 add_action( 'the_post', 'ETSWP_shuffle' ); //shuufle after we can determine if we are on a spread page
 //add_shortcode( 'shuffle', 'ETSWP_shuffle' ); //cant run as shortcodes are async, and this is too slow!
@@ -81,18 +74,9 @@ function ETSWP_shuffle(){
 if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ options(); } //if we don't do this for edit pages, oddly enough shortcodes trigger and give errors.
 if ( is_page('emogic-tarot') ) { options(); } //build options for page
 if ( is_page('emogic-your-tarot-reading') ) { options(); } //build options for page //need to do for shortcode
-
-//are we a child or grandchild of spreads page? then we need to run options()
-//global $post;
-//$ancs = get_ancestors($post->ID, 'page');
-//if(! isset($ancs[0])){$ancs[0]='foo';}
-//$spreads_page_id =  get_page_by_path('spreads')->ID;
-//if ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) { options(); }
-//else{ return; }
-
 if( is_descendent_page_of( 'spreads' ) )
 	options();
-else
+else // no need to shuffle
 	return;
 
 //choose our deck
@@ -193,25 +177,46 @@ function set_tarot_cookie() {
 	if ( isset($_GET['post_type'])  && $_GET['post_type'] === 'page' ){ return; }//admin edit pages trigger this, why?
 
 	//only do this if we are a child or grand child of spread page
-
-	//global $post;
-	//$ancs = get_ancestors($post->ID, 'page');
-	//if(! isset($ancs[0])){$ancs[0]='foo';}
-	//$spreads_page_id =  get_page_by_path('spreads')->ID;
-	//if (! ( in_array($spreads_page_id , $ancs) || $post->post_parent == "$spreads_page_id" ) ) { return; }
-
 	if( ! is_descendent_page_of( 'spreads' ) )
 		return;
 
-
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 	$visit_time = date('F j, Y  g:i a');
-	if(!isset($_COOKIE['ETSWP_items'])) {
-		$json = json_encode($ETSWP_keys_shuffled);
-		$foo = setcookie('ETSWP_items', $json , time()+(24*60*60) ); //cookie for a day
+	$cookie_name = '';
+	//$cookie_name =
+
+	if( isset($_REQUEST['first_name']) ){
+		$cookie_name = $cookie_name . $_REQUEST['first_name'];
+		setcookie(  'ETSWP_first_name' , $_REQUEST['first_name'] , time()+(100000*24*60*60) ); //cookie forever
 	}
+	else{
+
+	}
+		//? $cookie_name . $_REQUEST['first_name'] : $cookie_name ;
+
+	$cookie_name = isset($_REQUEST['emogic_deck']) ? $cookie_name . $_REQUEST['emogic_deck'] : $cookie_name ;
+	$cookie_name = isset($_REQUEST['emogic_spread']) ? $cookie_name . $_REQUEST['emogic_spread'] : $cookie_name ;
+	$cookie_name = isset($_REQUEST['emogic_question']) ? $cookie_name . $_REQUEST['emogic_question'] : $cookie_name ;
+	//remove =,; \t\r\n\013\014 from cookies
+	$cookie_name = str_replace( [" " , "=" , "," , ";" , "\t" , "\r" , "\n" , "\013" , "\014"] , '' ,  $cookie_name);
+
+	if(!isset($_COOKIE[$cookie_name])) {
+		$json = json_encode($ETSWP_keys_shuffled);
+
+		setcookie($cookie_name , $json , time()+(24*60*60) ); //cookie for a day
+
+		//add_option( string $option, mixed $value = '') maybe?
+	}
+
 }
 
+add_shortcode( 'cookie', 'cookie_function' ); //for reading display page
+function cookie_function( $atts = array(), $content = null ){
+	$name = $atts['name'];
+	$r = $_COOKIE;
+	isset($_COOKIE[$name]) ? $cookie = $_COOKIE[$name] : $cookie = '' ;
+	return $cookie;
+}
 /*
 add_shortcode( 'spread', 'spread_function' ); //for reading display page
 function spread_function(){

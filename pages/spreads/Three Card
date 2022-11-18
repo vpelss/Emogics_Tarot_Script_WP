@@ -1,5 +1,5 @@
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"isStackedOnMobile":false} -->
+<div class="wp-block-columns is-not-stacked-on-mobile"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
 <figure class="wp-block-image aligncenter size-large"><a href="#Past"><img src="[pluginpath]/images/backsmall.jpg" alt="Past"/></a><figcaption class="wp-element-caption">Past</figcaption></figure>
 <!-- /wp:image --></div>

@@ -73,10 +73,8 @@ if( class_exists('emogic_tarot') ){
 
 $emogic_tarot->init();
 
-//spreads to be published!
-
-// name deck spread in cookie name?
 // deactivate remove files!
+// name deck spread in cookie name?
 //more spreads
 
 //backup/restore spreads?
