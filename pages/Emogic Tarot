@@ -41,12 +41,10 @@ function setAction(form){
 form.action = '?pagename=spreads/' + document.getElementById("emogic_spread").value;
 }
 
-document.getElementById("first_name").setAttribute('value','[cookie name='ETSWP_first_name']');
-
-//document.ETSWP_form_settings.first_name.value = "[cookie name='ETSWP_first_name']" ;
-
-//document.TarotForm.template.value = getCookie('template') || 'three_card';
-//document.TarotForm.database.value = getCookie('database') || 'emogic';
+document.getElementById("first_name").value = '[cookie name='ETSWP_first_name']';
+document.getElementById("emogic_deck").value = '[cookie name='ETSWP_emogic_deck']' || 'Emogic';
+document.getElementById("emogic_spread").value = '[cookie name='ETSWP_emogic_spread']' || 'Three Card';
+document.getElementById("emogic_question").value = '[cookie name='ETSWP_emogic_question']';
 
 </script>
 <!-- /wp:html -->

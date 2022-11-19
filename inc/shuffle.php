@@ -120,8 +120,9 @@ while( count($file_lines) ){
 	array_push($ETSWP_items_array , $item_array);
 	}
 
-if( isset($_COOKIE['ETSWP_items']) ){//simply convert cookie to cards
-		$json = $_COOKIE['ETSWP_items'];
+$hash = build_cookie_name();
+if( isset($_COOKIE[$hash]) ){//simply convert cookie to cards
+		$json = $_COOKIE[$hash];
 		$ETSWP_keys_shuffled = json_decode($json);
 	}
 	else{//no cookies, shuffle cards
@@ -181,39 +182,34 @@ function set_tarot_cookie() {
 		return;
 
 	$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
-	$visit_time = date('F j, Y  g:i a');
+
+	$hash = build_cookie_name();
+	if(!isset($_COOKIE[$hash])) {
+		$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+		setcookie($hash , $json , time()+(24*60*60) ); //cookie for a day
+		//$ETSWP_readings[$hash]['keys_shuffled'] = $json;
+		//$ETSWP_readings[$hash]['timestamp'] = time();
+		//add_option( 'ETSWP_readings' , $ETSWP_readings ); //save reading as sql backup incase same reading on other device or no cookies were tossed
+	}
+}
+
+function build_cookie_name( $also_set_cookies = 0 ){
 	$cookie_name = '';
-	//$cookie_name =
-
-	if( isset($_REQUEST['first_name']) ){
-		$cookie_name = $cookie_name . $_REQUEST['first_name'];
-		setcookie(  'ETSWP_first_name' , $_REQUEST['first_name'] , time()+(100000*24*60*60) ); //cookie forever
+	$cookie_array = ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question'];
+	foreach($cookie_array as $cookie){
+		if( isset($_REQUEST[$cookie]) ){
+			$cookie_name = $cookie_name . $_REQUEST[$cookie]; //build cookie name for card reading
+			setcookie( 'ETSWP_'.$cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field
+		}
 	}
-	else{
-
-	}
-		//? $cookie_name . $_REQUEST['first_name'] : $cookie_name ;
-
-	$cookie_name = isset($_REQUEST['emogic_deck']) ? $cookie_name . $_REQUEST['emogic_deck'] : $cookie_name ;
-	$cookie_name = isset($_REQUEST['emogic_spread']) ? $cookie_name . $_REQUEST['emogic_spread'] : $cookie_name ;
-	$cookie_name = isset($_REQUEST['emogic_question']) ? $cookie_name . $_REQUEST['emogic_question'] : $cookie_name ;
-	//remove =,; \t\r\n\013\014 from cookies
-	$cookie_name = str_replace( [" " , "=" , "," , ";" , "\t" , "\r" , "\n" , "\013" , "\014"] , '' ,  $cookie_name);
-
-	if(!isset($_COOKIE[$cookie_name])) {
-		$json = json_encode($ETSWP_keys_shuffled);
-
-		setcookie($cookie_name , $json , time()+(24*60*60) ); //cookie for a day
-
-		//add_option( string $option, mixed $value = '') maybe?
-	}
-
+	$hash = hash( 'crc32' , $cookie_name ); //convert cookie name to hash
+return $hash;
 }
 
 add_shortcode( 'cookie', 'cookie_function' ); //for reading display page
 function cookie_function( $atts = array(), $content = null ){
 	$name = $atts['name'];
-	$r = $_COOKIE;
+	//$r = $_COOKIE;
 	isset($_COOKIE[$name]) ? $cookie = $_COOKIE[$name] : $cookie = '' ;
 	return $cookie;
 }
