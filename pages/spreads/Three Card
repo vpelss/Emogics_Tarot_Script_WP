@@ -1,19 +1,23 @@
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_input name='ETSWP_first_name'], your question is: [ETSWP_input name='ETSWP_question']</p>
+<!-- /wp:paragraph -->
+
 <!-- wp:columns {"isStackedOnMobile":false} -->
 <div class="wp-block-columns is-not-stacked-on-mobile"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Past"><img src="[pluginpath]/images/backsmall.jpg" alt="Past"/></a><figcaption class="wp-element-caption">Past</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><a href="#Past"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Past"/></a><figcaption class="wp-element-caption">Past</figcaption></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Present"><img src="[pluginpath]/images/backsmall.jpg" alt="Present"/></a><figcaption class="wp-element-caption">Present</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><a href="#Present"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Present"/></a><figcaption class="wp-element-caption">Present</figcaption></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Future"><img src="[pluginpath]/images/backsmall.jpg" alt="Future"/></a><figcaption class="wp-element-caption">Future</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><a href="#Future"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Future"/></a><figcaption class="wp-element-caption">Future</figcaption></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
@@ -24,7 +28,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='1' column='itemimage']" alt="Past"/><figcaption class="wp-element-caption">[ETSWP item='1' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='1' column='itemimage']" alt="Past"/><figcaption class="wp-element-caption">[ETSWP item='1' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -42,7 +46,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='2' column='itemimage']" alt="Present"/><figcaption class="wp-element-caption">[ETSWP item='2' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='2' column='itemimage']" alt="Present"/><figcaption class="wp-element-caption">[ETSWP item='2' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -60,7 +64,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='3' column='itemimage']" alt="Future"/><figcaption class="wp-element-caption">[ETSWP item='3' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='3' column='itemimage']" alt="Future"/><figcaption class="wp-element-caption">[ETSWP item='3' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->

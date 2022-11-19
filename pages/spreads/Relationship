@@ -1,3 +1,7 @@
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_input name='ETSWP_first_name'], your question is: [ETSWP_input name='ETSWP_question']</p>
+<!-- /wp:paragraph -->
+
 <!-- wp:columns {"isStackedOnMobile":false} -->
 <div class="wp-block-columns is-not-stacked-on-mobile"><!-- wp:column -->
 <div class="wp-block-column"></div>
@@ -9,7 +13,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter"><a href="#Mutual-goals"><img src="[pluginpath]/images/backsmall.jpg" alt="Mutual goals"/></a></figure>
+<figure class="wp-block-image aligncenter"><a href="#Mutual-goals"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Mutual goals"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
@@ -25,7 +29,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Their-qualities"><img src="[pluginpath]/images/backsmall.jpg" alt="Their
+<figure class="wp-block-image aligncenter size-large"><a href="#Their-qualities"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Their
 qualities"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
@@ -36,7 +40,7 @@ qualities"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Connection"><img src="[pluginpath]/images/backsmall.jpg" alt="Connection"/></a></figure>
+<figure class="wp-block-image aligncenter size-large"><a href="#Connection"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Connection"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
@@ -46,7 +50,7 @@ qualities"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Your-qualities"><img src="[pluginpath]/images/backsmall.jpg" alt="Your
+<figure class="wp-block-image aligncenter size-large"><a href="#Your-qualities"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Your
 qualities"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column --></div>
@@ -59,7 +63,7 @@ qualities"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#What-they-bring"><img src="[pluginpath]/images/backsmall.jpg" alt="What they bring"/></a></figure>
+<figure class="wp-block-image aligncenter size-large"><a href="#What-they-bring"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="What they bring"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
@@ -69,7 +73,7 @@ qualities"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#Common-base"><img src="[pluginpath]/images/backsmall.jpg" alt="Common base"/></a></figure>
+<figure class="wp-block-image aligncenter size-large"><a href="#Common-base"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="Common base"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
@@ -79,7 +83,7 @@ qualities"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large","linkDestination":"custom"} -->
-<figure class="wp-block-image aligncenter size-large"><a href="#What-you-bring"><img src="[pluginpath]/images/backsmall.jpg" alt="What you
+<figure class="wp-block-image aligncenter size-large"><a href="#What-you-bring"><img src="[ETSWP_pluginpath]/images/backsmall.jpg" alt="What you
 bring"/></a></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column --></div>
@@ -91,7 +95,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='1' column='itemimage']" alt="Mutual goals"/><figcaption class="wp-element-caption">[ETSWP item='1' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='1' column='itemimage']" alt="Mutual goals"/><figcaption class="wp-element-caption">[ETSWP item='1' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -109,7 +113,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='2' column='itemimage']" alt="Their qualities"/><figcaption class="wp-element-caption">[ETSWP item='2' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='2' column='itemimage']" alt="Their qualities"/><figcaption class="wp-element-caption">[ETSWP item='2' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -127,7 +131,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='3' column='itemimage']" alt="Connection"/><figcaption class="wp-element-caption">[ETSWP item='3' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='3' column='itemimage']" alt="Connection"/><figcaption class="wp-element-caption">[ETSWP item='3' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -145,7 +149,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='4' column='itemimage']" alt="Your qualities"/><figcaption class="wp-element-caption">[ETSWP item='4' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='4' column='itemimage']" alt="Your qualities"/><figcaption class="wp-element-caption">[ETSWP item='4' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -163,7 +167,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='5' column='itemimage']" alt="What they bring"/><figcaption class="wp-element-caption">[ETSWP item='5' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='5' column='itemimage']" alt="What they bring"/><figcaption class="wp-element-caption">[ETSWP item='5' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -181,7 +185,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='6' column='itemimage']" alt="Common base"/><figcaption class="wp-element-caption">[ETSWP item='6' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='6' column='itemimage']" alt="Common base"/><figcaption class="wp-element-caption">[ETSWP item='6' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -199,7 +203,7 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[pluginpath][ETSWP item='7' column='itemimage']" alt="What you
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='7' column='itemimage']" alt="What you
 bring"/><figcaption class="wp-element-caption">[ETSWP item='7' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 

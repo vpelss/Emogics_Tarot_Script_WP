@@ -80,9 +80,9 @@ else // no need to shuffle
 	return;
 
 //choose our deck
-$deck_chosen = 'emogic'; //default, will normally be chosen by visitor
-if( isset($_REQUEST["emogic_deck"]) ) {
-    $deck_chosen = $_REQUEST["emogic_deck"];
+$deck_chosen = 'Emogic'; //default
+if( isset($_REQUEST["ETSWP_deck"]) ) {
+    $deck_chosen = $_REQUEST["ETSWP_deck"];
 	}
 $wp_post = get_page_by_path('decks/'.$deck_chosen); //returns post object or null
 if(! isset( $wp_post )) {return;} //if no deck stop everything.
@@ -159,15 +159,16 @@ function ETSWP_function( $atts = array(), $content = null ) {
 	//first_name replace
 	$first_name = 'Seeker';
 	//$r = $_REQUEST["first_name"];
-	if( isset($_REQUEST["first_name"]) and ($_REQUEST["first_name"] != '') ) {
-		$first_name = $_REQUEST["first_name"];
+	if( isset($_REQUEST["ETSWP_first_name"]) and ($_REQUEST["ETSWP_first_name"] != '') ) {
+		$first_name = $_REQUEST["ETSWP_first_name"];
 		}
 	$output = str_replace( '[first_name]' , $first_name , $output );
 
 	return $output;
 	};
 
-add_shortcode( 'pluginpath', 'pluginpath_function' );
+
+add_shortcode( 'ETSWP_pluginpath', 'pluginpath_function' ); // I use this so we can find my image folder in plugin.
 function pluginpath_function( $atts = array(), $content = null ) {
 	return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 	};
@@ -195,24 +196,33 @@ function set_tarot_cookie() {
 
 function build_cookie_name( $also_set_cookies = 0 ){
 	$cookie_name = '';
-	$cookie_array = ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question'];
+	$cookie_array = ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 	foreach($cookie_array as $cookie){
 		if( isset($_REQUEST[$cookie]) ){
 			$cookie_name = $cookie_name . $_REQUEST[$cookie]; //build cookie name for card reading
-			setcookie( 'ETSWP_'.$cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field
+			setcookie( $cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field
 		}
 	}
 	$hash = hash( 'crc32' , $cookie_name ); //convert cookie name to hash
 return $hash;
 }
 
-add_shortcode( 'cookie', 'cookie_function' ); //for reading display page
+add_shortcode( 'ETSWP_cookie', 'cookie_function' ); //for reading display page [ETSWP_cookie name='cookie name']
 function cookie_function( $atts = array(), $content = null ){
 	$name = $atts['name'];
 	//$r = $_COOKIE;
 	isset($_COOKIE[$name]) ? $cookie = $_COOKIE[$name] : $cookie = '' ;
 	return $cookie;
 }
+
+add_shortcode( 'ETSWP_input', 'input_function' ); //[ETSWP_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+function input_function( $atts = array(), $content = null ){
+	$name = $atts['name'];
+	//$r = $_REQUEST;
+	isset($_REQUEST[$name]) ? $input = $_REQUEST[$name] : $input = '' ;
+	return $input;
+}
+
 /*
 add_shortcode( 'spread', 'spread_function' ); //for reading display page
 function spread_function(){

@@ -73,8 +73,15 @@ if( class_exists('emogic_tarot') ){
 
 $emogic_tarot->init();
 
-// deactivate remove files!
-// name deck spread in cookie name?
+
+//The plugin generated 2302 characters of unexpected output during activation. If you notice “headers already sent” messages, problems with syndication feeds or other issues, try deactivating or removing this plugin.
+
+//name and question on reading page
+
+//setup instructions, use possibilities, etc
+
+//text one line
+
 //more spreads
 
 //backup/restore spreads?
