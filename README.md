@@ -16,9 +16,9 @@ ETSWP_spread_options
 
 ETSWP_pluginpath ?
 
-cookie [ETSWP_cookie name='cookie name'] ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
+cookie [ETSWP_get_cookie name='cookie name'] ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 
-input [ETSWP_input name='cookie name'] ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
+input [ETSWP_get_input name='cookie name'] ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 
 ## Liabilty
 

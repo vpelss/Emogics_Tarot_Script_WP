@@ -5,14 +5,16 @@
 class ETSWP {
 
 	function run(){
-		add_shortcode( 'ETSWP_deck_options', array( 'ETSWP' ,'ETSWP_deck_options_function') ); //get options for main tarot page
-		add_shortcode( 'ETSWP_spread_options', array('ETSWP','ETSWP_spread_options_function') ); //for main page
-		add_action( 'the_post', array('ETSWP','ETSWP_shuffle') ); //shuffle after we can determine if we are on a spread page
-		add_shortcode( 'ETSWP', array('ETSWP','ETSWP_function') ); ////this is how we place cards on spreads [ETSWP item='1' column='itemname']
-		add_shortcode( 'ETSWP_pluginpath', array('ETSWP','pluginpath_function') ); // I use this so we can find my image folder in plugin.
-		add_action( 'the_post', array('ETSWP','set_tarot_cookie') ); //set our cookie during the_post, late enough to have $post data
-		add_shortcode( 'ETSWP_cookie', array('ETSWP','cookie_function') ); //for reading display page [ETSWP_cookie name='cookie name']
-		add_shortcode( 'ETSWP_input', array('ETSWP','input_function') ); //[ETSWP_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+
+		add_action( 'the_post', array('ETSWP','shuffle') ); //get deck and spread options, shuffle cards, after we can determine if we are on appropriate page
+		add_action( 'the_post', array('ETSWP','set_tarot_cookie') ); //set our cookies during the_post, late enough to have $post data for is_descendent_page_of()
+
+		add_shortcode( 'ETSWP_deck_options' , array( 'ETSWP' ,'deck_options') ); //get stored options for main tarot page [ETSWP_deck_options]
+		add_shortcode( 'ETSWP_spread_options' , array('ETSWP','spread_options') ); //get stored options for main page [ETSWP_spread_options]
+		add_shortcode( 'ETSWP_get_item' , array('ETSWP','get_item') ); ////this is how we place cards on spread pages [ETSWP_get_item item='1' column='itemname']
+		add_shortcode( 'ETSWP_pluginpath' , array('ETSWP','get_pluginpath') ); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
+		add_shortcode( 'ETSWP_get_cookie' , array('ETSWP','get_cookie') ); //for reading display page [ETSWP_get_cookie name='cookie name']
+		add_shortcode( 'ETSWP_get_input' , array('ETSWP','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 
 	}
 
@@ -50,13 +52,13 @@ class ETSWP {
 		return $html;
 	}
 
-	public static function ETSWP_deck_options_function() {
+	public static function deck_options() {
 		$page_path = 'decks';
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 		return $options;
 	}
 
-	public static function ETSWP_spread_options_function() {
+	public static function spread_options() {
 		$page_path = 'spreads';
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 		return $options;
@@ -74,7 +76,7 @@ class ETSWP {
 			return 0;
 	}
 
-	public static function ETSWP_shuffle(){
+	public static function shuffle(){
 
 	if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ self::options(); } //if we don't do this for edit pages, oddly enough shortcodes trigger and give errors.
 	if ( is_page('emogic-tarot') ) { self::options(); } //build options for page
@@ -151,7 +153,7 @@ class ETSWP {
 	wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
 	}
 
-	public static function ETSWP_function( $atts = array(), $content = null ) {
+	public static function get_item( $atts = array(), $content = null ) {
 		$ETSWP_items_array = wp_cache_get('ETSWP_items_array');
 		$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
 
@@ -169,7 +171,7 @@ class ETSWP {
 		return $output;
 		}
 
-	public static function pluginpath_function( $atts = array(), $content = null ) {
+	public static function get_pluginpath( $atts = array(), $content = null ) {
 		return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 		}
 
@@ -205,13 +207,13 @@ class ETSWP {
 	return $hash;
 	}
 
-	public static function cookie_function( $atts = array(), $content = null ){
+	public static function get_cookie( $atts = array(), $content = null ){
 		$name = $atts['name'];
 		isset($_COOKIE[$name]) ? $cookie = $_COOKIE[$name] : $cookie = '' ;
 		return $cookie;
 	}
 
-	public static function input_function( $atts = array(), $content = null ){
+	public static function get_input( $atts = array(), $content = null ){
 		$name = $atts['name'];
 		isset($_REQUEST[$name]) ? $input = $_REQUEST[$name] : $input = '' ;
 		return $input;

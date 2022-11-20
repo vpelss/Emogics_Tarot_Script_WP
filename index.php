@@ -10,11 +10,9 @@
 
 // Enable WP_DEBUG mode
 //define( 'WP_DEBUG', true );
-
 // Enable Debug logging to the /wp-content/debug.log file
 //define( 'WP_DEBUG_LOG', true );
 
-/* exit if directly accessed */
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
 // define variable for path to this plugin file.
@@ -23,7 +21,6 @@ define( 'EMOGIC_TAROT_PLUGIN_PATH', dirname( __FILE__ ) ); // c:\************\EM
 define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url( '', __FILE__ ) ); // http://wp_url/wp-content/plugins/EMOGIC_TAROT_pulgin_folder
 define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // EMOGIC_TAROT_wp (or other if renamed)
 define( 'EMOGIC_TAROT_ROOT_URL' , home_url() ); // http://wp_url/
-
 
 register_activation_hook( __FILE__, 'activate_ETSWP' );
 function activate_ETSWP() {
@@ -44,11 +41,7 @@ function run_ETSWP() {
 }
 run_ETSWP();
 
-//make it classy
-
 //setup instructions, use possibilities, etc
-
-//text one line
 
 //more spreads
 
@@ -61,4 +54,3 @@ run_ETSWP();
 //Numbers Speak reading
 
 //tarot, rune, other folder (all with main index page) to keeps decks separate?
-

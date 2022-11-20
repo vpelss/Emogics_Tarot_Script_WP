@@ -1,5 +1,5 @@
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_input name='ETSWP_first_name'], your question is: [ETSWP_input name='ETSWP_question']</p>
+<p class="has-text-align-center">[ETSWP_get_input name='ETSWP_first_name'], your question is: [ETSWP_get_input name='ETSWP_question']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:columns {"isStackedOnMobile":false} -->
@@ -95,11 +95,11 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='1' column='itemimage']" alt="Mutual goals"/><figcaption class="wp-element-caption">[ETSWP item='1' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='1' column='itemimage']" alt="Mutual goals"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='1' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='1' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='1' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -113,11 +113,11 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='2' column='itemimage']" alt="Their qualities"/><figcaption class="wp-element-caption">[ETSWP item='2' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='2' column='itemimage']" alt="Their qualities"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='2' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='2' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='2' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -131,11 +131,11 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='3' column='itemimage']" alt="Connection"/><figcaption class="wp-element-caption">[ETSWP item='3' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='3' column='itemimage']" alt="Connection"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='3' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='3' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='3' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -149,11 +149,11 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='4' column='itemimage']" alt="Your qualities"/><figcaption class="wp-element-caption">[ETSWP item='4' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='4' column='itemimage']" alt="Your qualities"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='4' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='4' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='4' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -167,11 +167,11 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='5' column='itemimage']" alt="What they bring"/><figcaption class="wp-element-caption">[ETSWP item='5' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='5' column='itemimage']" alt="What they bring"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='5' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='5' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='5' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -185,11 +185,11 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='6' column='itemimage']" alt="Common base"/><figcaption class="wp-element-caption">[ETSWP item='6' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='6' column='itemimage']" alt="Common base"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='6' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='6' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='6' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
@@ -203,12 +203,12 @@ bring"/></a></figure>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP item='7' column='itemimage']" alt="What you
-bring"/><figcaption class="wp-element-caption">[ETSWP item='7' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][[ETSWP_get_item item='7' column='itemimage']" alt="What you
+bring"/><figcaption class="wp-element-caption">[[ETSWP_get_item item='7' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP item='7' column='itemblurb']</p>
+<p class="has-text-align-center">[[ETSWP_get_item item='7' column='itemblurb']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
