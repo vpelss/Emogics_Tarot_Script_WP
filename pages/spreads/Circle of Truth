@@ -1,0 +1,133 @@
+<!-- wp:paragraph -->
+<p>Think carefully on your question. Then click on a card. Meditate on it's meaning.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<script src="https://www.emogic.com/tarot/js/jquery-3.6.0.js"></script>
+<script src="https://www.emogic.com/tarot/js/jquery-ui.js"></script>
+<_link rel="STYLESHEET" href="https://www.emogic.com/tarot/css/tarot.css" type="text/css">
+<style>
+#the_eye{
+  width: 225px;
+}
+/* for circle*/
+#circle_spread
+{
+_border: solid 1px white;
+width: 300pt;
+height: 300pt;
+position : relative;
+margin-left: auto;
+margin-right: auto;
+}
+.circle
+{
+position: absolute;
+}
+#circle_eye
+{
+position: absolute;
+display:block;
+top: 150pt;
+left: 150pt;
+margin-left: auto;
+margin-right: auto;
+}
+</style>
+<div align="" id="circle_spread">
+    <img src="https://www.emogic.com/tarot/images/eye.gif" border="0" id="circle_eye">
+                <div class="circle" style="left: 7px;"><a href="#" onclick="$( '#card1' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card2' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card3' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a> </div>
+                <div class="circle"><a href="#" onclick="$( '#card4' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a> </div>
+                <div class="circle"><a href="#" onclick="$( '#card5' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card6' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card7' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card8' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card9' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card10' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card11' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card12' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card13' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card14' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card15' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card16' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card17' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card18' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card19' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
+                <div class="circle"><a href="#" onclick="$( '#card20' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div> </div>
+         <p></p>
+         <p align="CENTER">If it was not for the circle, you would never have heard
+                of me - Pythagoras</p>
+   </div>
+   <script>
+//$( '#dialog-message' ).dialog( "open" );
+//start dialogs and turn off
+$(function() {
+    $( ".dialogs" ).dialog({
+      position: { my: "center", at: "center", of: window },
+        autoOpen: false,
+      modal: true,
+      buttons: {
+        Ok: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  });
+var numberOfItems = 20; //must have corresponding div and class
+//let intViewportWidth = document.getElementById('html').clientWidth;
+let spreadWidth = document.getElementById('circle_spread').clientWidth * 0.8;
+let half = spreadWidth / 2;
+let rad = half;
+var width = rad; //radius
+var height = rad; //radius
+var centerX = half;
+var centerY = rad;
+var nextObjectAngle = [];
+var incrimentAngle;
+var inOut = 0;
+function circle(mode)
+{
+var a , x , y;
+if (mode == 'initialize')
+    {
+    var steps = 180;
+    incrimentAngle = (2*Math.PI)/steps; //in radians
+    //initial poitions in circle
+    var offsetAngle = (2*Math.PI)/numberOfItems ;
+    for (a = 0 ; a < numberOfItems ; a++)
+        {
+        nextObjectAngle[a] = offsetAngle * a;
+        x = Math.cos(nextObjectAngle[a]) * width + centerX;
+        y = Math.sin(nextObjectAngle[a]) * height + centerY;
+        //document.getElementsByClassName("circle")[a].style.position = 'absolute';
+        document.getElementsByClassName("circle")[a].style.left = Math.floor(x).toString() + 'px';;
+ nn = document.getElementsByClassName("circle")[a].style.left;
+        document.getElementsByClassName("circle")[a].style.top = Math.floor(y).toString() + 'px';;
+        }
+     }
+else
+    {
+    for (a = 0 ; a < numberOfItems ; a++)
+        {
+                                inOut = inOut + incrimentAngle;
+        nextObjectAngle[a] = nextObjectAngle[a] + incrimentAngle; //turn circle
+                                var inOutAmount = 3 *  Math.sin(inOut); //make circle pulse
+                                //inOutAmount = 0;
+        x = Math.cos(nextObjectAngle[a]) * (width + inOutAmount) + centerX ;
+        y = Math.sin(nextObjectAngle[a]) * (height + inOutAmount) + centerY;
+        document.getElementsByClassName('circle')[a].style.left = Math.floor(x).toString() + 'px';
+ nn = document.getElementsByClassName("circle")[a].style.left;
+        document.getElementsByClassName("circle")[a].style.top = Math.floor(y).toString() + 'px';;
+        }
+    }
+setTimeout(circle, 50);
+}
+circle('initialize');
+  </script>
+<!-- /wp:html -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->
