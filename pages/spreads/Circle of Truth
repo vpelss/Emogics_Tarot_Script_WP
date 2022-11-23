@@ -1,39 +1,48 @@
 <!-- wp:paragraph -->
-<p>Think carefully on your question. Then click on a card. Meditate on it's meaning.</p>
+<p>Think carefully on your question. Click on a card. Meditate on it's meaning.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:html -->
-<script src="https://www.emogic.com/tarot/js/jquery-3.6.0.js"></script>
-<script src="https://www.emogic.com/tarot/js/jquery-ui.js"></script>
-<_link rel="STYLESHEET" href="https://www.emogic.com/tarot/css/tarot.css" type="text/css">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
 <style>
-#the_eye{
-  width: 225px;
+
+BODY {
+  font-family: Comic Sans MS;
+  color: yellow;
+  background-color: black;
 }
+
+A {
+  color: yellow;
+}
+
+.card{
+   background-color: gray;
+}
+
 /* for circle*/
+
 #circle_spread
 {
-_border: solid 1px white;
+display: flex;
+justify-content: center;
+align-items: center;
 width: 300pt;
 height: 300pt;
 position : relative;
-margin-left: auto;
-margin-right: auto;
 }
+
 .circle
 {
 position: absolute;
 }
-#circle_eye
-{
-position: absolute;
-display:block;
-top: 150pt;
-left: 150pt;
-margin-left: auto;
-margin-right: auto;
-}
+
 </style>
+<!-- /wp:html -->
+
+<!-- wp:html -->
 <div align="" id="circle_spread">
     <img src="https://www.emogic.com/tarot/images/eye.gif" border="0" id="circle_eye">
                 <div class="circle" style="left: 7px;"><a href="#" onclick="$( '#card1' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
@@ -56,11 +65,10 @@ margin-right: auto;
                 <div class="circle"><a href="#" onclick="$( '#card18' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
                 <div class="circle"><a href="#" onclick="$( '#card19' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div>
                 <div class="circle"><a href="#" onclick="$( '#card20' ).dialog( 'open' );"><img src="https://www.emogic.com/tarot/images/backsmall.jpg" width="50"></a></div> </div>
-         <p></p>
-         <p align="CENTER">If it was not for the circle, you would never have heard
-                of me - Pythagoras</p>
-   </div>
-   <script>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<script>
 //$( '#dialog-message' ).dialog( "open" );
 //start dialogs and turn off
 $(function() {
@@ -129,5 +137,285 @@ circle('initialize');
 <!-- /wp:html -->
 
 <!-- wp:paragraph -->
-<p></p>
+<p>If it was not for the circle, you would never have heard of me – Pythagoras</p>
 <!-- /wp:paragraph -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card1" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='1' column='itemimage']" alt="card1"/><figcaption class="wp-element-caption">[ETSWP_get_item item='1' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='1' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card2" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='2' column='itemimage']" alt="card2"/><figcaption class="wp-element-caption">[ETSWP_get_item item='2' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='2' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card3" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='3' column='itemimage']" alt="card3"/><figcaption class="wp-element-caption">[ETSWP_get_item item='3' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='3' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card4" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='4' column='itemimage']" alt="card4"/><figcaption class="wp-element-caption">[ETSWP_get_item item='4' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='4' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card5" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='5' column='itemimage']" alt="card5"/><figcaption class="wp-element-caption">[ETSWP_get_item item='5' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='5' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card6" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='6' column='itemimage']" alt="card6"/><figcaption class="wp-element-caption">[ETSWP_get_item item='6' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='6' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card7" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='7' column='itemimage']" alt="card7"/><figcaption class="wp-element-caption">[ETSWP_get_item item='7' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='7' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card8" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='8' column='itemimage']" alt="card8"/><figcaption class="wp-element-caption">[ETSWP_get_item item='8' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='8' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card9" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='9' column='itemimage']" alt="card9"/><figcaption class="wp-element-caption">[ETSWP_get_item item='9' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='9' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card10" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='10' column='itemimage']" alt="card10"/><figcaption class="wp-element-caption">[ETSWP_get_item item='10' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='10' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card11" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='11' column='itemimage']" alt="card11"/><figcaption class="wp-element-caption">[ETSWP_get_item item='11' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='11' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card12" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='12' column='itemimage']" alt="card12"/><figcaption class="wp-element-caption">[ETSWP_get_item item='12' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='12' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card13" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='13' column='itemimage']" alt="card13"/><figcaption class="wp-element-caption">[ETSWP_get_item item='13' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='13' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card14" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='14' column='itemimage']" alt="card14"/><figcaption class="wp-element-caption">[ETSWP_get_item item='14' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='14' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card15" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='15' column='itemimage']" alt="card15"/><figcaption class="wp-element-caption">[ETSWP_get_item item='15' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='15' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card16" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='16' column='itemimage']" alt="card16"/><figcaption class="wp-element-caption">[ETSWP_get_item item='16' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='16' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card17" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='17' column='itemimage']" alt="card17"/><figcaption class="wp-element-caption">[ETSWP_get_item item='17' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='17' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card18" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='18' column='itemimage']" alt="card18"/><figcaption class="wp-element-caption">[ETSWP_get_item item='18' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='18' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card19" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='19' column='itemimage']" alt="card19"/><figcaption class="wp-element-caption">[ETSWP_get_item item='19' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='19' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"className":"dialogs card","layout":{"type":"constrained"}} -->
+<div id="card20" class="wp-block-group dialogs card" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Truth</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center","sizeSlug":"large"} -->
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='20' column='itemimage']" alt="card20"/><figcaption class="wp-element-caption">[ETSWP_get_item item='20' column='itemname']</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">[ETSWP_get_item item='20' column='itemblurb']</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->

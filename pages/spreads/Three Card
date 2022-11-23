@@ -1,3 +1,19 @@
+<!-- wp:html -->
+<style>
+
+BODY {
+  font-family: Comic Sans MS;
+  color: yellow;
+  background-color: black;
+}
+
+A {
+  color: yellow;
+}
+
+</style>
+<!-- /wp:html -->
+
 <!-- wp:paragraph {"align":"center"} -->
 <p class="has-text-align-center">[ETSWP_get_input name='ETSWP_first_name'], your question is: [ETSWP_get_input name='ETSWP_question']</p>
 <!-- /wp:paragraph -->

@@ -5,6 +5,16 @@ body .ETSWP_cross{
 gap: 0rem;
 }
 
+BODY {
+  font-family: Comic Sans MS;
+  color: yellow;
+  background-color: black;
+}
+
+A {
+  color: yellow;
+}
+
 </style>
 <!-- /wp:html -->
 
