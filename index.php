@@ -41,6 +41,9 @@ function run_ETSWP() {
 }
 run_ETSWP();
 
+//activate unexpected text issue
+
+
 //setup instructions, use possibilities, etc
 
 //more spreads

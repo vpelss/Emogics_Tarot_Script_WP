@@ -14,7 +14,7 @@ BODY {
   background-color: black;
 }
 
-A {
+a , a:visited{
   color: yellow;
 }
 

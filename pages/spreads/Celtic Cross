@@ -11,7 +11,7 @@ BODY {
   background-color: black;
 }
 
-A {
+a , a:visited{
   color: yellow;
 }
 
@@ -52,11 +52,11 @@ A {
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":27913,"sizeSlug":"full","linkDestination":"custom"} -->
-<figure class="wp-block-image size-full"><a href="#You"><img src="[ETSWP_pluginpath]/images/backtop.jpg" alt="You" class="wp-image-27913"/></a></figure>
+<figure class="wp-block-image size-full"><a href="#You"><img src="[ETSWP_pluginpath]/images/backtop.gif" alt="You" class="wp-image-27913"/></a></figure>
 <!-- /wp:image -->
 
-<!-- wp:image {"align":"center","id":27898,"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image aligncenter size-full"><a href="#Crosses-you"><img src="[ETSWP_pluginpath]/images/backsmall90.jpg" alt="Crosses you" class="wp-image-27898"/></a></figure>
+<!-- wp:image {"align":"center","linkDestination":"custom"} -->
+<figure class="wp-block-image aligncenter"><a href="#Crosses-you"><img src="[ETSWP_pluginpath]/images/backsmall90.jpg" alt="Crosses you"/></a></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
