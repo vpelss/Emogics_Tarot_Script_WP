@@ -9,9 +9,9 @@
 **/
 
 // Enable WP_DEBUG mode
-//define( 'WP_DEBUG', true );
+define( 'WP_DEBUG', true );
 // Enable Debug logging to the /wp-content/debug.log file
-//define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_LOG', true );
 
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
@@ -40,9 +40,6 @@ function run_ETSWP() {
 	$plugin->run();
 }
 run_ETSWP();
-
-//activate unexpected text issue
-
 
 //setup instructions, use possibilities, etc
 
