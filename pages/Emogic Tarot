@@ -2,6 +2,22 @@
 <link rel="stylesheet" href="../wp-admin/css/forms.css?ver=6.0.2.2">
 <link rel="stylesheet" href="../wp-admin/css/forms.min.css?ver=6.0.2.2">
 
+<style>
+BODY {
+  font-family: Comic Sans MS;
+  color: yellow;
+  background-color: black;
+  background-image: url(../images/ball.jpg);
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+a , a:visited{
+  color: yellow;
+}
+</style>
+
+
 <form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
 <input type="hidden" name="action" value="ETSWP_process_form">
 <center>
