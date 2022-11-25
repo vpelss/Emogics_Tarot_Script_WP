@@ -7,7 +7,7 @@ BODY {
   font-family: Comic Sans MS;
   color: yellow;
   background-color: black;
-  background-image: url(../images/ball.jpg);
+  background-image: url([ETSWP_pluginpath]/images/ball.jpg);
   background-repeat: no-repeat;
   background-position: center top;
 }
