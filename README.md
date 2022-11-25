@@ -10,11 +10,11 @@ Use any images.
 
 Can easily be used for other readings. Rune readings? Just need some graphics and a database. Anyone want to donate so I can add?
 
-##Try
+## Try
 
 Currently running at https://tarot.somewhereincanada.com/
 
-##Install
+## Install
 
 place this directory under your Wordpress wp-content\plugins folder
 
@@ -25,14 +25,14 @@ Your main tarot page is: Emogic Tarot
 
 Important: If you uninstall the plugin your tarot pages and databases will be deleted. make copies or backup if you want to save any changes you have made.
 
-##Themes
+## Themes
 
 This has been tested with the 'Twenty' themes.
 It should work with any theme that can use shortcodes
 
 If not, try installing a second Wordpress installation in a sub folder 'Tarot' (?) and install the plugin there.
 
-##Deck Databases
+## Deck Databases
 
 Deck databases are in a text flat file format.
 They are stored in Wordpress pages. They are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
@@ -41,13 +41,13 @@ The can be easily modified our updated in the Wordpress page editor, or copy and
 
 The format is thus:
 
-itemnumber|itemname|itemimage|itemblurb
-1|Ace of Cups|/images/Rider_Waite/normal/cups01.jpg|The start of love, joy and fruitfulness. Spirituality aids the material world.
-1|Ace of Cups|/images/Rider_Waite/reversed/cups01.jpg|The start of love, joy and fruitfulness. Spirituality aids the material world.
-2|Two of Cups|/images/Rider_Waite/normal/cups02.jpg|This card signifies balance and give and take [first_name]. You may be entering a friendship with the opposite sex.
-2|Two of Cups|/images/Rider_Waite/reversed/cups02.jpg|This card signifies balance and give and take [first_name]. You may be entering a friendship with the opposite sex.
-3|Three of Cups|/images/Rider_Waite/normal/cups03.jpg|Achievement and abundance are headed your way [first_name].
-3|Three of Cups|/images/Rider_Waite/reversed/cups03.jpg|Achievement and abundance are headed your way [first_name].
+- itemnumber|itemname|itemimage|itemblurb
+- 1|Ace of Cups|/images/Rider_Waite/normal/cups01.jpg|The start of love, joy and fruitfulness. Spirituality aids the material world.
+- 1|Ace of Cups|/images/Rider_Waite/reversed/cups01.jpg|The start of love, joy and fruitfulness. Spirituality aids the material world.
+- 2|Two of Cups|/images/Rider_Waite/normal/cups02.jpg|This card signifies balance and give and take [first_name]. You may be entering a friendship with the opposite sex.
+- 2|Two of Cups|/images/Rider_Waite/reversed/cups02.jpg|This card signifies balance and give and take [first_name]. You may be entering a friendship with the opposite sex.
+- 3|Three of Cups|/images/Rider_Waite/normal/cups03.jpg|Achievement and abundance are headed your way [first_name].
+- 3|Three of Cups|/images/Rider_Waite/reversed/cups03.jpg|Achievement and abundance are headed your way [first_name].
 
 The fist line of the database must be the Column Names.
 
@@ -71,7 +71,7 @@ Note: You can add your own database fields/columns. These new fields can easily 
 
 You may also note that [first_name] placed in the database will be replaced by the First Name given field if filled out by the visitor.
 
-##Spreads
+## Spreads
 
 They are stored in Wordpress pages and displayed as such.
 They are stored as sub pages under the empty 'spreads' page.
@@ -81,7 +81,7 @@ To modify or create spreads, you should be comfortable to create and edit pages 
 
 Before a spread page is displayed, our script reads the chosen database, shuffles it's order. Then the script can display the card name, image, blurb by using Wordpress shortcodes.
 
-##Shortcodes
+## Shortcodes
 
 Spread shortcodes:
 
