@@ -2,8 +2,6 @@
 
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
-//register_activation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , array( 'activate' , 'activate_plugin') );
-
 class ETSWP_activator{
 
 	public static function activate(){
@@ -18,7 +16,6 @@ class ETSWP_activator{
 
 	$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
 	self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
-	//wp_cache_set('ETSWP_deactivate_file_array' , array_reverse($deactivate_file_array)); //efficient, nope. but easy on the eyes
 	add_option('ETSWP_deactivate_file_array' , array_reverse($deactivate_file_array));
 	}
 
@@ -39,8 +36,7 @@ class ETSWP_activator{
 				$parent_id_temp =  self::post_page_if_required( $parent_id , $page_path_parent , $file , $dir , $post_status);
 			array_push( $deactivate_file_array , $page_path_parent.'/'.$file );
 		}
-		if(is_dir($dir.'/'.$file)){
-			//create empty page
+		if(is_dir($dir.'/'.$file)){ //create empty page
 			$post_status = 'draft';
 			if(isset($wp_post)){//dir exists
 				$parent_id_temp = $wp_post->ID;
@@ -57,7 +53,7 @@ class ETSWP_activator{
 
 	public static function post_page_if_required( $post_parent , $page_path_parent , $file_name , $dir , $post_status){//$file is pagename, $path is page path with parents, $data is data for the page
 		if( is_file($dir.'/'.$file_name ) ){	$data = file_get_contents($dir.'/'.$file_name , true); }
-		else{ $data = ''; } //dir has no data
+		else{ $data = ''; } //this is a directory. it has  no data
 		//create page
 		$postarr  = array(
 			//'ID' => $page_id,

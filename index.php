@@ -8,11 +8,6 @@
 * Author URI: https://www.emogic.com/
 **/
 
-// Enable WP_DEBUG mode
-//define( 'WP_DEBUG', true );
-// Enable Debug logging to the /wp-content/debug.log file
-//define( 'WP_DEBUG_LOG', true );
-
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
 // define variable for path to this plugin file.

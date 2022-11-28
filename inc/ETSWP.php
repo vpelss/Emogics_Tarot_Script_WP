@@ -163,7 +163,6 @@ class ETSWP {
 
 		//first_name replace
 		$first_name = 'Seeker';
-		//$r = $_REQUEST["first_name"];
 		if( isset($_REQUEST["ETSWP_first_name"]) and ($_REQUEST["ETSWP_first_name"] != '') ) {
 			$first_name = $_REQUEST["ETSWP_first_name"];
 			}
@@ -188,9 +187,6 @@ class ETSWP {
 		if(!isset($_COOKIE[$hash])) {
 			$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 			setcookie($hash , $json , time()+(24*60*60) ); //cookie for a day
-			//$ETSWP_readings[$hash]['keys_shuffled'] = $json;
-			//$ETSWP_readings[$hash]['timestamp'] = time();
-			//add_option( 'ETSWP_readings' , $ETSWP_readings ); //save reading as sql backup incase same reading on other device or no cookies were tossed
 		}
 	}
 

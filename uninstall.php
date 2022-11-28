@@ -5,14 +5,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	//die('WP_UNINSTALL_PLUGIN not defn');
 }
 
-/*
-		$books = get_posts( array('book_type' => 'book' , 'numberposts' => -1) );
-		foreach($books as $book){
-			wp_delete_post( $book->ID , true );
-		}
-*/
+// nothing to do. we did it all in deactivate.php
 
-		global $wpdb;
-		$wpdb->query("DELETE FROM wp_posts WHERE post_type = 'imok_posts'");
-		$wpdb->query("DELETE FROM wp_postmeta WHERE post_id NOT IN (SELECT ID FROM wp_posts)");
-		$wpdb->query("DELETE FROM wp_term_relationships WHERE object_id NOT IN (SELECT ID FROM wp_posts)");
+
