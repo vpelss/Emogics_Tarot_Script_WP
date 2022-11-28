@@ -6,12 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
 
 class ETSWP_activator{
 
-	public function activate(){
+	public static function activate(){
 		self::read_and_create_pages();
 		flush_rewrite_rules();
 	}
 
-	public function read_and_create_pages(){
+	public static function read_and_create_pages(){
 	$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
 	$parent_id = 0;
 	$page_path_parent = '';
@@ -22,7 +22,7 @@ class ETSWP_activator{
 	add_option('ETSWP_deactivate_file_array' , array_reverse($deactivate_file_array));
 	}
 
-	public function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){
+	public static function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){
 	//note: recursive routine, do not change arg values here!!!
 	$files = array_diff(scandir($dir), array('..', '.'));
 	foreach ($files as $file) {
@@ -55,7 +55,7 @@ class ETSWP_activator{
 	return;
 	}
 
-	public function post_page_if_required( $post_parent , $page_path_parent , $file_name , $dir , $post_status){//$file is pagename, $path is page path with parents, $data is data for the page
+	public static function post_page_if_required( $post_parent , $page_path_parent , $file_name , $dir , $post_status){//$file is pagename, $path is page path with parents, $data is data for the page
 		if( is_file($dir.'/'.$file_name ) ){	$data = file_get_contents($dir.'/'.$file_name , true); }
 		else{ $data = ''; } //dir has no data
 		//create page
