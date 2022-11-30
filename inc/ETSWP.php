@@ -6,8 +6,9 @@ class ETSWP {
 
 	function run(){
 
-		add_action( 'the_post', array('ETSWP','shuffle') ); //get deck and spread options, shuffle cards, after we can determine if we are on appropriate page
-		add_action( 'the_post', array('ETSWP','set_tarot_cookie') ); //set our cookies during the_post, late enough to have $post data for is_descendent_page_of()
+		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
+		add_action( 'template_redirect', array('ETSWP','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
+		add_action( 'template_redirect', array('ETSWP','set_tarot_shuffled_cards_cookie') ); //set our shuffled card cookies
 
 		add_shortcode( 'ETSWP_deck_options' , array( 'ETSWP' ,'deck_options') ); //get stored options for main tarot page [ETSWP_deck_options]
 		add_shortcode( 'ETSWP_spread_options' , array('ETSWP','spread_options') ); //get stored options for main page [ETSWP_spread_options]
@@ -174,8 +175,10 @@ class ETSWP {
 		return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 		}
 
-	public static function set_tarot_cookie() {
-		if ( isset($_GET['post_type'])  && $_GET['post_type'] === 'page' ){ return; }//admin edit pages trigger this, why?
+	public static function set_tarot_shuffled_cards_cookie() {
+		if ( isset($_GET['post_type'])  && $_GET['post_type'] === 'page' ){
+			return;
+			}//admin edit pages trigger this, why?
 
 		//only do this if we are a child or grand child of spread page
 		if( ! self::is_descendent_page_of( 'spreads' ) )
@@ -196,7 +199,7 @@ class ETSWP {
 		foreach($cookie_array as $cookie){
 			if( isset($_REQUEST[$cookie]) ){
 				$cookie_name = $cookie_name . $_REQUEST[$cookie]; //build cookie name for card reading
-				setcookie( $cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field
+				setcookie( $cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field from main tarot page
 			}
 		}
 		$hash = hash( 'crc32' , $cookie_name ); //convert cookie name to hash

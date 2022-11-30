@@ -1,9 +1,9 @@
 <?php
 /**
 * Plugin Name: Emogic Tarot Reader for WP
-* Plugin URI: https://github.com/vpelss/EMOGIC_TAROT_wp
+* Plugin URI: https://github.com/vpelss/Emogics_Tarot_Script_WP#readme
 * Description: Emogic Tarot Reader for WP.
-* Version: 0.9
+* Version: 1.0
 * Author: Vince Pelss
 * Author URI: https://www.emogic.com/
 **/

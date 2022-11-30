@@ -1,14 +1,17 @@
-Emocic Tarot Script for Wordpress
+## Emogic Tarot Reading plugin for Wordpress
+
+This plugin is for those who are serious about making their own spreads, reading text, and use their own images.
+We provide 2 databases, use the standard Rider-Waite deck images, and a few spreads.
+
+You can create your own spreads and databases.
+Use any images.
+It can easily be used for other readings.
+Rune readings? You just need some graphics and a database.
+If anyone wants to donate a database or graphics you created, to this project I will consider adding it to the plugin.
 
 ## Benefits
 
 See the future.
-
-You can create your own spreads and databases.
-
-Use any images.
-
-Can easily be used for other readings. Rune readings? Just need some graphics and a database. Anyone want to donate so I can add?
 
 ## Try
 
@@ -16,21 +19,23 @@ Currently running at https://tarot.somewhereincanada.com/
 
 ## Install
 
-place this directory under your Wordpress wp-content\plugins folder
+Place this directory under your Wordpress wp-content\plugins folder
 
-activate it
+Activate it
 
-Your main tarot page is: Emogic Tarot
+Your main tarot page will be: Emogic Tarot
 ?pagename=Emogic-Tarot
+Yes, you can rename it.
 
-Important: If you uninstall the plugin your tarot pages and databases will be deleted. make copies or backup if you want to save any changes you have made.
+Important: If you uninstall the plugin your tarot pages and databases will be deleted.
+If you edited the original plugin files, make copies or backup if you want to save any changes you have made.
 
 ## Themes
 
 This has been tested with the 'Twenty' themes.
 It should work with any theme that can use shortcodes
 
-If not, try installing a second Wordpress installation in a sub folder 'Tarot' (?) and install the plugin there.
+If it does not work with your prefered theme, instal a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
 
 ## Deck Databases
 
@@ -103,7 +108,13 @@ Other:
 
 [ETSWP_pluginpath] Returns the URL path to this plugin. eg: https://mysite.com/tarot/wp-content/plugins/Emogics_Tarot_Script_WP. I use this shortcode so I do not need to have the full URL path of my images in the deck databases.
 
-## Liabilty
+## Support
+
+Support is limited to bugs as time permits.
+This is a free product.
+We will not be teaching Wordpress, html, css, etc...
+
+## Liability
 
 This program is subject to change and no assumption of reliability can be assumed.
 
