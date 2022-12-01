@@ -7,6 +7,7 @@ class ETSWP {
 	function run(){
 
 		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
+		//   template_redirect posts_results
 		add_action( 'template_redirect', array('ETSWP','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
 		add_action( 'template_redirect', array('ETSWP','set_tarot_shuffled_cards_cookie') ); //set our shuffled card cookies
 
@@ -44,7 +45,7 @@ class ETSWP {
 				//not elegant. remove drom options display
 				$path_tmp = preg_replace('/^decks\//', '', $path);
 				$path_tmp = preg_replace('/^spreads\//', '', $path_tmp);
-
+				//$perma = get_permalink($parent_id , false);
 				$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
 			}
 			$html_children = self::options_recursive_pages($child->ID,$path);
@@ -66,8 +67,10 @@ class ETSWP {
 	}
 
 	public static function is_descendent_page_of( $path ){ //will only work when post is available. eg, after the_post hook
-		global $post;
-		$ancs = get_ancestors($post->ID, 'page'); //get array of ancestor pages of current page
+	//	global $post;
+		$id = get_queried_object_id();
+//		$ancs = get_ancestors($post->ID, 'page'); //get array of ancestor pages of current page
+		$ancs = get_ancestors($id, 'page'); //get array of ancestor pages of current page
 		if(count($ancs) == 0)
 			return 0; //no ancestors
 		$page_id =  get_page_by_path($path)->ID;
@@ -79,9 +82,12 @@ class ETSWP {
 
 	public static function shuffle(){
 
-	if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ self::options(); } //if we don't do this for edit pages, oddly enough shortcodes trigger and give errors.
-	if ( is_page('emogic-tarot') ) { self::options(); } //build options for page
-	if ( is_page('emogic-your-tarot-reading') ) { self::options(); } //build options for page //need to do for shortcode
+	if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){
+		self::options(); } //if we don't do this for edit pages, oddly enough shortcodes trigger and give errors.
+	if ( is_page('emogic-tarot') ) {
+		self::options(); } //build options for page
+	if ( is_page('emogic-your-tarot-reading') ) {
+		self::options(); } //build options for page //need to do for shortcode
 	if( self::is_descendent_page_of( 'spreads' ) )
 		self::options();
 	else // no need to shuffle if not on a spread page

@@ -36,6 +36,9 @@ function run_ETSWP() {
 }
 run_ETSWP();
 
+//navigate to page with permalink style? get_permalink
+
+
 //setup instructions, use possibilities, etc
 
 //more spreads
