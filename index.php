@@ -29,15 +29,15 @@ function deactivate_ETSWP() {
 	ETSWP_deactivator::deactivate();
 }
 
+//if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ return 0;	} // no need for any of this on an admin edit page
+if( is_admin() ){ return; }  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
+
 require_once plugin_dir_path(__file__) . 'inc/ETSWP.php' ; //
 function run_ETSWP() {
 	$plugin = new ETSWP();
 	$plugin->run();
 }
 run_ETSWP();
-
-//navigate to page with permalink style? get_permalink
-
 
 //setup instructions, use possibilities, etc
 

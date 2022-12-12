@@ -29,6 +29,7 @@ Yes, you can rename it.
 
 Important: If you uninstall the plugin your tarot pages and databases will be deleted.
 If you edited the original plugin files, make copies or backup if you want to save any changes you have made.
+There are many good plugins to backup your site
 
 ## Themes
 

@@ -6,6 +6,8 @@ class ETSWP {
 
 	function run(){
 
+		//if( is_admin() ){ return; }  // no need for any of this on an admin
+
 		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
 		//   template_redirect posts_results
 		add_action( 'template_redirect', array('ETSWP','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
@@ -45,7 +47,7 @@ class ETSWP {
 				//not elegant. remove drom options display
 				$path_tmp = preg_replace('/^decks\//', '', $path);
 				$path_tmp = preg_replace('/^spreads\//', '', $path_tmp);
-				//$perma = get_permalink($parent_id , false);
+				//$perma = get_permalink($parent_id , false); //should we use this instead of
 				$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
 			}
 			$html_children = self::options_recursive_pages($child->ID,$path);
@@ -82,8 +84,6 @@ class ETSWP {
 
 	public static function shuffle(){
 
-	if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){
-		self::options(); } //if we don't do this for edit pages, oddly enough shortcodes trigger and give errors.
 	if ( is_page('emogic-tarot') ) {
 		self::options(); } //build options for page
 	if ( is_page('emogic-your-tarot-reading') ) {
