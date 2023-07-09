@@ -15,7 +15,7 @@ See the future.
 
 ## Try
 
-Currently running at https://tarot.somewhereincanada.com/
+Currently running at https://tarot.emogic.com/
 
 ## Install
 
