@@ -1,6 +1,6 @@
 <?php
 /**
-* Plugin Name: Emogic Tarot Reader for WP
+* Plugin Name: Emogics Tarot Reader for WP
 * Plugin URI: https://github.com/vpelss/Emogics_Tarot_Script_WP#readme
 * Description: Emogic Tarot Reader for WP.
 * Version: 1.0
