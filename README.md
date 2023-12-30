@@ -56,7 +56,9 @@ The format for the deck databases is:
 - 3|Three of Cups|/images/Rider_Waite/reversed/cups03.jpg|Achievement and abundance are headed your way [first_name].
 
 The fist line of the database must be the Column Names.
+
 There is one record per line.
+
 Each column of the record is separated by the delimiter character '|'.
 
 You must ensure that you have the same number of columns as you do on the first line with the Column Names.
