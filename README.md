@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Emogic Tarot Reading plugin for Wordpress
 
 This plugin is for those who are serious about making their own spreads, reading text, and use their own images.
@@ -42,7 +41,8 @@ If it does not work with your preferred theme you use on your site, you can inst
 ## Deck Databases
 
 Deck databases are in a text flat file format. 
-Deck databases are stored in Wordpress pages. They are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
+Deck databases are stored in Wordpress pages.
+Deck databases are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
 Deck databases are stored as sub pages under the empty 'decks' page
 Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste in and update.
 
@@ -213,9 +213,11 @@ They are stored in Wordpress pages and displayed as such.
 They are stored as sub pages under the empty 'spreads' page.
 This is where you can modify, or create your own spreads.
 
-To modify or create spreads, you should be comfortable to create and edit pages in Wordpress. A little css, html and JS knowledge will go a long way if you want to get creative.
+To modify or create spreads, you should be comfortable to create and edit pages in Wordpress.
+A little css, html and JS knowledge will go a long way if you want to get creative.
 
-Before a spread page is displayed, our script reads the chosen database, shuffles it's order. Then the script can display the card name, image, blurb by using Wordpress shortcodes.
+Before a spread page is displayed, our script reads the chosen database, shuffles it's order.
+Then the script can display the card name, image, blurb by using Wordpress shortcodes.
 
 ## Shortcodes
 
@@ -256,4 +258,4 @@ Not for resale. Do not charge for this.
 ## To Do
 
 everything
->>>>>>> 64f187fb20de8729f068f51c83f6852c4d911715
+

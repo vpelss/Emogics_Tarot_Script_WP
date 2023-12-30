@@ -134,6 +134,3 @@ document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP
 
 </script>
 <!-- /wp:html -->
-
-
->>>>>>> 64f187fb20de8729f068f51c83f6852c4d911715
