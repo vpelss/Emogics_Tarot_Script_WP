@@ -65,10 +65,4 @@ document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP
 </script>
 <!-- /wp:html -->
 
-<!-- wp:spacer -->
-<div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
-<!-- /wp:spacer -->
 
-<!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">Get this script at github: <a href="https://github.com/vpelss/Emogics_Tarot_Script_WP" target="_blank" rel="noreferrer noopener">https://github.com/vpelss/Emogics_Tarot_Script_WP</a></p>
-<!-- /wp:paragraph -->

@@ -15,7 +15,7 @@ See the future.
 
 ## Try
 
-Currently running at https://tarot.emogic.com/
+Currently running at https://tarot.somewhereincanada.com/
 
 ## Install
 
@@ -25,7 +25,7 @@ Activate it
 
 Your main tarot page will be: Emogic Tarot
 ?pagename=Emogic-Tarot
-Yes, you can rename it.
+You can rename the page.
 
 Important: If you uninstall the plugin your tarot pages and databases will be deleted.
 If you edited the original plugin files, make copies or backup if you want to save any changes you have made.
@@ -36,16 +36,16 @@ There are many good plugins to backup your site
 This has been tested with the 'Twenty' themes.
 It should work with any theme that can use shortcodes
 
-If it does not work with your prefered theme, instal a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
+If it does not work with your preferred theme you use on your site, you can install a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
 
 ## Deck Databases
 
-Deck databases are in a text flat file format.
-They are stored in Wordpress pages. They are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
-They are stored as sub pages under the empty 'decks' page
-The can be easily modified our updated in the Wordpress page editor, or copy and paste in and update.
+Deck databases are in a text flat file format. 
+Deck databases are stored in Wordpress pages. They are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
+Deck databases are stored as sub pages under the empty 'decks' page
+Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste in and update.
 
-The format is thus:
+The format for the deck databases is:
 
 - itemnumber|itemname|itemimage|itemblurb
 - 1|Ace of Cups|/images/Rider_Waite/normal/cups01.jpg|The start of love, joy and fruitfulness. Spirituality aids the material world.
