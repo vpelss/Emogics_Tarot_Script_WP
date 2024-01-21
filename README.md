@@ -34,9 +34,10 @@ There are many good plugins to backup your site
 ## Themes
 
 This has been tested with the 'Twenty' themes.
-It should work with any theme that can use shortcodes
+I use Twenty Twenty-Three
+It should work with any theme that can use shortcodes.
 
-If it does not work with your preferred theme you use on your site, you can install a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
+If it does not work with your sites current theme, you can install a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
 
 ## Deck Databases
 
