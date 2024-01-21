@@ -1,10 +1,14 @@
 <!-- wp:html -->
+
 <link rel="stylesheet" href="./wp-admin/css/forms.css?ver=6.0.2.2">
 <link rel="stylesheet" href="./wp-admin/css/forms.min.css?ver=6.0.2.2">
 
 <style>
+
+/* this block is here so it is easier for me to distribute my css to your wordpress installation.
+This is not good practice. You should create a new Page Template and add your CCS there. */
+
 BODY {
-  font-family: Comic Sans MS;
   color: yellow;
   background-color: black;
   background-image: url([ETSWP_pluginpath]/images/ball.jpg);

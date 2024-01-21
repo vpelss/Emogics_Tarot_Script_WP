@@ -9,6 +9,8 @@ It can easily be used for other readings.
 Rune readings? You just need some graphics and a database.
 If anyone wants to donate a database or graphics you created, to this project I will consider adding it to the plugin.
 
+To make your own spreads you will have to have a working knowledge of Wordpress Shortcodes and use a Wordpress Theme that uses Shorcodes.
+
 ## Benefits
 
 See the future.
