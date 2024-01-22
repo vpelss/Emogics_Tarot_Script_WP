@@ -1,15 +1,17 @@
 ## Emogic Tarot Reading plugin for Wordpress
 
+You can edit EVERYTHING. This is the most flexible Tarot Script.
+
 This plugin is for those who are serious about making their own spreads, reading text, and use their own images.
 We provide 2 databases, use the standard Rider-Waite deck images, and a few spreads.
 
 You can create your own spreads and databases.
 Use any images.
 It can easily be used for other readings.
-Rune readings? You just need some graphics and a database.
+Rune readings? You just need some rune graphics and a database.
 If anyone wants to donate a database or graphics you created, to this project I will consider adding it to the plugin.
 
-To make your own spreads you will have to have a working knowledge of Wordpress Shortcodes and use a Wordpress Theme that uses Shorcodes.
+To make your own spreads you will have to have a working knowledge of Wordpress Shortcodes.
 
 ## Benefits
 
@@ -27,11 +29,10 @@ Activate it
 
 Your main tarot page will be: Emogic Tarot
 ?pagename=Emogic-Tarot
-You can rename the page.
+You can rename this page.
 
 Important: If you uninstall the plugin your tarot pages and databases will be deleted.
-If you edited the original plugin files, make copies or backup if you want to save any changes you have made.
-There are many good plugins to backup your site
+If you edited the original plugin files, make copies or backup them if you want to save any changes you have made.
 
 ## Themes
 
@@ -43,11 +44,12 @@ If it does not work with your sites current theme, you can install a second Word
 
 ## Deck Databases
 
-Deck databases are in a text flat file format. 
 Deck databases are stored in Wordpress pages.
-Deck databases are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
 Deck databases are stored as sub pages under the empty 'decks' page
-Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste in and update.
+This is where you can modify, or create your own decks.
+Deck databases are in a text flat file format. 
+Deck databases are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
+Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste and update.
 
 The format for the deck databases is:
 
@@ -59,11 +61,11 @@ The format for the deck databases is:
 - 3|Three of Cups|/images/Rider_Waite/normal/cups03.jpg|Achievement and abundance are headed your way [first_name].
 - 3|Three of Cups|/images/Rider_Waite/reversed/cups03.jpg|Achievement and abundance are headed your way [first_name].
 
-The fist line of the database must be the Column Names.
+The first line of the database must be the Column Names.
 
 There is one record per line.
 
-Each column of the record is separated by the delimiter character '|'.
+Each column of the record is separated by the delimiter character '|'. The pipe character, usually above the '\'
 
 You must ensure that you have the same number of columns as you do on the first line with the Column Names.
 
@@ -83,8 +85,8 @@ You may also note that [first_name] placed in the database will be replaced by t
 
 ## Spreads
 
-They are stored in Wordpress pages and displayed as such.
-They are stored as sub pages under the empty 'spreads' page.
+Spreads are stored in Wordpress pages and displayed as such.
+Spreads are stored as sub pages under the empty 'spreads' page.
 This is where you can modify, or create your own spreads.
 
 To modify or create spreads, you should be comfortable to create and edit pages in Wordpress. A little css, html and JS knowledge will go a long way if you want to get creative.
@@ -131,3 +133,24 @@ Not for resale. Do not charge for this.
 
 Everything.
 
+-Make front page options show when we add a deck or spread. not only reading from the file in plugin
+
+-paths
+
+-export and import spreads and decks -backup/restore spreads? -backup/restore decks
+
+-DB check count pipe delimiters and report
+
+-reading deck, fix blank lines, etc...
+
+-better front form option? Use shortcodes for form and text fields?
+
+-setup instructions, use possibilities, etc
+
+-more spreads
+
+-deck edit page?
+
+-Numbers Speak reading
+
+-tarot, rune, other folder (all with main index page) to keeps decks separate?

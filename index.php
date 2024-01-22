@@ -39,16 +39,3 @@ function run_ETSWP() {
 }
 run_ETSWP();
 
-//setup instructions, use possibilities, etc
-
-//more spreads
-
-//backup/restore spreads?
-//deck edit page?
-//backup/restore decks
-
-//reading deck, fix blank lines, etc...
-
-//Numbers Speak reading
-
-//tarot, rune, other folder (all with main index page) to keeps decks separate?
