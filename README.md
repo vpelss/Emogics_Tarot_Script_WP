@@ -154,3 +154,18 @@ Everything.
 -Numbers Speak reading
 
 -tarot, rune, other folder (all with main index page) to keeps decks separate?
+
+-top tags set to cards
+
+-in edit mode show card backs. admin chose card back image
+
+-click to show card reading
+
+-main form tips / instructions. path / inputs
+
+-page structure: emogic_start : emogic_decks : emogic_spreads 
+
+-use slug to pick deck and spreads. title may be different!
+
+-protect deck data from being published. always check and turn off
+

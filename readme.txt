@@ -1,8 +1,10 @@
-=== Emogic Tarot Reading plugin for Wordpress ===
+=== Emogic Tarot Reader Plugin for Wordpress ===
 Contributors: vpelss
 Tags: Tarot Reader
+Stable tag: 0.8.0
+Tested up to: 6.4.2
 License: GPLv3
-License URI: https://raw.githubusercontent.com/vpelss/Emogics_Tarot_Script_WP/master/LICENSE
+License URI: https://github.com/vpelss/Emogics_Tarot_Script_WP?tab=GPL-3.0-1-ov-file#readme
 
 Emogic Tarot Reading plugin for Wordpress
 
