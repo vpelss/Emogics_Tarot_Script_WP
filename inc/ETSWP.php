@@ -96,7 +96,10 @@ class ETSWP {
 	//choose our deck
 	$deck_chosen = 'Emogic'; //default
 	if( isset($_REQUEST["ETSWP_deck"]) ) {
-		$deck_chosen = $_REQUEST["ETSWP_deck"];
+		$deck_chosen = sanitize_text_field( $_REQUEST["ETSWP_deck"] );
+		$deck_chosen = $deck_chosen . "....";
+		//strip ..
+		$deck_chosen = str_replace( ".." , "" , $deck_chosen );
 		}
 	$wp_post = get_page_by_path('decks/'.$deck_chosen); //returns post object or null
 	if(! isset( $wp_post )) {return;} //if no deck stop everything.
@@ -136,7 +139,7 @@ class ETSWP {
 
 	$hash = self::build_cookie_name();
 	if( isset($_COOKIE[$hash]) ){//simply convert cookie to cards
-			$json = $_COOKIE[$hash];
+			$json = sanitize_text_field( $_COOKIE[$hash] );
 			$ETSWP_keys_shuffled = json_decode($json);
 		}
 		else{//no cookies, shuffle cards
@@ -171,7 +174,7 @@ class ETSWP {
 		//first_name replace
 		$first_name = 'Seeker';
 		if( isset($_REQUEST["ETSWP_first_name"]) and ($_REQUEST["ETSWP_first_name"] != '') ) {
-			$first_name = $_REQUEST["ETSWP_first_name"];
+			$first_name = sanitize_text_field( $_REQUEST["ETSWP_first_name"] );
 			}
 		$output = str_replace( '[first_name]' , $first_name , $output );
 		return $output;
@@ -204,8 +207,8 @@ class ETSWP {
 		$cookie_array = ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 		foreach($cookie_array as $cookie){
 			if( isset($_REQUEST[$cookie]) ){
-				$cookie_name = $cookie_name . $_REQUEST[$cookie]; //build cookie name for card reading
-				setcookie( $cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field from main tarot page
+				$cookie_name = $cookie_name . sanitize_text_field( $_REQUEST[$cookie] ); //build cookie name for card reading
+				setcookie( $cookie , sanitize_text_field( $_REQUEST[$cookie] ) , time()+(365*24*60*60) ); //save cookie of form field from main tarot page
 			}
 		}
 		$hash = hash( 'crc32' , $cookie_name ); //convert cookie name to hash
@@ -214,13 +217,13 @@ class ETSWP {
 
 	public static function get_cookie( $atts = array(), $content = null ){
 		$name = $atts['name'];
-		isset($_COOKIE[$name]) ? $cookie = $_COOKIE[$name] : $cookie = '' ;
+		isset($_COOKIE[$name]) ? $cookie = sanitize_text_field( $_COOKIE[$name] ) : $cookie = '' ;
 		return $cookie;
 	}
 
 	public static function get_input( $atts = array(), $content = null ){
 		$name = $atts['name'];
-		isset($_REQUEST[$name]) ? $input = $_REQUEST[$name] : $input = '' ;
+		isset($_REQUEST[$name]) ? $input = sanitize_text_field( $_REQUEST[$name] ) : $input = '' ;
 		return $input;
 	}
 
