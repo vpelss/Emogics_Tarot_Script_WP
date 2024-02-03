@@ -146,7 +146,7 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--rename page structure: emogic_start : emogic_decks : emogic_spreads 
+-rename page structure: emogic_start : emogic_databases : emogic_readings 
 -use slug to pick deck and spreads. title may be different!
 -in edit mode show card backs. admin chose card back image
 -protect deck data from being published. always check and turn off

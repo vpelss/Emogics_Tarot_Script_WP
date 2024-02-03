@@ -20,7 +20,7 @@ class EmogicTarotReader_Core {
 	}
 
 	public static function options(){
-		$page_paths = ['decks' , 'spreads'];
+		$page_paths = [EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER , EMOGIC_TAROT_PLUGIN_READING_FOLDER];
 		foreach($page_paths as $page_path){
 			$html = '';
 			$wp_post = get_page_by_path($page_path); //returns post object or null
@@ -41,9 +41,9 @@ class EmogicTarotReader_Core {
 			if($page_path_parent == '') $path = $child->post_title;
 			else $path = $page_path_parent . '/' . $child->post_title;
 			if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
-				//not elegant. remove drom options display
-				$path_tmp = preg_replace('/^decks\//', '', $path);
-				$path_tmp = preg_replace('/^spreads\//', '', $path_tmp);
+				//not elegant. remove dom options display
+				$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '\//', '', $path);
+				$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_READING_FOLDER . '\//', '', $path_tmp);
 				//$perma = get_permalink($parent_id , false); //should we use this instead of
 				$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
 			}
@@ -54,13 +54,13 @@ class EmogicTarotReader_Core {
 	}
 
 	public static function deck_options() {
-		$page_path = 'decks';
+		$page_path = EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER;
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 		return $options;
 	}
 
 	public static function spread_options() {
-		$page_path = 'spreads';
+		$page_path = EMOGIC_TAROT_PLUGIN_READING_FOLDER;
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 		return $options;
 	}
@@ -80,12 +80,11 @@ class EmogicTarotReader_Core {
 	}
 
 	public static function shuffle(){
-
 	if ( is_page('emogic-tarot') ) {
 		self::options(); } //build options for page
 	if ( is_page('emogic-your-tarot-reading') ) {
 		self::options(); } //build options for page //need to do for shortcode
-	if( self::is_descendent_page_of( 'spreads' ) )
+	if( self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) )
 		self::options();
 	else // no need to shuffle if not on a spread page
 		return;
@@ -97,7 +96,7 @@ class EmogicTarotReader_Core {
 		//strip ..
 		$deck_chosen = str_replace( ".." , "" , $deck_chosen );
 		}
-	$wp_post = get_page_by_path('decks/'.$deck_chosen); //returns post object or null
+	$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '/' . $deck_chosen); //returns post object or null
 	if(! isset( $wp_post )) {return;} //if no deck stop everything.
 	if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) {return;} //deck is empty or maybe just a directory
 
@@ -186,7 +185,7 @@ class EmogicTarotReader_Core {
 			}//admin edit pages trigger this, why?
 
 		//only do this if we are a child or grand child of spread page
-		if( ! self::is_descendent_page_of( 'spreads' ) )
+		if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) )
 			return;
 
 		$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
