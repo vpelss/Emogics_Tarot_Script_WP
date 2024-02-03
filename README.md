@@ -24,6 +24,8 @@ Currently running at https://tarot.emogic.com/
 ## Install
 
 Place this directory under your Wordpress wp-content\plugins folder
+Suggested plugin folder name "Emogic-Tarot-Reader-Plugin-for-Wordpress"
+eg: wp-content\plugins\Emogic-Tarot-Reader-Plugin-for-Wordpress
 
 Activate it
 
@@ -31,7 +33,7 @@ Your main tarot page will be: Emogic Tarot
 ?pagename=Emogic-Tarot
 You can rename this page.
 
-Important: If you uninstall the plugin your tarot pages and databases will be deleted.
+Important: If you deactivate or uninstall the plugin your tarot pages and databases will be deleted.
 If you edited the original plugin files, make copies or backup them if you want to save any changes you have made.
 
 ## Themes
@@ -45,11 +47,17 @@ If it does not work with your sites current theme, you can install a second Word
 ## Deck Databases
 
 Deck databases are stored in Wordpress pages.
-Deck databases are stored as sub pages under the empty 'decks' page
+Deck database pages are stored as sub pages under the empty 'decks' page
 This is where you can modify, or create your own decks.
 Deck databases are in a text flat file format. 
 Deck databases are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
 Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste and update.
+To create a new database:
+1: Set the 'decks' page to published (so you can use it as a parent page).
+2: Create a new page for the database and set it's parent page to 'decks' and set it to draft, not publish. This hides it from the public.
+3: Type or paste your flat file data base into the page and save it.
+4: Set the 'decks' page to draft to hide it again.
+5: Note that you can have multiple 'decks' page sub folders. eg: /decks/runes/(pages/db)  and /decks/tarot/(pages/db)
 
 The format for the deck databases is:
 
@@ -88,8 +96,13 @@ You may also note that [first_name] placed in the database will be replaced by t
 Spreads are stored in Wordpress pages and displayed as such.
 Spreads are stored as sub pages under the empty 'spreads' page.
 This is where you can modify, or create your own spreads.
-
 To modify or create spreads, you should be comfortable to create and edit pages in Wordpress. A little css, html and JS knowledge will go a long way if you want to get creative.
+To create a new spread:
+1: Set the 'spreads' page to published (so you can use it as a parent page).
+2: Create a new page for the spread and set it's parent page to 'spreads' and set it to published.
+3: Edit your spread using shortcodes below.
+4: Set the 'spreads' page to draft to hide it again.
+5: Note that you can have multiple 'spreads' page sub folders. eg: /spreads/runes/(pages/db)  and /spreads/tarot/(pages/db)
 
 Before a spread page is displayed, our script reads the chosen database, shuffles it's order. Then the script can display the card name, image, blurb by using Wordpress shortcodes.
 
@@ -131,41 +144,24 @@ Not for resale. Do not charge for this.
 
 ## To Do
 
-Everything.
+-Everything
 
--Make front page options show when we add a deck or spread. not only reading from the file in plugin
-
--paths
-
--export and import spreads and decks -backup/restore spreads? -backup/restore decks
-
+-rename page structure: emogic_start : emogic_decks : emogic_spreads 
+-use slug to pick deck and spreads. title may be different!
+-in edit mode show card backs. admin chose card back image
+-protect deck data from being published. always check and turn off
 -DB check count pipe delimiters and report
-
 -reading deck, fix blank lines, etc...
-
--better front form option? Use shortcodes for form and text fields?
-
--setup instructions, use possibilities, etc
-
--more spreads
-
+-export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 
+-top tags point to cards, not top of page
+-better front form option? Use shortcodes for form and text fields?
+
+-more spreads
 -Numbers Speak reading
+-click to show popup card reading 
 
--tarot, rune, other folder (all with main index page) to keeps decks separate?
-
--top tags set to cards
-
--in edit mode show card backs. admin chose card back image
-
--click to show card reading
-
+-setup instructions, use possibilities, etc
 -main form tips / instructions. path / inputs
-
--page structure: emogic_start : emogic_decks : emogic_spreads 
-
--use slug to pick deck and spreads. title may be different!
-
--protect deck data from being published. always check and turn off
-
+-tarot, rune, other folder (all with main index page) to keeps decks separate?

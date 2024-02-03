@@ -1,5 +1,8 @@
 <?php
 
+//this will only delete pages that were set up by the plugin
+//new unique pages will be left in wordpress, and will loose their parent pages
+
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
 class EmogicTarotReader_Deactivator{

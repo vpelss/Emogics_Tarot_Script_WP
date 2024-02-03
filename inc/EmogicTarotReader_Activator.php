@@ -2,6 +2,12 @@
 
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
+//read all files, folders in /pages
+//you can have multiple folder levels, but not recommended. eg: /pages/spreads/runes/runedb
+//create pages for all files and folders following directory structure
+//page name will be same as folder or file name
+//only root folder files will be published. the databases are in draft as some may not want their databases exposed
+
 class EmogicTarotReader_Activator{
 
 	public static function activate(){
@@ -36,7 +42,7 @@ class EmogicTarotReader_Activator{
 				$parent_id_temp =  self::post_page_if_required( $parent_id , $page_path_parent , $file , $dir , $post_status);
 			array_push( $deactivate_file_array , $page_path_parent.'/'.$file );
 		}
-		if(is_dir($dir.'/'.$file)){ //create empty page
+		if(is_dir($dir.'/'.$file)){ //for directories create empty page
 			$post_status = 'draft';
 			if(isset($wp_post)){//dir exists
 				$parent_id_temp = $wp_post->ID;
