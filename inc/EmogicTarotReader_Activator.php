@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
-class ETSWP_activator{
+class EmogicTarotReader_Activator{
 
 	public static function activate(){
 		self::read_and_create_pages();
@@ -16,7 +16,7 @@ class ETSWP_activator{
 
 	$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
 	self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
-	add_option('ETSWP_deactivate_file_array' , array_reverse($deactivate_file_array));
+	add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array));
 	}
 
 	public static function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){

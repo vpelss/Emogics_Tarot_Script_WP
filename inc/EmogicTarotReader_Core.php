@@ -2,24 +2,21 @@
 //ip: path to deck or deck data : cookies for daily cards
 //op: shortcodes
 
-class ETSWP {
+class EmogicTarotReader_Core {
 
 	function run(){
-
 		//if( is_admin() ){ return; }  // no need for any of this on an admin
-
 		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
 		//   template_redirect posts_results
-		add_action( 'template_redirect', array('ETSWP','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
-		add_action( 'template_redirect', array('ETSWP','set_tarot_shuffled_cards_cookie') ); //set our shuffled card cookies
+		add_action( 'template_redirect', array('EmogicTarotReader_Core','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
+		add_action( 'template_redirect', array('EmogicTarotReader_Core','set_tarot_shuffled_cards_cookie') ); //set our shuffled card cookies
 
-		add_shortcode( 'ETSWP_deck_options' , array( 'ETSWP' ,'deck_options') ); //get stored options for main tarot page [ETSWP_deck_options]
-		add_shortcode( 'ETSWP_spread_options' , array('ETSWP','spread_options') ); //get stored options for main page [ETSWP_spread_options]
-		add_shortcode( 'ETSWP_get_item' , array('ETSWP','get_item') ); ////this is how we place cards on spread pages [ETSWP_get_item item='1' column='itemname']
-		add_shortcode( 'ETSWP_pluginpath' , array('ETSWP','get_pluginpath') ); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
-		add_shortcode( 'ETSWP_get_cookie' , array('ETSWP','get_cookie') ); //for reading display page [ETSWP_get_cookie name='cookie name']
-		add_shortcode( 'ETSWP_get_input' , array('ETSWP','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
-
+		add_shortcode( 'ETSWP_deck_options' , array( 'EmogicTarotReader_Core' ,'deck_options') ); //get stored options for main tarot page [ETSWP_deck_options]
+		add_shortcode( 'ETSWP_spread_options' , array('EmogicTarotReader_Core','spread_options') ); //get stored options for main page [ETSWP_spread_options]
+		add_shortcode( 'ETSWP_get_item' , array('EmogicTarotReader_Core','get_item') ); ////this is how we place cards on spread pages [ETSWP_get_item item='1' column='itemname']
+		add_shortcode( 'ETSWP_pluginpath' , array('EmogicTarotReader_Core','get_pluginpath') ); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
+		add_shortcode( 'ETSWP_get_cookie' , array('EmogicTarotReader_Core','get_cookie') ); //for reading display page [ETSWP_get_cookie name='cookie name']
+		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 	}
 
 	public static function options(){
@@ -97,7 +94,6 @@ class ETSWP {
 	$deck_chosen = 'Emogic'; //default
 	if( isset($_REQUEST["ETSWP_deck"]) ) {
 		$deck_chosen = sanitize_text_field( $_REQUEST["ETSWP_deck"] );
-		$deck_chosen = $deck_chosen . "....";
 		//strip ..
 		$deck_chosen = str_replace( ".." , "" , $deck_chosen );
 		}

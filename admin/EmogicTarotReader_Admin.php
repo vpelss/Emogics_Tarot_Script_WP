@@ -20,7 +20,8 @@
  * @subpackage Plugin_Name/admin
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Admin {
+
+class EmogicTarotReader_Admin {
 
 	/**
 	 * The ID of this plugin.
