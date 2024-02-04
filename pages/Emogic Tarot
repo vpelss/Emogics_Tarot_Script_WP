@@ -57,7 +57,8 @@ a , a:visited{
 <script>
 
 function setAction(form){
-form.action = '?pagename=spreads/' + document.getElementById("ETSWP_spread").value;
+//form.action = '?pagename=emogic-readings/' + document.getElementById("ETSWP_spread").value;
+form.action = document.getElementById("ETSWP_spread").value;
 }
 
 //remember previous choices

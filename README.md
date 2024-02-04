@@ -53,11 +53,11 @@ Deck databases are in a text flat file format.
 Deck databases are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
 Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste and update.
 To create a new database:
-1: Set the 'decks' page to published (so you can use it as a parent page).
-2: Create a new page for the database and set it's parent page to 'decks' and set it to draft, not publish. This hides it from the public.
+1: Set the 'emogic-databases' page to published (so you can use it as a parent page).
+2: Create a new page for the database and set it's parent page to 'emogic-databases' and set it to draft, not publish. This hides it from the public.
 3: Type or paste your flat file data base into the page and save it.
-4: Set the 'decks' page to draft to hide it again.
-5: Note that you can have multiple 'decks' page sub folders. eg: /decks/runes/(pages/db)  and /decks/tarot/(pages/db)
+4: Set the 'emogic-databases' page to draft to hide it again.
+5: Note that you can have multiple 'emogic-databases' page sub folders. eg: /emogic-databases/runes/(pages/db)  and /emogic-databases/tarot/(pages/db)
 
 The format for the deck databases is:
 
@@ -99,10 +99,10 @@ This is where you can modify, or create your own spreads.
 To modify or create spreads, you should be comfortable to create and edit pages in Wordpress. A little css, html and JS knowledge will go a long way if you want to get creative.
 To create a new spread:
 1: Set the 'spreads' page to published (so you can use it as a parent page).
-2: Create a new page for the spread and set it's parent page to 'spreads' and set it to published.
+2: Create a new page for the spread and set it's parent page to 'emogic-readings' and set it to published.
 3: Edit your spread using shortcodes below.
-4: Set the 'spreads' page to draft to hide it again.
-5: Note that you can have multiple 'spreads' page sub folders. eg: /spreads/runes/(pages/db)  and /spreads/tarot/(pages/db)
+4: Set the 'emogic-readings' page to draft to hide it again.
+5: Note that you can have multiple 'emogic-readings' page sub folders. eg: /emogic-readings/runes/(pages/db)  and /emogic-readings/tarot/(pages/db)
 
 Before a spread page is displayed, our script reads the chosen database, shuffles it's order. Then the script can display the card name, image, blurb by using Wordpress shortcodes.
 
@@ -146,8 +146,8 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--rename page structure: emogic_start : emogic_databases : emogic_readings 
--use slug to pick deck and spreads. title may be different!
+-selected in main form options
+-default deck will be first deck found???
 -in edit mode show card backs. admin chose card back image
 -protect deck data from being published. always check and turn off
 -DB check count pipe delimiters and report

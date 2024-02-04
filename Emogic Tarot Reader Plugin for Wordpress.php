@@ -19,8 +19,8 @@ define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url( '', __FILE__ ) ); // ht
 define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // EMOGIC_TAROT_wp (or other if renamed)
 define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
 //same as folder structure under /pages/ in plugin
-define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "decks" ); // will be emogic_databases 
-define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "spreads" ); // will be emogic_readings
+define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 
+define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "emogic-readings" ); // will be emogic_readings
 
 register_activation_hook( __FILE__, 'EmogicTarotReader_activate' );
 function EmogicTarotReader_activate() {

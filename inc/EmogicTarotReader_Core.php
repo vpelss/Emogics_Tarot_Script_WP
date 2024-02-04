@@ -19,7 +19,8 @@ class EmogicTarotReader_Core {
 		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 	}
 
-	public static function options(){
+	//build both emogic-database and emogic-readings options from wp pages
+	public static function options(){ 
 		$page_paths = [EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER , EMOGIC_TAROT_PLUGIN_READING_FOLDER];
 		foreach($page_paths as $page_path){
 			$html = '';
@@ -38,14 +39,34 @@ class EmogicTarotReader_Core {
 		$children = get_children( $parent_id );
 		if( ! isset($children) ) {return $html;} //no branch $html = ''
 		foreach ($children as $child) {
-			if($page_path_parent == '') $path = $child->post_title;
-			else $path = $page_path_parent . '/' . $child->post_title;
+			if($page_path_parent == '') //root page
+				$path = $child->post_title;
+			else //not root, a sub page
+				$path = $page_path_parent . '/' . $child->post_title;
 			if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
+				
 				//not elegant. remove dom options display
-				$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '\//', '', $path);
-				$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_READING_FOLDER . '\//', '', $path_tmp);
+				$y = EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER;
+				$ww = strpos($path , "xxx" );
+				$ww = strpos($path , "gic" );
+				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER ) ){
+					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '\//', '', $path);
+					$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
+					//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
+				}
+				$e = EMOGIC_TAROT_PLUGIN_READING_FOLDER;
+				$ww = strpos($path , "EMOGIC_TAROT_PLUGIN_READING_FOLDER" );
+				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){
+					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_READING_FOLDER . '\//', '', $path);
+					$perma = get_permalink($child->ID , false);
+					//$perma = get_permalink($child->ID , true);
+					$html = $html . "<option value='" . $perma . "'>$path_tmp</option>";
+					//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
+				}				
 				//$perma = get_permalink($parent_id , false); //should we use this instead of
-				$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
+				//page_id will never change, $path_tmp should be viewer friendly (based on page title)
+				//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
+				//$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
 			}
 			$html_children = self::options_recursive_pages($child->ID,$path);
 			$html = $html . $html_children;
@@ -53,12 +74,14 @@ class EmogicTarotReader_Core {
 		return $html;
 	}
 
+	//for quick short code retrieval
 	public static function deck_options() {
 		$page_path = EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER;
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 		return $options;
 	}
 
+	//for quick short code retrieval
 	public static function spread_options() {
 		$page_path = EMOGIC_TAROT_PLUGIN_READING_FOLDER;
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
@@ -80,15 +103,17 @@ class EmogicTarotReader_Core {
 	}
 
 	public static function shuffle(){
-	if ( is_page('emogic-tarot') ) {
-		self::options(); } //build options for page
-	if ( is_page('emogic-your-tarot-reading') ) {
-		self::options(); } //build options for page //need to do for shortcode
-	if( self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) )
-		self::options();
-	else // no need to shuffle if not on a spread page
+	//if ( is_page('emogic-tarot') ) { //build options for main form page
+		self::options(); //build options for main form page. Just always run it for all pages to avoid complex code
+		//} 
+	//if ( is_page('emogic-your-tarot-reading') ) {
+		//self::options(); } //build options for page //need to do for shortcode
+	if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ) // no need to shuffle if not on a spread page
+		//self::options();
+	//else // no need to shuffle if not on a spread page
 		return;
 
+	//if here, we are a emogic-readings sub page
 	//choose our deck
 	$deck_chosen = 'Emogic'; //default
 	if( isset($_REQUEST["ETSWP_deck"]) ) {
@@ -158,6 +183,7 @@ class EmogicTarotReader_Core {
 	wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
 	}
 
+	//for quick short code retrieval
 	public static function get_item( $atts = array(), $content = null ) {
 		$ETSWP_items_array = wp_cache_get('ETSWP_items_array');
 		$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
@@ -175,6 +201,7 @@ class EmogicTarotReader_Core {
 		return $output;
 		}
 
+	//for quick short code retrieval
 	public static function get_pluginpath( $atts = array(), $content = null ) {
 		return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 		}
