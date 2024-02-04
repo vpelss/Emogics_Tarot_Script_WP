@@ -5,9 +5,7 @@
 class EmogicTarotReader_Core {
 
 	function run(){
-		//if( is_admin() ){ return; }  // no need for any of this on an admin
-		//if( is_admin() ){EmogicTarotReader_Core::shuffle();}
-		
+
 		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
 		//template_redirect: Fires before determining which template to load.
 		//template_redirect: This action hook executes just before WordPress determines which template page to load. It is a good hook to use if you need to do a redirect with full knowledge of the content that has been queried.
@@ -38,6 +36,7 @@ class EmogicTarotReader_Core {
 			}
 	}
 
+	//options() calls this. navigates sub folders and files
 	public static function options_recursive_pages($parent_id,$page_path_parent){ //note: recursive routine, do not change arg values here!!!
 		$html = '';
 		$html_children = '';
@@ -48,26 +47,16 @@ class EmogicTarotReader_Core {
 				$path = $child->post_title;
 			else //not root, a sub page
 				$path = $page_path_parent . '/' . $child->post_title;
-			if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
-				
-				//not elegant. remove dom options display
-				
+			if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){ //empty, likely a directory page
 				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER ) ){
 					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '\//', '', $path);
 					$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
-					//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
 				}
 				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){
 					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_READING_FOLDER . '\//', '', $path);
 					$perma = get_permalink($child->ID , false);
-					//$perma = get_permalink($child->ID , true);
 					$html = $html . "<option value='" . $perma . "'>$path_tmp</option>";
-					//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
 				}				
-				//$perma = get_permalink($parent_id , false); //should we use this instead of
-				//page_id will never change, $path_tmp should be viewer friendly (based on page title)
-				//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
-				//$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
 			}
 			$html_children = self::options_recursive_pages($child->ID,$path);
 			$html = $html . $html_children;
@@ -90,9 +79,7 @@ class EmogicTarotReader_Core {
 	}
 
 	public static function is_descendent_page_of( $path ){ //will only work when post is available. eg, after the_post hook
-	//	global $post;
 		$id = get_queried_object_id();
-//		$ancs = get_ancestors($post->ID, 'page'); //get array of ancestor pages of current page
 		$ancs = get_ancestors($id, 'page'); //get array of ancestor pages of current page
 		if(count($ancs) == 0)
 			return 0; //no ancestors
@@ -103,17 +90,12 @@ class EmogicTarotReader_Core {
 			return 0;
 	}
 
+	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
 	public static function shuffle(){
-	//if ( is_page('emogic-tarot') ) { //build options for main form page
-		self::options(); //build options for main form page. Just always run it for all pages to avoid complex code
-		//} 
-	//if ( is_page('emogic-your-tarot-reading') ) {
-		//self::options(); } //build options for page //need to do for shortcode
-	if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ) // no need to shuffle if not on a spread page
-		//self::options();
-	//else // no need to shuffle if not on a spread page
+		self::options(); //build options for main form page. Always run it for all pages KISS
+	if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){ // no need to shuffle if not on a spread page
 		return;
-
+		}
 	//if here, we are a emogic-readings sub page
 	//choose our deck
 	$deck_chosen = 'Emogic'; //default
@@ -127,23 +109,27 @@ class EmogicTarotReader_Core {
 	if(! isset( $wp_post )) {
 		wp_die( "No Deck " . $deck_chosen , "No Deck" );
 		} //if no deck stop everything.
-	if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) {return;} //deck is empty or maybe just a directory
-
+	if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) { //already checked in options. likely an empty directory page
+		return;
+		} 
 	//get deck text and put in array
 	$file_string = $wp_post->post_content;
 	$file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
+	//remove blank lines
+	
+	//make sure all lines have correct number of delimiters
 
 	$ETSWP_items_array = array();
 	$ETSWP_keys_shuffled = array();
 	//$ETSWP_items_array will be complete array read in order.
 	//we will shuffle a separate keys array, $ETSWP_keys_shuffled
-	//then ensure that none of the key array points to another item in $ETSWP_items_array with a duplicate itemnumber
+	//then we ensure that none of the key array points to another item in $ETSWP_items_array with a duplicate itemnumber
+	$number_of_same_item_array = array(); //so we can see if this item has another version of it in the database, and roll to see which to keep
 
 	//1st line is the column text description
 	$line_string = array_shift( $file_lines );
-	$columns_array = explode("|" , $line_string);
-
-	$number_of_same_item_array = array(); //so we can see if this item has another version of it in the database, and roll to see which to keep
+	$field_delimeters = substr_count( $line_string , EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER);
+	$columns_array = explode(EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER , $line_string);
 
 	//get all items in order
 	while( count($file_lines) ){
@@ -154,7 +140,11 @@ class EmogicTarotReader_Core {
 		if($line_string == ''){//ignore empty lines
 			continue;
 		}
-		$line_array = explode("|" , $line_string);
+		$count_delimeters = substr_count( $line_string , EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER);
+		if($field_delimeters !== $count_delimeters){ //see if record has right number of delimiters
+			wp_die( "Database record has " . $count_delimeters . " record delimiters when it should have " . $field_delimeters . "</br>See: " . $line_string , "Database record error" );
+		}
+		$line_array = explode(EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER , $line_string);
 		$item_number = $line_array[0];
 		$item_array = array_combine($columns_array , $line_array);
 
@@ -228,9 +218,9 @@ class EmogicTarotReader_Core {
 		}
 	}
 
-	//returns a  hash of form inputs of ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']. this allows different readings for dirfferent names, questions, spreads
+	//returns a  hash of form inputs of ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']. this allows different readings for different names, questions, spreads
 	//but also sets cookies for ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']
-	public static function build_cookie_name( $also_set_cookies = 0 ){ 
+	public static function build_cookie_name(){ 
 		$cookie_name = '';
 		$cookie_array = ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 		foreach($cookie_array as $cookie){

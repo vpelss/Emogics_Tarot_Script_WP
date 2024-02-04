@@ -11,7 +11,7 @@ It can easily be used for other readings.
 Rune readings? You just need some rune graphics and a database.
 If anyone wants to donate a database or graphics you created, to this project I will consider adding it to the plugin.
 
-To make your own spreads you will have to have a working knowledge of Wordpress Shortcodes.
+To make your own spreads you must have a working knowledge of Wordpress Shortcodes. HTML, CSS, and Javascript is very helpful.
 
 ## Benefits
 
@@ -146,11 +146,10 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--reading deck, fix blank lines, etc...
--DB check count pipe delimiters and report
 -protect deck data from being published. always check and turn off
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
+-monitor folders for new db and spreads?
 
 -top tags point to cards, not top of page
 -better front form option? Use shortcodes for form and text fields?

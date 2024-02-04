@@ -21,6 +21,7 @@ define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
 //same as folder structure under /pages/ in plugin
 define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 
 define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "emogic-readings" ); // will be emogic_readings
+define( 'EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER' , "|" ); // will be emogic_readings
 
 register_activation_hook( __FILE__, 'EmogicTarotReader_activate' );
 function EmogicTarotReader_activate() {
