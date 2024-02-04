@@ -46,16 +46,11 @@ class EmogicTarotReader_Core {
 			if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
 				
 				//not elegant. remove dom options display
-				$y = EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER;
-				$ww = strpos($path , "xxx" );
-				$ww = strpos($path , "gic" );
 				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER ) ){
 					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '\//', '', $path);
 					$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
 					//$html = $html . "<option value='" . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . "/?page_id=" . $child->ID . "'>$path_tmp</option>";
 				}
-				$e = EMOGIC_TAROT_PLUGIN_READING_FOLDER;
-				$ww = strpos($path , "EMOGIC_TAROT_PLUGIN_READING_FOLDER" );
 				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){
 					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_READING_FOLDER . '\//', '', $path);
 					$perma = get_permalink($child->ID , false);
@@ -115,14 +110,17 @@ class EmogicTarotReader_Core {
 
 	//if here, we are a emogic-readings sub page
 	//choose our deck
-	$deck_chosen = 'Emogic'; //default
+	//$deck_chosen = 'Emogic'; //default
 	if( isset($_REQUEST["ETSWP_deck"]) ) {
 		$deck_chosen = sanitize_text_field( $_REQUEST["ETSWP_deck"] );
 		//strip ..
 		$deck_chosen = str_replace( ".." , "" , $deck_chosen );
 		}
+
 	$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '/' . $deck_chosen); //returns post object or null
-	if(! isset( $wp_post )) {return;} //if no deck stop everything.
+	if(! isset( $wp_post )) {
+		wp_die( "No Deck " . $deck_chosen , "No Deck" );
+		} //if no deck stop everything.
 	if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) {return;} //deck is empty or maybe just a directory
 
 	//get deck text and put in array
@@ -220,29 +218,35 @@ class EmogicTarotReader_Core {
 		$hash = self::build_cookie_name();
 		if(!isset($_COOKIE[$hash])) {
 			$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
-			setcookie($hash , $json , time()+(24*60*60) ); //cookie for a day
+			setcookie($hash , $json , time()+(24*60*60) , "/" ); //cookie for a day
 		}
 	}
 
-	public static function build_cookie_name( $also_set_cookies = 0 ){
+	//returns a  hash of form inputs of ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']. this allows different readings for dirfferent names, questions, spreads
+	//but also sets cookies for ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']
+	public static function build_cookie_name( $also_set_cookies = 0 ){ 
 		$cookie_name = '';
 		$cookie_array = ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 		foreach($cookie_array as $cookie){
 			if( isset($_REQUEST[$cookie]) ){
 				$cookie_name = $cookie_name . sanitize_text_field( $_REQUEST[$cookie] ); //build cookie name for card reading
-				setcookie( $cookie , sanitize_text_field( $_REQUEST[$cookie] ) , time()+(365*24*60*60) ); //save cookie of form field from main tarot page
+				$result = setcookie( $cookie , sanitize_text_field( $_REQUEST[$cookie] ) , time()+(365*24*60*60) , "/" ); //save cookie of form fields from main tarot page
 			}
 		}
 		$hash = hash( 'crc32' , $cookie_name ); //convert cookie name to hash
-	return $hash;
+	return $hash; 
 	}
 
+	//for shortcode
+	//[ETSWP_get_cookie name='ETSWP_deck']
 	public static function get_cookie( $atts = array(), $content = null ){
 		$name = $atts['name'];
 		isset($_COOKIE[$name]) ? $cookie = sanitize_text_field( $_COOKIE[$name] ) : $cookie = '' ;
 		return $cookie;
 	}
 
+	//for shortcode
+	//[ETSWP_get_item item='3' column='itemimage']
 	public static function get_input( $atts = array(), $content = null ){
 		$name = $atts['name'];
 		isset($_REQUEST[$name]) ? $input = sanitize_text_field( $_REQUEST[$name] ) : $input = '' ;

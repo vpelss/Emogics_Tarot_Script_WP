@@ -1,8 +1,5 @@
 <!-- wp:html -->
 
-<link rel="stylesheet" href="./wp-admin/css/forms.css?ver=6.0.2.2">
-<link rel="stylesheet" href="./wp-admin/css/forms.min.css?ver=6.0.2.2">
-
 <style>
 
 /* this block is here so it is easier for me to distribute my css to your wordpress installation.
@@ -57,14 +54,18 @@ a , a:visited{
 <script>
 
 function setAction(form){
-//form.action = '?pagename=emogic-readings/' + document.getElementById("ETSWP_spread").value;
 form.action = document.getElementById("ETSWP_spread").value;
 }
 
 //remember previous choices
 document.getElementById("ETSWP_first_name").value = '[ETSWP_get_cookie name='ETSWP_first_name']';
 document.getElementById("ETSWP_deck").value = '[ETSWP_get_cookie name='ETSWP_deck']' || 'Emogic';
-document.getElementById("ETSWP_spread").value = '[ETSWP_get_cookie name='ETSWP_spread']' || 'Three Card';
+if(  "[ETSWP_get_cookie name='ETSWP_deck']" !== "" ){
+  document.getElementById("ETSWP_deck").value = "[ETSWP_get_cookie name='ETSWP_deck']"
+}
+if(  "[ETSWP_get_cookie name='ETSWP_spread']" !== "" ){
+  document.getElementById("ETSWP_spread").value = "[ETSWP_get_cookie name='ETSWP_spread']"
+}
 document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP_question']';
 
 </script>

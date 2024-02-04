@@ -146,8 +146,6 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--selected in main form options
--default deck will be first deck found???
 -in edit mode show card backs. admin chose card back image
 -protect deck data from being published. always check and turn off
 -DB check count pipe delimiters and report
