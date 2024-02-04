@@ -60,12 +60,8 @@ form.action = document.getElementById("ETSWP_spread").value;
 //remember previous choices
 document.getElementById("ETSWP_first_name").value = '[ETSWP_get_cookie name='ETSWP_first_name']';
 document.getElementById("ETSWP_deck").value = '[ETSWP_get_cookie name='ETSWP_deck']' || 'Emogic';
-if(  "[ETSWP_get_cookie name='ETSWP_deck']" !== "" ){
-  document.getElementById("ETSWP_deck").value = "[ETSWP_get_cookie name='ETSWP_deck']"
-}
-if(  "[ETSWP_get_cookie name='ETSWP_spread']" !== "" ){
-  document.getElementById("ETSWP_spread").value = "[ETSWP_get_cookie name='ETSWP_spread']"
-}
+document.getElementById("ETSWP_deck").value = "[ETSWP_get_cookie name='ETSWP_deck']" || document.getElementById("ETSWP_deck").value;
+document.getElementById("ETSWP_spread").value = "[ETSWP_get_cookie name='ETSWP_spread']" || document.getElementById("ETSWP_spread").value;
 document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP_question']';
 
 </script>

@@ -146,10 +146,9 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--in edit mode show card backs. admin chose card back image
--protect deck data from being published. always check and turn off
--DB check count pipe delimiters and report
 -reading deck, fix blank lines, etc...
+-DB check count pipe delimiters and report
+-protect deck data from being published. always check and turn off
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 

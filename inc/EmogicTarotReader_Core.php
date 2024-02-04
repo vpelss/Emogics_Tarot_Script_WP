@@ -1,13 +1,17 @@
 <?php
-//ip: path to deck or deck data : cookies for daily cards
+//ip: main form data: name, deck, spread, question : cookies for daily cards
 //op: shortcodes
 
 class EmogicTarotReader_Core {
 
 	function run(){
 		//if( is_admin() ){ return; }  // no need for any of this on an admin
+		//if( is_admin() ){EmogicTarotReader_Core::shuffle();}
+		
 		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
-		//   template_redirect posts_results
+		//template_redirect: Fires before determining which template to load.
+		//template_redirect: This action hook executes just before WordPress determines which template page to load. It is a good hook to use if you need to do a redirect with full knowledge of the content that has been queried.
+		//template_redirect: best time to get form data
 		add_action( 'template_redirect', array('EmogicTarotReader_Core','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
 		add_action( 'template_redirect', array('EmogicTarotReader_Core','set_tarot_shuffled_cards_cookie') ); //set our shuffled card cookies
 
@@ -19,6 +23,7 @@ class EmogicTarotReader_Core {
 		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 	}
 
+	//shuffle() calls this
 	//build both emogic-database and emogic-readings options from wp pages
 	public static function options(){ 
 		$page_paths = [EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER , EMOGIC_TAROT_PLUGIN_READING_FOLDER];
@@ -46,6 +51,7 @@ class EmogicTarotReader_Core {
 			if( !(ctype_space($child->post_content) or ($child->post_content == '')) ){
 				
 				//not elegant. remove dom options display
+				
 				if( 0 === strpos($path , EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER ) ){
 					$path_tmp = preg_replace('/^' . EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '\//', '', $path);
 					$html = $html . "<option value='$path_tmp'>$path_tmp</option>";
@@ -69,14 +75,14 @@ class EmogicTarotReader_Core {
 		return $html;
 	}
 
-	//for quick short code retrieval
+	//stored in wp_cache for quick short code retrieval. Set in options wp_cache_set
 	public static function deck_options() {
 		$page_path = EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER;
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
 		return $options;
 	}
 
-	//for quick short code retrieval
+	//stored in wp_cache for quick short code retrieval. Set in options wp_cache_set
 	public static function spread_options() {
 		$page_path = EMOGIC_TAROT_PLUGIN_READING_FOLDER;
 		$options = wp_cache_get('ETSWP_'.$page_path.'_options');
@@ -110,7 +116,7 @@ class EmogicTarotReader_Core {
 
 	//if here, we are a emogic-readings sub page
 	//choose our deck
-	//$deck_chosen = 'Emogic'; //default
+	$deck_chosen = 'Emogic'; //default
 	if( isset($_REQUEST["ETSWP_deck"]) ) {
 		$deck_chosen = sanitize_text_field( $_REQUEST["ETSWP_deck"] );
 		//strip ..
