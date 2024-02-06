@@ -21,7 +21,7 @@ a , a:visited{
 <!-- /wp:html -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_input name='ETSWP_first_name'], your question is: [ETSWP_get_input name='ETSWP_question']</p>
+<p class="has-text-align-center" id="top">[ETSWP_get_input name='ETSWP_first_name'], your question is: [ETSWP_get_input name='ETSWP_question']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:columns {"isStackedOnMobile":false} -->
@@ -146,7 +146,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -164,7 +164,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -182,7 +182,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -200,7 +200,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -218,7 +218,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -236,7 +236,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -254,7 +254,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -272,7 +272,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -290,7 +290,7 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -308,6 +308,6 @@ a , a:visited{
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center"><a href="#">Top ^</a></p>
+<p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

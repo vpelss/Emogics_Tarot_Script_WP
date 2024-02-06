@@ -36,7 +36,9 @@ function EmogicTarotReader_deactivate() {
 }
 
 //if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ return 0;	} // no need for any of this on an admin edit page
-if( is_admin() ){ return; }  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
+if( is_admin() ){
+	return;
+	}  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
 
 require_once plugin_dir_path(__file__) . 'inc/EmogicTarotReader_Core.php' ; //
 function EmogicTarotReader__run() {

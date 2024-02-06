@@ -55,9 +55,10 @@ Deck databases can be easily modified our updated in the Wordpress page editor, 
 To create a new database:
 1: Set the 'emogic-databases' page to published (so you can use it as a parent page).
 2: Create a new page for the database and set it's parent page to 'emogic-databases' and set it to draft, not publish. This hides it from the public.
-3: Type or paste your flat file data base into the page and save it.
-4: Set the 'emogic-databases' page to draft to hide it again.
-5: Note that you can have multiple 'emogic-databases' page sub folders. eg: /emogic-databases/runes/(pages/db)  and /emogic-databases/tarot/(pages/db)
+3: Type or paste your flat file database into the page and save it.
+4: Set the 'emogic-databases' page to draft to hide it again. IMPORTANT: If you skip this step, your database is visible
+5: IMPORTANT: Ensure all your database files are set to draft. If you skip this step, your database is visible
+6: Note that you can have multiple 'emogic-databases' page sub folders. eg: /emogic-databases/runes/(pages/db)  and /emogic-databases/tarot/(pages/db)
 
 The format for the deck databases is:
 
@@ -146,10 +147,8 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--protect deck data from being published. always check and turn off
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
--monitor folders for new db and spreads?
 
 -top tags point to cards, not top of page
 -better front form option? Use shortcodes for form and text fields?

@@ -4,6 +4,7 @@
 
 class EmogicTarotReader_Core {
 
+	//run everytime a page is opened
 	function run(){
 
 		//both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
@@ -11,7 +12,7 @@ class EmogicTarotReader_Core {
 		//template_redirect: This action hook executes just before WordPress determines which template page to load. It is a good hook to use if you need to do a redirect with full knowledge of the content that has been queried.
 		//template_redirect: best time to get form data
 		add_action( 'template_redirect', array('EmogicTarotReader_Core','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
-		add_action( 'template_redirect', array('EmogicTarotReader_Core','set_tarot_shuffled_cards_cookie') ); //set our shuffled card cookies
+		//add_action( 'template_redirect', array('EmogicTarotReader_Core','set_shuffled_db_in_cookie') ); //set our shuffled card cookies
 
 		add_shortcode( 'ETSWP_deck_options' , array( 'EmogicTarotReader_Core' ,'deck_options') ); //get stored options for main tarot page [ETSWP_deck_options]
 		add_shortcode( 'ETSWP_spread_options' , array('EmogicTarotReader_Core','spread_options') ); //get stored options for main page [ETSWP_spread_options]
@@ -19,6 +20,99 @@ class EmogicTarotReader_Core {
 		add_shortcode( 'ETSWP_pluginpath' , array('EmogicTarotReader_Core','get_pluginpath') ); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
 		add_shortcode( 'ETSWP_get_cookie' , array('EmogicTarotReader_Core','get_cookie') ); //for reading display page [ETSWP_get_cookie name='cookie name']
 		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+	}
+
+	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
+	public static function shuffle(){
+		self::options(); //build options for main form page. Always run it for all pages KISS
+	
+		if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){ // no need to shuffle if not on a spread page
+			return;
+			}
+		//if here, we are a emogic-readings sub page
+		//choose our deck
+		$deck_chosen = 'Emogic'; //default
+		if( isset($_REQUEST["ETSWP_deck"]) ) {
+			$deck_chosen = sanitize_text_field( $_REQUEST["ETSWP_deck"] );
+			//strip ..
+			$deck_chosen = str_replace( ".." , "" , $deck_chosen );
+			}
+	
+		//read db
+		$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '/' . $deck_chosen); //returns post object or null
+		if(! isset( $wp_post )) {
+			wp_die( "No Deck " . $deck_chosen , "No Deck" );
+			} //if no deck stop everything.
+		if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) { //already checked in options. likely an empty directory page
+			return;
+			} 
+		//get deck text and put in array
+		$file_string = $wp_post->post_content;
+		$file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
+	
+		$ETSWP_items_array = array();
+		$ETSWP_keys_shuffled = array();
+		//$ETSWP_items_array will be complete array read in order.
+		//we will shuffle a separate keys array, $ETSWP_keys_shuffled
+		//then we ensure that none of the key array points to another item in $ETSWP_items_array with a duplicate itemnumber
+		$number_of_same_item_array = array(); //so we can see if this item has another version of it in the database, and roll to see which to keep
+		
+		//1st line is the column text description
+		$line_string = array_shift( $file_lines );
+		$field_delimeters = substr_count( $line_string , EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER);
+		$columns_array = explode(EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER , $line_string);
+	
+		//read all db records in order
+		while( count($file_lines) ){
+			$line_string = array_shift( $file_lines );
+			if( ctype_space($line_string) ){//ignore whitespace lines
+				continue;
+			}
+			if($line_string == ''){//ignore empty lines
+				continue;
+			}
+			$count_delimeters = substr_count( $line_string , EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER);
+			if($field_delimeters !== $count_delimeters){ //see if record has right number of delimiters
+				wp_die( "Database record has " . $count_delimeters . " record delimiters when it should have " . $field_delimeters . "</br>See: " . $line_string , "Database record error" );
+			}
+			$line_array = explode(EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER , $line_string);
+			$item_number = $line_array[0];
+			$item_array = array_combine($columns_array , $line_array);
+	
+			array_push($ETSWP_items_array , $item_array);
+			}
+	
+		//shuffled order is in cookie or we need to shuffle
+		$hash = self::build_cookie_name();
+		if( isset($_COOKIE[$hash]) ){//simply convert cookie to cards
+				$json = sanitize_text_field( $_COOKIE[$hash] );
+				$ETSWP_keys_shuffled = json_decode($json);
+			}
+		else{//no cookies, shuffle cards
+			//create a key array and shuffle it
+			$ETSWP_keys_shuffled = array_keys($ETSWP_items_array); //$ETSWP_keys_shuffled is in order at this time
+			shuffle($ETSWP_keys_shuffled);
+			//remove keys that point to duplicate itemnumbers in $ETSWP_items_array
+			$key_exists = array();
+			foreach($ETSWP_keys_shuffled as $key){
+				$itemnumber = $ETSWP_items_array[$key]['itemnumber'];
+				if( isset( $key_exists[$itemnumber] ) ){
+					unset($ETSWP_keys_shuffled[$key]); //remove item from $ETSWP_keys_shuffled array
+					}
+				$key_exists[$itemnumber] = 1;
+				}
+			//re-index $ETSWP_keys_shuffled as there are random holes in index
+			$ETSWP_keys_shuffled = array_values($ETSWP_keys_shuffled);
+			}
+		//store shuffled db in cookie in case we reread
+		$hash = self::build_cookie_name();
+		if(!isset($_COOKIE[$hash])) {
+			$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+			setcookie($hash , $json , time()+(24*60*60) , "/" ); //cookie for a day
+		}
+		//need to globalize it so we can use it in shortcode. shortcodes are called later!
+		wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
+		wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
 	}
 
 	//shuffle() calls this
@@ -84,99 +178,14 @@ class EmogicTarotReader_Core {
 		if(count($ancs) == 0)
 			return 0; //no ancestors
 		$page_id =  get_page_by_path($path)->ID;
-		if ( in_array($page_id , $ancs) || $post->post_parent == "$page_id" )
+		//BUG $post will not work here!!!!
+		//if ( in_array($page_id , $ancs) || $post->post_parent == "$page_id" )
+		if ( in_array($page_id , $ancs) )
 			return 1;
 		else
 			return 0;
 	}
-
-	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
-	public static function shuffle(){
-		self::options(); //build options for main form page. Always run it for all pages KISS
-	if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){ // no need to shuffle if not on a spread page
-		return;
-		}
-	//if here, we are a emogic-readings sub page
-	//choose our deck
-	$deck_chosen = 'Emogic'; //default
-	if( isset($_REQUEST["ETSWP_deck"]) ) {
-		$deck_chosen = sanitize_text_field( $_REQUEST["ETSWP_deck"] );
-		//strip ..
-		$deck_chosen = str_replace( ".." , "" , $deck_chosen );
-		}
-
-	$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER . '/' . $deck_chosen); //returns post object or null
-	if(! isset( $wp_post )) {
-		wp_die( "No Deck " . $deck_chosen , "No Deck" );
-		} //if no deck stop everything.
-	if( ctype_space($wp_post->post_content) or ($wp_post->post_content == '') ) { //already checked in options. likely an empty directory page
-		return;
-		} 
-	//get deck text and put in array
-	$file_string = $wp_post->post_content;
-	$file_lines = preg_split("/\r\n|\n|\r/", $file_string); //$array = preg_split ('/$\R?^/m', $string);
-	//remove blank lines
 	
-	//make sure all lines have correct number of delimiters
-
-	$ETSWP_items_array = array();
-	$ETSWP_keys_shuffled = array();
-	//$ETSWP_items_array will be complete array read in order.
-	//we will shuffle a separate keys array, $ETSWP_keys_shuffled
-	//then we ensure that none of the key array points to another item in $ETSWP_items_array with a duplicate itemnumber
-	$number_of_same_item_array = array(); //so we can see if this item has another version of it in the database, and roll to see which to keep
-
-	//1st line is the column text description
-	$line_string = array_shift( $file_lines );
-	$field_delimeters = substr_count( $line_string , EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER);
-	$columns_array = explode(EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER , $line_string);
-
-	//get all items in order
-	while( count($file_lines) ){
-		$line_string = array_shift( $file_lines );
-		if( ctype_space($line_string) ){//ignore whitespace lines
-			continue;
-		}
-		if($line_string == ''){//ignore empty lines
-			continue;
-		}
-		$count_delimeters = substr_count( $line_string , EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER);
-		if($field_delimeters !== $count_delimeters){ //see if record has right number of delimiters
-			wp_die( "Database record has " . $count_delimeters . " record delimiters when it should have " . $field_delimeters . "</br>See: " . $line_string , "Database record error" );
-		}
-		$line_array = explode(EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER , $line_string);
-		$item_number = $line_array[0];
-		$item_array = array_combine($columns_array , $line_array);
-
-		array_push($ETSWP_items_array , $item_array);
-		}
-
-	$hash = self::build_cookie_name();
-	if( isset($_COOKIE[$hash]) ){//simply convert cookie to cards
-			$json = sanitize_text_field( $_COOKIE[$hash] );
-			$ETSWP_keys_shuffled = json_decode($json);
-		}
-		else{//no cookies, shuffle cards
-		//create a key array and shuffle it
-		$ETSWP_keys_shuffled = array_keys($ETSWP_items_array); //$ETSWP_keys_shuffled is in order at this time
-		shuffle($ETSWP_keys_shuffled);
-		//remove keys that point to duplicate itemnumbers in $ETSWP_items_array
-		$key_exists = array();
-		foreach($ETSWP_keys_shuffled as $key){
-			$itemnumber = $ETSWP_items_array[$key]['itemnumber'];
-			if( isset( $key_exists[$itemnumber] ) ){
-				unset($ETSWP_keys_shuffled[$key]); //remove item from $ETSWP_keys_shuffled array
-				}
-			$key_exists[$itemnumber] = 1;
-			}
-		//re-index $ETSWP_keys_shuffled as there are random holes in index
-		$ETSWP_keys_shuffled = array_values($ETSWP_keys_shuffled);
-		}
-
-	wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
-	wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
-	}
-
 	//for quick short code retrieval
 	public static function get_item( $atts = array(), $content = null ) {
 		$ETSWP_items_array = wp_cache_get('ETSWP_items_array');
@@ -199,24 +208,6 @@ class EmogicTarotReader_Core {
 	public static function get_pluginpath( $atts = array(), $content = null ) {
 		return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 		}
-
-	public static function set_tarot_shuffled_cards_cookie() {
-		if ( isset($_GET['post_type'])  && $_GET['post_type'] === 'page' ){
-			return;
-			}//admin edit pages trigger this, why?
-
-		//only do this if we are a child or grand child of spread page
-		if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) )
-			return;
-
-		$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled');
-
-		$hash = self::build_cookie_name();
-		if(!isset($_COOKIE[$hash])) {
-			$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
-			setcookie($hash , $json , time()+(24*60*60) , "/" ); //cookie for a day
-		}
-	}
 
 	//returns a  hash of form inputs of ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']. this allows different readings for different names, questions, spreads
 	//but also sets cookies for ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']
