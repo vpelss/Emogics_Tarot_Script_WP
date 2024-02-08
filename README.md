@@ -44,6 +44,32 @@ It should work with any theme that can use shortcodes.
 
 If it does not work with your sites current theme, you can install a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
 
+##Main Calling Form
+
+The HTML form that calls the reading must have certain 'input' and 'select' tags. The tag id must remain the same.
+
+<input type="text" name="ETSWP_first_name" id="ETSWP_first_name" placeholder="First Name">
+
+<select name="ETSWP_deck" id="ETSWP_deck">
+[ETSWP_deck_options]
+</select>
+
+<select name="ETSWP_spread" id="ETSWP_spread">
+[ETSWP_spread_options]
+</select>
+
+<input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
+
+
+[ETSWP_get_cookie name='ETSWP_first_name']
+
+[ETSWP_get_cookie name='ETSWP_deck']
+
+[ETSWP_get_cookie name='ETSWP_spread']
+
+[ETSWP_get_cookie name='ETSWP_question']
+
+
 ## Deck Databases
 
 Deck databases are stored in Wordpress pages.
@@ -150,8 +176,8 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 
--top tags point to cards, not top of page
 -better front form option? Use shortcodes for form and text fields?
+-fix cookie format
 
 -more spreads
 -Numbers Speak reading

@@ -10,7 +10,8 @@ BODY {
   background-color: black;
   background-image: url([ETSWP_pluginpath]/images/ball.jpg);
   background-repeat: no-repeat;
-  background-position: center top;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 a , a:visited{
@@ -59,7 +60,6 @@ form.action = document.getElementById("ETSWP_spread").value;
 
 //remember previous choices
 document.getElementById("ETSWP_first_name").value = '[ETSWP_get_cookie name='ETSWP_first_name']';
-document.getElementById("ETSWP_deck").value = '[ETSWP_get_cookie name='ETSWP_deck']' || 'Emogic';
 document.getElementById("ETSWP_deck").value = "[ETSWP_get_cookie name='ETSWP_deck']" || document.getElementById("ETSWP_deck").value;
 document.getElementById("ETSWP_spread").value = "[ETSWP_get_cookie name='ETSWP_spread']" || document.getElementById("ETSWP_spread").value;
 document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP_question']';
