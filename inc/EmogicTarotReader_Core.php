@@ -19,7 +19,7 @@ class EmogicTarotReader_Core {
 		add_shortcode( 'ETSWP_get_item' , array('EmogicTarotReader_Core','get_item') ); ////this is how we place cards on spread pages [ETSWP_get_item item='1' column='itemname']
 		add_shortcode( 'ETSWP_pluginpath' , array('EmogicTarotReader_Core','get_pluginpath') ); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
 		add_shortcode( 'ETSWP_get_cookie' , array('EmogicTarotReader_Core','get_cookie') ); //for reading display page [ETSWP_get_cookie name='cookie name']
-		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //[ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 	}
 
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
@@ -104,7 +104,7 @@ class EmogicTarotReader_Core {
 			//re-index $ETSWP_keys_shuffled as there are random holes in index
 			$ETSWP_keys_shuffled = array_values($ETSWP_keys_shuffled);
 			}
-		//store shuffled db in cookie in case we reread
+		//store shuffled db in cookie in case we re-read
 		$hash = self::build_cookie_name();
 		if(!isset($_COOKIE[$hash])) {
 			$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']

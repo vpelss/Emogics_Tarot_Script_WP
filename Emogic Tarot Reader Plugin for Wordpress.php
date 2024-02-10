@@ -35,7 +35,6 @@ function EmogicTarotReader_deactivate() {
 	EmogicTarotReader_Deactivator::deactivate();
 }
 
-//if ( isset($_GET['action'])  && $_GET['action'] === 'edit' ){ return 0;	} // no need for any of this on an admin edit page
 if( is_admin() ){
 	return;
 	}  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors

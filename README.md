@@ -11,7 +11,7 @@ It can easily be used for other readings.
 Rune readings? You just need some rune graphics and a database.
 If anyone wants to donate a database or graphics you created, to this project I will consider adding it to the plugin.
 
-To make your own spreads you must have a working knowledge of Wordpress Shortcodes. HTML, CSS, and Javascript is very helpful.
+To make your own spreads you must have a working knowledge of Wordpress Shortcodes. Knowledge of HTML, CSS, and Javascript is very helpful.
 
 ## Benefits
 
@@ -155,6 +155,27 @@ Other:
 
 [ETSWP_pluginpath] Returns the URL path to this plugin. eg: https://mysite.com/tarot/wp-content/plugins/Emogics_Tarot_Script_WP. I use this shortcode so I do not need to have the full URL path of my images in the deck databases.
 
+##What happens in a typical reading
+
+A visitor will typically start at your main form page.
+If they have visited before, their browser session may have cookies that can be used to pre fill in some of the form data using Javascript
+The main page will typically have user fillable fields that as for:
+First Name
+Deck database
+Spread
+Their question or concern for this reading
+
+There may also be cookies containing the deck shuffles for previous readings.
+Typically I set the life of these deck shuffle cookies to 24 hours.
+So if they enter the same name, deck, spread, and question, the reading will be the same for the next 24 hours.
+
+Some Wordpress shortcodes are used on this page to set, the decks and spreads availble.
+
+When they click on "Get Reading", their forms are sent to the spread they chose.
+
+When the spread page is displayed, the deck database is read and then shuffled. If there was an cookie for a deck shuffle that matches this reading, then that deck shuffle will be used.
+Card images, text, fields, etc are displayed using shortcodes.
+
 ## Support
 
 Support is limited to bugs as time permits.
@@ -173,10 +194,11 @@ Not for resale. Do not charge for this.
 
 -Everything
 
+-bypass storing cookie cards : maybe have shortcode for current cookie hash...: deck_life_in_hours 0 - ?
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 
--better front form option? Use shortcodes for form and text fields?
+-better front form option? Use shortcodes for form and text fields? - show example...
 -fix cookie format
 
 -more spreads
@@ -184,5 +206,6 @@ Not for resale. Do not charge for this.
 -click to show popup card reading 
 
 -setup instructions, use possibilities, etc
+-explain cookies
 -main form tips / instructions. path / inputs
 -tarot, rune, other folder (all with main index page) to keeps decks separate?
