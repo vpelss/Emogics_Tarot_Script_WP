@@ -108,7 +108,13 @@ class EmogicTarotReader_Core {
 		$hash = self::build_cookie_name();
 		if(!isset($_COOKIE[$hash])) {
 			$json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
-			setcookie($hash , $json , time()+(24*60*60) , "/" ); //cookie for a day
+			if( isset($_REQUEST["ETSWP_deck_life_in_hours"]) ){
+			$deck_life_in_hours = $_REQUEST["ETSWP_deck_life_in_hours"];
+			}
+			else{
+				$deck_life_in_hours = 24;
+			}
+			setcookie($hash , $json , time()+($deck_life_in_hours*60*60) , "/" ); //cookie for a day
 		}
 		//need to globalize it so we can use it in shortcode. shortcodes are called later!
 		wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode

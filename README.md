@@ -50,7 +50,7 @@ The HTML form that calls the reading must have certain 'input' and 'select' tags
 
 <input type="text" name="ETSWP_first_name" id="ETSWP_first_name" placeholder="First Name">
 
-<select name="ETSWP_deck" id="ETSWP_deck">
+\<select name="ETSWP_deck" id="ETSWP_deck">
 [ETSWP_deck_options]
 </select>
 
@@ -60,7 +60,6 @@ The HTML form that calls the reading must have certain 'input' and 'select' tags
 
 <input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
 
-
 [ETSWP_get_cookie name='ETSWP_first_name']
 
 [ETSWP_get_cookie name='ETSWP_deck']
@@ -68,7 +67,6 @@ The HTML form that calls the reading must have certain 'input' and 'select' tags
 [ETSWP_get_cookie name='ETSWP_spread']
 
 [ETSWP_get_cookie name='ETSWP_question']
-
 
 ## Deck Databases
 
@@ -155,6 +153,24 @@ Other:
 
 [ETSWP_pluginpath] Returns the URL path to this plugin. eg: https://mysite.com/tarot/wp-content/plugins/Emogics_Tarot_Script_WP. I use this shortcode so I do not need to have the full URL path of my images in the deck databases.
 
+##Cookies
+After the main form calls a spread, the following cookies are set:
+
+ETSWP_first_name
+
+ETSWP_deck
+
+ETSWP_spread
+
+ETSWP_question
+
+various cookies that look like "e276a1c4" :
+These are stored shuffles for a combination of ETSWP_first_name, ETSWP_deck, ETSWP_spread, ETSWP_question.
+The life of these cookies can be set by the following hidden field on the main calling form.
+You can choose your oewn time in hours, or set it to zero to disable it.
+eg:
+<input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
+
 ##What happens in a typical reading
 
 A visitor will typically start at your main form page.
@@ -195,6 +211,7 @@ Not for resale. Do not charge for this.
 -Everything
 
 -bypass storing cookie cards : maybe have shortcode for current cookie hash...: deck_life_in_hours 0 - ?
+<input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 

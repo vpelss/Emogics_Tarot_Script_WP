@@ -21,6 +21,7 @@ a , a:visited{
 
 <form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
 <input type="hidden" name="action" value="ETSWP_process_form">
+<input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
 <center>
 
 <p>
