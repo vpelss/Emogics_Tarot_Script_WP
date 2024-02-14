@@ -2,6 +2,9 @@
 
 You can edit EVERYTHING. This is the most flexible Tarot Script.
 
+Wordpress has some very amazing page editing tools.
+With Wordpress shortcodes, and this script you can easily create new spread layouts in minutes.
+
 This plugin is for those who are serious about making their own spreads, reading text, and use their own images.
 We provide 2 databases, use the standard Rider-Waite deck images, and a few spreads.
 
@@ -52,13 +55,13 @@ The HTML form that calls the reading must have certain 'input' and 'select' tags
 
 \<select name="ETSWP_deck" id="ETSWP_deck">
 [ETSWP_deck_options]
-</select>
+\</select>
 
-<select name="ETSWP_spread" id="ETSWP_spread">
+\<select name="ETSWP_spread" id="ETSWP_spread">
 [ETSWP_spread_options]
-</select>
+\</select>
 
-<input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
+\<input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
 
 [ETSWP_get_cookie name='ETSWP_first_name']
 
@@ -71,11 +74,11 @@ The HTML form that calls the reading must have certain 'input' and 'select' tags
 ## Deck Databases
 
 Deck databases are stored in Wordpress pages.
-Deck database pages are stored as sub pages under the empty 'decks' page
-This is where you can modify, or create your own decks.
+Deck database pages are stored in Wordpress with the parent page set to the 'emogic_databases' page. 
+You can modify, or create your own Deck databases
 Deck databases are in a text flat file format. 
-Deck databases are set to 'draft' (not published), and should be kept that way, to keep your cherished database private.
-Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste and update.
+Deck databases are set to 'draft' (not published), and should be kept that way to keep your database private.
+Deck databases can be easily modified our updated in the Wordpress page editor, or just copy and paste then update.
 To create a new database:
 1: Set the 'emogic-databases' page to published (so you can use it as a parent page).
 2: Create a new page for the database and set it's parent page to 'emogic-databases' and set it to draft, not publish. This hides it from the public.
@@ -210,13 +213,12 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--bypass storing cookie cards : maybe have shortcode for current cookie hash...: deck_life_in_hours 0 - ?
-<input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
+-email? with link? ?sh=
 
 -better front form option? Use shortcodes for form and text fields? - show example...
--fix cookie format
+-fix cookie format???
 
 -more spreads
 -Numbers Speak reading
