@@ -215,7 +215,13 @@ Not for resale. Do not charge for this.
 
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
--email? with link? ?sh=
+
+
+-account / field : enable / disable? account avoids spam
+-email template outer css and use shorcode
+-with link? ?sh=
+-disable email code embed in spread
+-inline css for email
 
 -better front form option? Use shortcodes for form and text fields? - show example...
 -fix cookie format???

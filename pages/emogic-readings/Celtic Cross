@@ -1,4 +1,9 @@
 <!-- wp:html -->
+<!-- outer div required so we can inline style our email readings -->
+<div style="color: yellow; background-color: black;">
+<!-- /wp:html -->
+
+<!-- wp:html -->
 <style>
 
 /* this block is here so it is easier for me to distribute my css to your wordpress installation.
@@ -311,3 +316,7 @@ a , a:visited{
 <p class="has-text-align-center"><a href="#top">Top ^</a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
+
+<!-- wp:html -->
+</div>
+<!-- /wp:html -->

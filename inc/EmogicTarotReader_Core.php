@@ -13,7 +13,7 @@ class EmogicTarotReader_Core {
 		//template_redirect: best time to get form data
 		add_action( 'template_redirect', array('EmogicTarotReader_Core','shuffle') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
 		//add_action( 'template_redirect', array('EmogicTarotReader_Core','set_shuffled_db_in_cookie') ); //set our shuffled card cookies
-		add_action( 'wp_print_footer_scripts', array('EmogicTarotReader_Core','shutdown') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
+		add_action( 'wp_print_footer_scripts', array('EmogicTarotReader_Core','email_it') ); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
 
 		
 		add_shortcode( 'ETSWP_deck_options' , array( 'EmogicTarotReader_Core' ,'deck_options') ); //get stored options for main tarot page [ETSWP_deck_options]
@@ -24,10 +24,30 @@ class EmogicTarotReader_Core {
 		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 	}
 
-	public static function shutdown(){
-		$rr = get_post();
-		$t = wp_mail( "vpelss@gmail.com" , "test", $rr->post_content );
+	//Filter the mail content type.
+	public static function wpdocs_set_html_mail_content_type() {
+	return 'text/html';
+	}
+	
+	public static function email_it(){
+		if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){ // no need to shuffle if not on a spread page
+			return;
+		}
+		add_filter( 'wp_mail_content_type', 'EmogicTarotReader_Core::wpdocs_set_html_mail_content_type' );
+		$post = get_post();
+		$html = do_shortcode($post->post_content);
+		
+		$actual_link = sanitize_text_field( $_REQUEST["ETSWP_spread"])
+			. "?ETSWP_first_name=" . sanitize_text_field( $_REQUEST["ETSWP_first_name"] )
+			. "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"])
+			. "&" . "ETSWP_spread=" . sanitize_text_field($_REQUEST["ETSWP_spread"] )
+			. "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] )
+			. "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( json_encode( wp_cache_get('ETSWP_keys_shuffled') ) );
+		$html = "<a href='" . $actual_link . "'>Click here to get your reading</a> <p>" . $html;
+		$result = wp_mail( "vpelss@gmail.com" , "test", $html );
 		$t = 9;
+		// Reset content-type to avoid conflicts -- https://core.trac.wordpress.org/ticket/23578
+		remove_filter( 'wp_mail_content_type', 'EmogicTarotReader_Core::wpdocs_set_html_mail_content_type' );
 	}
 	
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
