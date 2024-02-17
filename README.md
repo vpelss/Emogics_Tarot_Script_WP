@@ -6,7 +6,7 @@ Wordpress has some very amazing page editing tools.
 With Wordpress shortcodes, and this script you can easily create new spread layouts in minutes.
 
 This plugin is for those who are serious about making their own spreads, reading text, and use their own images.
-We provide 2 databases, use the standard Rider-Waite deck images, and a few spreads.
+We provide 2 databases, use the standard public domain Rider-Waite deck images, and a few spreads.
 
 You can create your own spreads and databases.
 Use any images.
@@ -18,7 +18,21 @@ To make your own spreads you must have a working knowledge of Wordpress Shortcod
 
 ## Benefits
 
-See the future.
+See the future
+
+Create your own flat file database by creating and editing a Wordpress page
+
+Create your own Readings / Spreads by creating and editing a Wordpress page
+
+Use your own images or multiple images
+
+Reverse cards and readings
+
+Multiple card text readings for same card possible
+
+Use cookies to keep readings the same for a day, or another time period
+
+Email readings possible
 
 ## Try
 
@@ -217,9 +231,9 @@ Not for resale. Do not charge for this.
 -deck edit page?
 
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
--block display on emailed readings??? -block show html reading on email?
--card cookie and card arg the same. will that work? -with link? ?sh=
--don't send email from email link
+
+-token to choose a template
+-token to choose a response page (email)
 
 -make a post welcome message...
 

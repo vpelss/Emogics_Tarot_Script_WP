@@ -1,5 +1,12 @@
 <!-- wp:html -->
+<!--
+Wordpress does not provide for form tags like input, etc
+Why? It would make developers lives easier. Just saying.
+So we need to create forms using html ourselves
+-->
+<!-- /wp:html -->
 
+<!-- wp:html -->
 <style>
 
 /* this block is here so it is easier for me to distribute my css to your wordpress installation.

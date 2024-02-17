@@ -33,14 +33,16 @@ class EmogicTarotReader_Core {
 	// Check if we're inside the main loop in a single Post.
 	if ( is_singular() && in_the_loop() && is_main_query() ) {
 		//just_say_no_to_display
-		if ( str_contains($content, "redirect_to_email_has_been_sent") ){ //see if we want
+		if( isset($_REQUEST["ETSWP_email_link"]) ){ // allow readings from email link
+			return $content;
+		}
+		if ( str_contains($content, "redirect_to_email_has_been_sent") ){ //see if we want to redirect output
 			$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER . '/emogic-email-has-been-sent'); //returns post object or null
 			if(! isset( $wp_post )) {
 				wp_die( "No Email Has Been Sent Template found." );
 				} //if no email template stop everything.
-			//just in case useful
+			//do shortcode just in case, eg for username etc
 			$content = do_shortcode($wp_post->post_content);
-			//return ''; //maybe show a new page "An email has been sent"
 		}
 	//return $content . esc_html__( 'I’m filtering the content inside the main loop', 'wporg');
 	}
@@ -56,16 +58,10 @@ class EmogicTarotReader_Core {
 		$actual_link .= isset($_REQUEST["ETSWP_deck"]) ? "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"] ) : "";
 		$actual_link .= isset($_REQUEST["ETSWP_question"]) ? "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] ) : "";
 		$actual_link .= "&" . "ETSWP_email_link=1";
-		$actual_link .= isset($_REQUEST["ETSWP_keys_shuffled"]) ? "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( $_REQUEST["ETSWP_keys_shuffled"] ) : "";
+		$ETSWP_keys_shuffled = wp_cache_get('ETSWP_keys_shuffled'); 
+		$json = json_encode($ETSWP_keys_shuffled);
+		$actual_link .= isset($json) ? "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( $json ) : "";
 		
-		/*
-		 *$actual_link = sanitize_text_field( $_REQUEST["ETSWP_spread"] ) 
-			. "?ETSWP_first_name=" . sanitize_text_field( $_REQUEST["ETSWP_first_name"] )
-			. "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"])
-			. "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] )
-			. "&" . "ETSWP_email_link=1"
-			. "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( json_encode( wp_cache_get('ETSWP_keys_shuffled') ) );
-			*/
 		return $actual_link;
 	}
 	
@@ -165,10 +161,21 @@ class EmogicTarotReader_Core {
 			array_push($ETSWP_items_array , $item_array);
 			}
 	
+		if( isset($_REQUEST["ETSWP_keys_shuffled"]) ){ # this is likely a reading from an email link 
+			$json = sanitize_text_field( $_REQUEST["ETSWP_keys_shuffled"] );
+			$ETSWP_keys_shuffled = json_decode($json);
+			//need to globalize it so we can use it in shortcode. shortcodes are called later!
+			wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
+			wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
+			return;
+		}
+		
 		//shuffled order is in cookie or we need to shuffle
 		$hash = self::build_cookie_name();
 		if( isset($_COOKIE[$hash]) ){//simply convert cookie to cards
+		//if( isset($_REQUEST[$hash]) ){//simply convert cookie to cards
 				$json = sanitize_text_field( $_COOKIE[$hash] );
+				//$json = sanitize_text_field( $_REQUEST[$hash] );
 				$ETSWP_keys_shuffled = json_decode($json);
 			}
 		else{//no cookies, shuffle cards
@@ -199,6 +206,7 @@ class EmogicTarotReader_Core {
 			}
 			setcookie($hash , $json , time()+($deck_life_in_hours*60*60) , "/" ); //cookie for a day
 		}
+		
 		//need to globalize it so we can use it in shortcode. shortcodes are called later!
 		wp_cache_set('ETSWP_items_array' , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
 		wp_cache_set('ETSWP_keys_shuffled' , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode

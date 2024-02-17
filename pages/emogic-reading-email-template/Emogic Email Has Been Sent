@@ -1,1 +1,25 @@
-An email has been sent
+<!-- wp:html -->
+<style>
+
+/* this block is here so it is easier for me to distribute my css to your wordpress installation.
+This is not good practice. You should create a new Page Template and add your CCS there. */
+
+BODY {
+  color: yellow;
+  background-color: black;
+}
+
+a , a:visited{
+  color: yellow;
+}
+
+</style>
+<!-- /wp:html -->
+
+<!-- wp:paragraph -->
+<p>Thank you for requesting an Emogic Tarot Reading.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>[ETSWP_get_input name='ETSWP_first_name'] ,an email will be sent to you when the reading is created.</p>
+<!-- /wp:paragraph -->
