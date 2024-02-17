@@ -1,0 +1,31 @@
+<!-- wp:html -->
+<!-- 
+Sending email readings are fraught with formatting challenges. 
+
+Here I use the outer div to inline css our email readings
+-->
+
+<div style="color: yellow; background-color: black; padding: 25px;">
+
+<p>&nbsp;</p>
+<!-- /wp:html -->
+
+<!-- wp:paragraph -->
+<p><a href="[ETSWP_link_to_reading]" target="_blank" rel="noreferrer noopener">Click here to get your reading</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:html -->
+[ETSWP_spread]
+<!--
+Use this if you want the reading to be added to the email. The formatting will likely be different from what shows on the website as WP does not use inline css. 
+
+The link above will take you to the Wordpress site and display the reading.
+This is, by far, the easiest way to email a reading without email formatting headaches.
+-->
+
+
+<!-- /wp:html -->
+
+<!-- wp:html -->
+</div>
+<!-- /wp:html -->

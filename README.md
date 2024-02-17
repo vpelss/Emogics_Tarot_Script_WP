@@ -216,7 +216,6 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 
--
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
 -block display on emailed readings??? -block show html reading on email?
 -card cookie and card arg the same. will that work? -with link? ?sh=

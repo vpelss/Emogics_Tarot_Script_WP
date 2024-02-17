@@ -25,18 +25,47 @@ class EmogicTarotReader_Core {
 
 		add_shortcode( 'ETSWP_link_to_reading' , array('EmogicTarotReader_Core','get_link_to_reading') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 		add_shortcode( 'ETSWP_spread' , array('EmogicTarotReader_Core','get_spread') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+		
+		add_filter( 'the_content', array('EmogicTarotReader_Core','filter_block_html_display_on_email') , 1 );
+	}
+
+	public static function  filter_block_html_display_on_email( $content ) {
+	// Check if we're inside the main loop in a single Post.
+	if ( is_singular() && in_the_loop() && is_main_query() ) {
+		//just_say_no_to_display
+		if ( str_contains($content, "redirect_to_email_has_been_sent") ){ //see if we want
+			$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER . '/emogic-email-has-been-sent'); //returns post object or null
+			if(! isset( $wp_post )) {
+				wp_die( "No Email Has Been Sent Template found." );
+				} //if no email template stop everything.
+			//just in case useful
+			$content = do_shortcode($wp_post->post_content);
+			//return ''; //maybe show a new page "An email has been sent"
+		}
+	//return $content . esc_html__( 'I’m filtering the content inside the main loop', 'wporg');
+	}
+	return $content;
 	}
 
 	public static function get_link_to_reading() { //usually for email template
-		//$post_url = get_post()->guid;
-		//$actual_link = $post_url
-		$actual_link = sanitize_text_field( $_REQUEST["ETSWP_spread"])
+		$post_url = get_post()->guid;
+		$actual_link = $post_url;
+		//$actual_link = isset($_REQUEST["ETSWP_spread"]) ? sanitize_text_field( $_REQUEST["ETSWP_spread"] ) : "";
+		$actual_link .= "?";
+		$actual_link .= isset($_REQUEST["ETSWP_first_name"]) ? "&" . "ETSWP_first_name=" . sanitize_text_field( $_REQUEST["ETSWP_first_name"] ) : "";
+		$actual_link .= isset($_REQUEST["ETSWP_deck"]) ? "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"] ) : "";
+		$actual_link .= isset($_REQUEST["ETSWP_question"]) ? "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] ) : "";
+		$actual_link .= "&" . "ETSWP_email_link=1";
+		$actual_link .= isset($_REQUEST["ETSWP_keys_shuffled"]) ? "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( $_REQUEST["ETSWP_keys_shuffled"] ) : "";
+		
+		/*
+		 *$actual_link = sanitize_text_field( $_REQUEST["ETSWP_spread"] ) 
 			. "?ETSWP_first_name=" . sanitize_text_field( $_REQUEST["ETSWP_first_name"] )
 			. "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"])
-			//. "&" . "ETSWP_spread=" . sanitize_text_field($_REQUEST["ETSWP_spread"] )
 			. "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] )
 			. "&" . "ETSWP_email_link=1"
 			. "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( json_encode( wp_cache_get('ETSWP_keys_shuffled') ) );
+			*/
 		return $actual_link;
 	}
 	
