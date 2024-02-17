@@ -22,6 +22,7 @@ class EmogicTarotReader_Activator{
 
 	$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
 	self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
+	//stored in wp db
 	add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array));
 	}
 
@@ -32,7 +33,7 @@ class EmogicTarotReader_Activator{
 		//does file exist?
 		$page_path = $page_path_parent.'/'.$file;
 		$wp_post = get_page_by_path($page_path); //returns post object or null
-		if(is_file($dir.'/'.$file)){
+		if(is_file($dir.'/'.$file)){//for files
 			$post_status = 'draft';
 			if(! $parent_id)  //only publish if root pages
 				$post_status = 'publish';

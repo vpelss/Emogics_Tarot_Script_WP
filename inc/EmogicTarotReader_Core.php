@@ -22,30 +22,56 @@ class EmogicTarotReader_Core {
 		add_shortcode( 'ETSWP_pluginpath' , array('EmogicTarotReader_Core','get_pluginpath') ); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
 		add_shortcode( 'ETSWP_get_cookie' , array('EmogicTarotReader_Core','get_cookie') ); //for reading display page [ETSWP_get_cookie name='cookie name']
 		add_shortcode( 'ETSWP_get_input' , array('EmogicTarotReader_Core','get_input') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+
+		add_shortcode( 'ETSWP_link_to_reading' , array('EmogicTarotReader_Core','get_link_to_reading') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
+		add_shortcode( 'ETSWP_spread' , array('EmogicTarotReader_Core','get_spread') ); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
 	}
 
+	public static function get_link_to_reading() { //usually for email template
+		//$post_url = get_post()->guid;
+		//$actual_link = $post_url
+		$actual_link = sanitize_text_field( $_REQUEST["ETSWP_spread"])
+			. "?ETSWP_first_name=" . sanitize_text_field( $_REQUEST["ETSWP_first_name"] )
+			. "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"])
+			//. "&" . "ETSWP_spread=" . sanitize_text_field($_REQUEST["ETSWP_spread"] )
+			. "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] )
+			. "&" . "ETSWP_email_link=1"
+			. "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( json_encode( wp_cache_get('ETSWP_keys_shuffled') ) );
+		return $actual_link;
+	}
+	
+	public static function get_spread() { //usually for email template
+		$post = get_post();
+		$html = do_shortcode($post->post_content);
+		return $html;		
+	}
+	
 	//Filter the mail content type.
-	public static function wpdocs_set_html_mail_content_type() {
+	public static function set_html_mail_content_type() {
 	return 'text/html';
 	}
 	
 	public static function email_it(){
-		if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){ // no need to shuffle if not on a spread page
+		if( isset($_REQUEST["ETSWP_email_link"]) ) { //this is a reading from an email link. don't send another email please.
+			return false;
+		}
+		if( ! self::is_descendent_page_of( EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ){ // no need to email if not on a spread page
 			return;
 		}
-		add_filter( 'wp_mail_content_type', 'EmogicTarotReader_Core::wpdocs_set_html_mail_content_type' );
-		$post = get_post();
-		$html = do_shortcode($post->post_content);
-		
-		$actual_link = sanitize_text_field( $_REQUEST["ETSWP_spread"])
-			. "?ETSWP_first_name=" . sanitize_text_field( $_REQUEST["ETSWP_first_name"] )
-			. "&" . "ETSWP_deck=" . sanitize_text_field( $_REQUEST["ETSWP_deck"])
-			. "&" . "ETSWP_spread=" . sanitize_text_field($_REQUEST["ETSWP_spread"] )
-			. "&" . "ETSWP_question=" . sanitize_text_field( $_REQUEST["ETSWP_question"] )
-			. "&" . "ETSWP_keys_shuffled=" . sanitize_text_field( json_encode( wp_cache_get('ETSWP_keys_shuffled') ) );
-		$html = "<a href='" . $actual_link . "'>Click here to get your reading</a> <p>" . $html;
-		$result = wp_mail( "vpelss@gmail.com" , "test", $html );
-		$t = 9;
+		//set email to html 
+		add_filter( 'wp_mail_content_type', 'EmogicTarotReader_Core::set_html_mail_content_type' );		
+		//read email template
+		$wp_post = get_page_by_path(EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER . '/emogic-reading-email-template'); //returns post object or null
+		if(! isset( $wp_post )) {
+			wp_die( "No Email Template found." );
+			} //if no email template stop everything.
+		//email template will should have [ETSWP_link_to_reading] and/or [ETSWP_spread]
+		$email_template = do_shortcode($wp_post->post_content);
+		if ( ! str_contains($email_template, "just_say_yes_to_email") ){ //see if this reading is set for email
+			return;
+		}
+		//$html = do_shortcode($email_template); not required
+		$result = wp_mail( "vpelss@gmail.com" , "test", $email_template );
 		// Reset content-type to avoid conflicts -- https://core.trac.wordpress.org/ticket/23578
 		remove_filter( 'wp_mail_content_type', 'EmogicTarotReader_Core::wpdocs_set_html_mail_content_type' );
 	}
@@ -249,7 +275,7 @@ class EmogicTarotReader_Core {
 		$cookie_name = '';
 		$cookie_array = ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'];
 		foreach($cookie_array as $cookie){
-			if( isset($_REQUEST[$cookie]) ){
+			if( isset( $_REQUEST[$cookie] ) ){
 				$cookie_name = $cookie_name . sanitize_text_field( $_REQUEST[$cookie] ); //build cookie name for card reading
 				$result = setcookie( $cookie , sanitize_text_field( $_REQUEST[$cookie] ) , time()+(365*24*60*60) , "/" ); //save cookie of form fields from main tarot page
 			}

@@ -1,8 +1,3 @@
-<!-- wp:html -->
-<!-- outer div required so we can inline style our email readings -->
-<div style="color: yellow; background-color: black;">
-<!-- /wp:html -->
-
 <!-- wp:paragraph -->
 <p>Think carefully on your question. Click on a card. Meditate on it's meaning.</p>
 <!-- /wp:paragraph -->
@@ -426,7 +421,3 @@ circle('initialize');
 <p class="has-text-align-center">[ETSWP_get_item item='20' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
-
-<!-- wp:html -->
-</div>
-<!-- /wp:html -->
