@@ -78,14 +78,62 @@ class EmogicTarotReader_Activator{
 	public static function copy_images_to_media_library(){
 		$from = EMOGIC_TAROT_PLUGIN_PATH . "/images/";
 		$to = get_home_path() . "wp-content/uploads/Emogic-Images";
-		$result = mkdir($to, 0755);
-		
-		//recursive_copy2($from,$to);
-		
+		$result = mkdir($to, 0755); //create dest dir
+		self::recursive_copy2($from,$to); //copy files
+		self::copy_images_to_media_library2($to);
 		$t = 9;
+	}
+	
+	public static function copy_images_to_media_library2($to){
+
+		foreach (
+		 $iterator = new \RecursiveIteratorIterator(
+		  new \RecursiveDirectoryIterator($to, \RecursiveDirectoryIterator::SKIP_DOTS),
+		  \RecursiveIteratorIterator::SELF_FIRST) as $item
+		) {
+		  if ($item->isDir()) {
+			//mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
+		  } else {
+			
+			//copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
+			$filename = $item->getFilename();
+			$path = $item->getPath();
+			$url_filename =  $path."/".$filename;
+			$artdata = array(
+				'post_author' => 1, 
+				'post_date' => current_time('mysql'),
+				'post_date_gmt' => current_time('mysql'),
+				'post_title' => $filename, 
+				'post_status' => 'inherit',
+				'comment_status' => 'closed',
+				'ping_status' => 'closed',
+				'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $filename)),											'post_modified' => current_time('mysql'),
+				'post_modified_gmt' => current_time('mysql'),
+				//'post_parent' => $post_id,
+				'post_type' => 'attachment',
+				//'guid' => $siteurl.'/'.$artDir.$new_filename,
+				'guid' => $url_filename,
+				'post_mime_type' => $file_info['mime'],
+				'post_excerpt' => '',
+				'post_content' => ''
+			);
+			
+			//$attach_id = wp_insert_attachment( $artdata, $save_path, $post_id );
+			$attach_id = wp_insert_attachment( $artdata, $url_filename );
+	
+			//generate metadata and thumbnails
+			//if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path)) {
+			if ($attach_data = wp_generate_attachment_metadata( $attach_id,$url_filename)) {
+				wp_update_attachment_metadata($attach_id, $attach_data);
+			}
+			$t = 9;			
+			
+		  }
+		}		
 		
 	}
 	
+	//https://nlb-creations.com/2012/09/26/how-to-programmatically-import-media-files-to-wordpress/
 	public static function fetch_media($file_url, $post_id) {
 		require_once(ABSPATH . 'wp-load.php');
 		require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -153,27 +201,24 @@ class EmogicTarotReader_Activator{
 		return true;
 	}
 	
-	
-	public static function recursive_copy($src,$dst) {
-		$dir = opendir($src);
-		@mkdir($dst);
-		while(( $file = readdir($dir)) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ) {
-					$this->recursive_copy($src .'/'. $file, $dst .'/'. $file);
-				}
-				else {
-					copy($src .'/'. $file,$dst .'/'. $file);
-				}
-			}
-		}
-		closedir($dir);
-	}
-
+	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
+	public static function recurse_copy($src,$dst) { 
+    $dir = opendir($src); 
+    @mkdir($dst); 
+    while(false !== ( $file = readdir($dir)) ) { 
+        if (( $file != '.' ) && ( $file != '..' )) { 
+            if ( is_dir($src . '/' . $file) ) { 
+                recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+            } 
+            else { 
+                copy($src . '/' . $file,$dst . '/' . $file); 
+            } 
+        } 
+    } 
+    closedir($dir); 
+}
+	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
 	public static function recursive_copy2($source,$dest) {	
-		//$source = "dir/dir/dir";
-		//$dest= "dest/dir";
-		
 		mkdir($dest, 0755);
 		foreach (
 		 $iterator = new \RecursiveIteratorIterator(
