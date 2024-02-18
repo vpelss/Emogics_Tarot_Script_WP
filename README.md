@@ -230,7 +230,10 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 -deck edit page?
 
+-images in galleries!!!!!!!!!!!!
+
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
+-one email only
 
 -token to choose a template
 -token to choose a response page (email)
