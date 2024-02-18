@@ -12,7 +12,7 @@ class EmogicTarotReader_Activator{
 
 	public static function activate(){
 		self::read_and_create_pages();
-		self::copy_images_to_media_library();
+		self::copy_images_to_uploads();
 		flush_rewrite_rules();
 	}
 
@@ -75,130 +75,76 @@ class EmogicTarotReader_Activator{
 		return wp_insert_post( $postarr ); //returns page_id
 	}
 	
-	public static function copy_images_to_media_library(){
+	public static function copy_images_to_uploads(){
+		$deactivate_media_array = array();
 		$from = EMOGIC_TAROT_PLUGIN_PATH . "/images/";
 		$to = get_home_path() . "wp-content/uploads/Emogic-Images";
+		
 		$result = mkdir($to, 0755); //create dest dir
 		self::recursive_copy2($from,$to); //copy files
-		self::copy_images_to_media_library2($to);
 		$t = 9;
+		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));
+		
 	}
 	
-	public static function copy_images_to_media_library2($to){
-
+	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
+	public static function recursive_copy2($source,$dest,$deactivate_media_array) {	
+		mkdir($dest, 0755);
 		foreach (
 		 $iterator = new \RecursiveIteratorIterator(
-		  new \RecursiveDirectoryIterator($to, \RecursiveDirectoryIterator::SKIP_DOTS),
+		  new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
 		  \RecursiveIteratorIterator::SELF_FIRST) as $item
 		) {
 		  if ($item->isDir()) {
-			//mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
+			mkdir($dest . "/" . $iterator->getSubPathname());
 		  } else {
-			
+			copy($item, $dest . "/" . $iterator->getSubPathname());
+			$filename = $iterator->getSubPathname();
+			//$file_path =  $dest . DIRECTORY_SEPARATOR . $filename;
+			$file_path =  $dest . "/" . $filename;
+			self::copy_image_to_media_library($file_path,$filename,$deactivate_media_array);
+		  }
+		}
+	}
+
+	public static function copy_image_to_media_library($file_path,$filename,$deactivate_media_array){
 			//copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
-			$filename = $item->getFilename();
-			$path = $item->getPath();
-			$url_filename =  $path."/".$filename;
+			//$filename = $item->getFilename();
+			//$path = $item->getPath();
+			//$file_path =  $path."/".$filename;
+			
+			//$rr = EMOGIC_TAROT_PLUGIN_WP_ROOT_URL."/"."wp-content/uploads/Emogic-Images"."/".$filename;
+			 //self::rudr_upload_file_by_url( $rr );
+			 
 			$artdata = array(
 				'post_author' => 1, 
-				'post_date' => current_time('mysql'),
-				'post_date_gmt' => current_time('mysql'),
+				//'post_date' => current_time('mysql'),
+				//'post_date_gmt' => current_time('mysql'),
 				'post_title' => $filename, 
-				'post_status' => 'inherit',
+				//'post_status' => 'inherit',
 				'comment_status' => 'closed',
 				'ping_status' => 'closed',
 				'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $filename)),											'post_modified' => current_time('mysql'),
 				'post_modified_gmt' => current_time('mysql'),
-				//'post_parent' => $post_id,
+				'post_parent' => 0,
 				'post_type' => 'attachment',
 				//'guid' => $siteurl.'/'.$artDir.$new_filename,
-				'guid' => $url_filename,
-				'post_mime_type' => $file_info['mime'],
-				'post_excerpt' => '',
-				'post_content' => ''
+				'guid' => $file_path,
+				'post_mime_type' => mime_content_type( $file_path ),
+				'post_excerpt' => $filename,
+				'post_content' => $filename,
+				'size'     => filesize( $file_path ),
 			);
-			
-			//$attach_id = wp_insert_attachment( $artdata, $save_path, $post_id );
-			$attach_id = wp_insert_attachment( $artdata, $url_filename );
+			$attach_id = wp_insert_attachment( $artdata, $file_path , 0);
 	
 			//generate metadata and thumbnails
-			//if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path)) {
-			if ($attach_data = wp_generate_attachment_metadata( $attach_id,$url_filename)) {
+			if ($attach_data = wp_generate_attachment_metadata( $attach_id,$file_path)) {
 				wp_update_attachment_metadata($attach_id, $attach_data);
 			}
-			$t = 9;			
 			
-		  }
-		}		
-		
-	}
-	
-	//https://nlb-creations.com/2012/09/26/how-to-programmatically-import-media-files-to-wordpress/
-	public static function fetch_media($file_url, $post_id) {
-		require_once(ABSPATH . 'wp-load.php');
-		require_once(ABSPATH . 'wp-admin/includes/image.php');
-		global $wpdb;
-	
-		if(!$post_id) {
-			return false;
-		}
-	
-		//directory to import to	
-		$artDir = 'wp-content/uploads/importedmedia/';
-	
-		//if the directory doesn't exist, create it	
-		if(!file_exists(ABSPATH.$artDir)) {
-			mkdir(ABSPATH.$artDir);
-		}
-	
-		//rename the file... alternatively, you could explode on "/" and keep the original file name
-		$ext = array_pop(explode(".", $file_url));
-		$new_filename = 'blogmedia-'.$post_id.".".$ext; //if your post has multiple files, you may need to add a random number to the file name to prevent overwrites
-	
-		if (@fclose(@fopen($file_url, "r"))) { //make sure the file actually exists
-			copy($file_url, ABSPATH.$artDir.$new_filename);
-	
-			$siteurl = get_option('siteurl');
-			$file_info = getimagesize(ABSPATH.$artDir.$new_filename);
-	
-			//create an array of attachment data to insert into wp_posts table
-			$artdata = array();
-			$artdata = array(
-				'post_author' => 1, 
-				'post_date' => current_time('mysql'),
-				'post_date_gmt' => current_time('mysql'),
-				'post_title' => $new_filename, 
-				'post_status' => 'inherit',
-				'comment_status' => 'closed',
-				'ping_status' => 'closed',
-				'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),											'post_modified' => current_time('mysql'),
-				'post_modified_gmt' => current_time('mysql'),
-				'post_parent' => $post_id,
-				'post_type' => 'attachment',
-				'guid' => $siteurl.'/'.$artDir.$new_filename,
-				'post_mime_type' => $file_info['mime'],
-				'post_excerpt' => '',
-				'post_content' => ''
-			);
-	
-			$uploads = wp_upload_dir();
-			$save_path = $uploads['basedir'].'/importedmedia/'.$new_filename;
-	
-			//insert the database record
-			$attach_id = wp_insert_attachment( $artdata, $save_path, $post_id );
-	
-			//generate metadata and thumbnails
-			if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path)) {
-				wp_update_attachment_metadata($attach_id, $attach_data);
-			}
-	
-			//optional make it the featured image of the post it's attached to
-			$rows_affected = $wpdb->insert($wpdb->prefix.'postmeta', array('post_id' => $post_id, 'meta_key' => '_thumbnail_id', 'meta_value' => $attach_id));
-		}
-		else {
-			return false;
-		}
-		return true;
+			array_push( $deactivate_media_array , $attach_id );
+			//set_post_thumbnail
+			//$post_id = wp_insert_post( $my_post_data ); 
 	}
 	
 	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
@@ -217,20 +163,5 @@ class EmogicTarotReader_Activator{
     } 
     closedir($dir); 
 }
-	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
-	public static function recursive_copy2($source,$dest) {	
-		mkdir($dest, 0755);
-		foreach (
-		 $iterator = new \RecursiveIteratorIterator(
-		  new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
-		  \RecursiveIteratorIterator::SELF_FIRST) as $item
-		) {
-		  if ($item->isDir()) {
-			mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
-		  } else {
-			copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
-		  }
-		}
-	}
 
 }

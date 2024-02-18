@@ -16,7 +16,14 @@ class EmogicTarotReader_Deactivator{
 			$page = get_page_by_path($page_name);
 			wp_delete_post($page->ID , 1);
 			}
-
+			
+		//remove images
+		$images_ids = get_option('EmogicTarotReader_option_deactivate_media_array');
+		delete_option('EmogicTarotReader_option_deactivate_media_array'); //no longer needed
+		foreach ($images_ids as $images_id) {
+			wp_delete_attachment( $images_id );
+			}
+			
 		flush_rewrite_rules();
 	}
 
