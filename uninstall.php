@@ -6,5 +6,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // nothing to do. we did it all in deactivate.php
+//maybe delete card image folder? alert first?
 
 

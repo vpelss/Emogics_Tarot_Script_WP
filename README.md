@@ -209,6 +209,14 @@ When they click on "Get Reading", their forms are sent to the spread they chose.
 When the spread page is displayed, the deck database is read and then shuffled. If there was an cookie for a deck shuffle that matches this reading, then that deck shuffle will be used.
 Card images, text, fields, etc are displayed using shortcodes.
 
+## FAQs
+
+#Why am I not seeing your images on the Wordpress edit page?
+
+To distibute the plugin to multiple sites this is required. When you add images from your site, you will see them in the eit page.
+
+Note: the images where the selected cards will show will always be blank. In the edit screen a card has not been selected yet.
+
 ## Support
 
 Support is limited to bugs as time permits.
@@ -228,22 +236,16 @@ Not for resale. Do not charge for this.
 -Everything
 
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
--deck edit page?
-
--images in galleries!!!!!!!!!!!!
 
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
 -one email only
-
--token to choose a template
--token to choose a response page (email)
+-email comes from Wordpress  wordpress@tarot.emogic.com : allow users to change in admin
 
 -make a post welcome message...
 
 -warn on deactivate
 
 -better front form option? Use shortcodes for form and text fields? - show example...
--fix cookie format???
 
 -more spreads
 -Numbers Speak reading

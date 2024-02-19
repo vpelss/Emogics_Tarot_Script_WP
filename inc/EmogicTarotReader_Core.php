@@ -21,7 +21,10 @@ class EmogicTarotReader_Core {
         //for email, but can be used elsewhere
         add_shortcode("ETSWP_link_to_reading", ["EmogicTarotReader_Core", "get_link_to_reading", ]); //eg [ETSWP_link_to_reading] will return a GET URL to the current reading. For use in email readings
         add_shortcode("ETSWP_spread", ["EmogicTarotReader_Core", "get_spread"]); //eg [ETSWP_spread] will return the spread page for the current reading. For use in the email template page.
-        add_filter("the_content", ["EmogicTarotReader_Core", "filter_block_html_display_on_email"], 1); //for sending email in html        
+        add_filter("the_content", ["EmogicTarotReader_Core", "filter_block_html_display_on_email"], 1); //for sending email in html
+        // Hooking up our functions to WordPress filters 
+        add_filter( 'wp_mail_from', ["EmogicTarotReader_Core", 'sender_email'] );
+        add_filter( 'wp_mail_from_name', ["EmogicTarotReader_Core",'sender_name'] );
     }
     
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
@@ -260,6 +263,16 @@ class EmogicTarotReader_Core {
         return "text/html";
     }
     
+    // Function to change email address
+    public static function sender_email( $original_email_address ) {
+        return 'tarot@tarot.emogic.com';
+    }
+ 
+    // Function to change sender name
+    public static function sender_name( $original_email_from ) {
+        return 'Tarot';
+    }
+     
 	//for quick short code retrieval
     public static function get_item($atts = [], $content = null) {
         $ETSWP_items_array = wp_cache_get("ETSWP_items_array");

@@ -21,7 +21,8 @@ class EmogicTarotReader_Deactivator{
 		$images_ids = get_option('EmogicTarotReader_option_deactivate_media_array');
 		delete_option('EmogicTarotReader_option_deactivate_media_array'); //no longer needed
 		foreach ($images_ids as $images_id) {
-			wp_delete_attachment( $images_id );
+			$result = wp_delete_attachment( $images_id , true );
+			$t = 9;
 			}
 			
 		flush_rewrite_rules();

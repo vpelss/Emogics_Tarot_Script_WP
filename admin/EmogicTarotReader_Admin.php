@@ -1,65 +1,65 @@
 <?php
 
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
- */
-
-/**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
- * @author     Your Name <email@example.com>
- */
-
 class EmogicTarotReader_Admin {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
+	public static function run() {
+		//set up setting link in plugin menu
+		add_filter( "plugin_action_links_" . EMOGIC_TAROT_PLUGIN_NAME , 'EmogicTarotReader_Admin::settings_link' ); 
+		//set up admin form field(s)
+		add_action( 'admin_init', 'EmogicTarotReader_Admin::settings_init' ); //admin_init is triggered before any other hook when a user accesses the admin area.
+		//page title , menu title , capability , menu_slug , callback
+		add_action( 'admin_menu', 'EmogicTarotReader_Admin::add_admin_menu' );
+		//add_options_page( 'Emogic Tarot Reader Settings 2', 'ETSWP Settings', 'manage_options', 'ETSWP_settings2', 'EmogicTarotReader_Admin::imok_settings_section_callback' ); 
+	}
+	
+	
+	public static function add_admin_menu(  ) {
+		//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):
+		//add_options_page( 'imok settings', 'imok', 'manage_options', 'imok_settings', 'imok_options_page' );
+		add_options_page( 'Emogic Tarot Reader Settings 2', 'ETSWP Settings', 'manage_options', 'ETSWP_settings2', 'EmogicTarotReader_Admin::imok_settings_section_callback' ); 
+		}
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+	//add custom settings link next to plugin deactivate link
+	public static function settings_link($links){
+		//$settings_link = '<a href="admin.php?page=ETSWP_settings">Settings</a>';
+		$settings_link = '<a href="admin.php?page=ETSWP_admin_page">Settings</a>';
+		array_push($links , $settings_link);
+		return $links;
+	}
+	
+	//set up admin field(s)
+	public static function settings_init(  ) {
+		//register_setting(string $option_group=ETSWP_admin_page , string $option_name=ETSWP_admin_settings)
+		//creates an array ETSWP_admin_settings in wp_options and wp will update it according to our added setting fields
+		register_setting( 'ETSWP_admin_page', 'ETSWP_admin_settings' );
+		add_settings_section(
+			'ETSWP_pluginPage_section',
+			'Emogic Tarot Reader Settings', // section title , 
+			'EmogicTarotReader_Admin::imok_settings_section_callback',
+			//'ETSWP_admin_page' //slug-name of the settings page on which to show the section
+			'General' //slug-name of the settings page on which to show the section
+		);
+		add_settings_field(
+			'ETSWP_from_email_field', //Slug-name to identify the field
+			'From Email', //field label
+			'email_field_render', //callback to create field
+			'ETSWP_admin_page', //slug-name of the settings page on which to show the section
+			'ETSWP_pluginPage_section'
+		);
+	}
+	
+	public static function imok_settings_section_callback(  ) {
+		//more text for Section title area
+		echo 'This section description'; 
 	}
 
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
+	public static function email_field_render(  ) {
+		$options = get_option( 'ETSWP_admin_settings' );
+		$option1 = $options['ETSWP_from_email_field'];
+		//echo "<input type='text' name='imok_admin_settings[ETSWP_from_email_field]' value='{$options['imok_from_email_field']}'>";
+		echo "<input type='text' name='ETSWP_from_email_field' value='{$options['imok_from_email_field']}'>";
+	}
+
 	public function enqueue_styles() {
 
 		/**
@@ -74,7 +74,7 @@ class EmogicTarotReader_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array() );
 
 	}
 
@@ -102,3 +102,64 @@ class EmogicTarotReader_Admin {
 	}
 
 }
+
+/*
+//add_action( 'admin_menu' , array('admin' ,'imok_add_admin_pages') ); //set an admin page and put it in wp admin left menu
+add_action( 'admin_menu' , 'imok_add_admin_pages' ); //set an admin page and put it in wp admin left menu
+function imok_add_admin_pages(){
+		//add_menu_page( 'browser tab text' , 'link text' , 'manage_options' , 'url ? page name' , 'path to html inc\admin\admin::admin_index' , 'dashicons-store' , 110 );
+		add_menu_page( 'imok Plugin' , 'IMOK Admin' , 'manage_options' , 'imok_admin_page' , 'imok_admin_index' , 'dashicons-store' , 110 );
+	}
+function imok_admin_index(){//generates html output
+		require_once IMOK_PLUGIN_PATH . '/templates/admin.php'; //
+	}
+
+add_filter( "plugin_action_links_" . IMOK_PLUGIN_NAME , 'imok_settings_link' ); 	//set up link under plugin on plugin page
+function imok_settings_link($links){
+		//add custom settings link
+		$settings_link = '<a href="admin.php?page=imok_admin_page">Settings</a>';
+		array_push($links , $settings_link);
+		return $links;
+	}
+*/
+
+
+ /*
+//the imok fields to be added to user profile page
+//these require echo to feed to user page at correct time. return goes to a bit bucket so it does not work here
+add_action( 'show_user_profile', 'imok_settings_form_echo' ); // Add the imok fields to user's own profile editing screen
+add_action( 'edit_user_profile', 'imok_settings_form_echo' ); // Add the imok fields to user profile editing screen for admins
+function imok_settings_form_echo( $user ){
+	$html = "<h2 id='settings_top'>IMOK Data Settings Below:</h2><hr>" . imok_settings_form($user);
+	echo $html;
+	}
+
+add_action( 'personal_options_update', 'imok_process_form' ); // user to process IMOK setting changes on their account page. imok_process_form() is in settings.php
+add_action( 'edit_user_profile_update', 'imok_process_form' ); // admin to process user's IMOK setting.  imok_process_form() is in settings.php
+
+//--------------------------------
+
+*/
+
+
+/*
+
+//Adds an imok link to the Dashboard Settings menu. Also creates the imok setting page 
+add_action( 'admin_menu', 'imok_add_admin_menu' );
+function imok_add_admin_menu(  ) {
+	add_options_page( 'imok settings', 'imok', 'manage_options', 'imok_settings', 'imok_options_page' );
+	//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):
+}
+
+function imok_options_page(  ) {
+	 //ob_start();//allow return with same code
+	echo"<form action='options.php' method='post'>";
+	settings_fields( 'imok_admin_page' );
+	do_settings_sections( 'imok_admin_page' );
+	submit_button();
+	echo"</form>";
+	//return ob_get_clean(); //allow return with same code
+}
+
+*/
+

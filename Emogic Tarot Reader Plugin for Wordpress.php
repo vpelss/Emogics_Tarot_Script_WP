@@ -37,6 +37,8 @@ function EmogicTarotReader_deactivate() {
 }
 
 if( is_admin() ){
+	require_once plugin_dir_path( __FILE__ ) . 'admin/EmogicTarotReader_Admin.php';
+	EmogicTarotReader_Admin::run();
 	return;
 	}  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
 

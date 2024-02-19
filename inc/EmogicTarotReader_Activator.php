@@ -12,7 +12,7 @@ class EmogicTarotReader_Activator{
 
 	public static function activate(){
 		self::read_and_create_pages();
-		self::copy_images_to_uploads();
+		self::images_to_media_library();
 		flush_rewrite_rules();
 	}
 
@@ -75,20 +75,21 @@ class EmogicTarotReader_Activator{
 		return wp_insert_post( $postarr ); //returns page_id
 	}
 	
-	public static function copy_images_to_uploads(){
+	public static function images_to_media_library(){
 		$deactivate_media_array = array();
 		$from = EMOGIC_TAROT_PLUGIN_PATH . "/images/";
 		$to = get_home_path() . "wp-content/uploads/Emogic-Images";
 		
 		$result = mkdir($to, 0755); //create dest dir
-		self::recursive_copy2($from,$to); //copy files
-		$t = 9;
+		self::recursive_copy($from,$to,$deactivate_media_array); //copy files
+		
 		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));
+		$t = 9;
 		
 	}
 	
 	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
-	public static function recursive_copy2($source,$dest,$deactivate_media_array) {	
+	public static function recursive_copy($source,$dest,&$deactivate_media_array) {	
 		mkdir($dest, 0755);
 		foreach (
 		 $iterator = new \RecursiveIteratorIterator(
@@ -100,14 +101,15 @@ class EmogicTarotReader_Activator{
 		  } else {
 			copy($item, $dest . "/" . $iterator->getSubPathname());
 			$filename = $iterator->getSubPathname();
-			//$file_path =  $dest . DIRECTORY_SEPARATOR . $filename;
 			$file_path =  $dest . "/" . $filename;
+			//$file_path =  $source . "/" . $filename;
+			$file_path= str_replace("\\","/",$file_path);
 			self::copy_image_to_media_library($file_path,$filename,$deactivate_media_array);
 		  }
 		}
 	}
 
-	public static function copy_image_to_media_library($file_path,$filename,$deactivate_media_array){
+	public static function copy_image_to_media_library($file_path,$filename,&$deactivate_media_array){
 			//copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
 			//$filename = $item->getFilename();
 			//$path = $item->getPath();
@@ -148,7 +150,7 @@ class EmogicTarotReader_Activator{
 	}
 	
 	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
-	public static function recurse_copy($src,$dst) { 
+	public static function recurse_copy_alt($src,$dst) { 
     $dir = opendir($src); 
     @mkdir($dst); 
     while(false !== ( $file = readdir($dir)) ) { 
