@@ -13,7 +13,7 @@ class EmogicTarotReader_Admin {
 	
 		public static function create_admin_page_and_slug() { //create menu page and a slug to it
 		//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):
-		add_options_page( 'Emogic Tarot Reader Settings', 'Emogic Tarot Reader Settings', 'manage_options', 'ETSWP_settings', 'EmogicTarotReader_Admin::build_form_options_page' ); 
+		add_options_page( 'Emogic Tarot Reader Settings', 'Emogic Tarot Reader Settings', 'manage_options', 'ETSWP_settings', 'EmogicTarotReader_Admin::build_form_options_page' );	
 		}
 		
 	public static function build_form_options_page(  ) {
@@ -59,6 +59,25 @@ class EmogicTarotReader_Admin {
 			'ETSWP_option_group', //slug-name of the settings page on which to show the section
 			'ETSWP_pluginPage_section'
 		);
+		add_settings_field(
+			'ETSWP_email_display_name_field', //Slug-name to identify the field
+			' Email Display Name', //field label
+			'EmogicTarotReader_Admin::email_display_name_field_render', //callback to create field
+			'ETSWP_option_group', //slug-name of the settings page on which to show the section
+			'ETSWP_pluginPage_section'
+		);
+	
+		//also set default options if none already
+		$options = get_option( 'ETSWP_options' );
+		if($options == false || $options == ""){
+			$options = array();
+			$ETSWP_email_display_name_field = "Tarot Mailer";
+			$ETSWP_from_email_field = "tarot@emogic.com";
+			$options["ETSWP_email_display_name_field"] = $ETSWP_email_display_name_field;
+			$options["ETSWP_from_email_field"] = $ETSWP_from_email_field;
+			update_option( 'ETSWP_options' ,  $options );
+		}
+			
 	}
 	
 	public static function imok_settings_section_callback(  ) {
@@ -68,22 +87,17 @@ class EmogicTarotReader_Admin {
 
 	public static function email_field_render(  ) {
 		$options = get_option( 'ETSWP_options' );
-		if($options == false || $options == ""){
-			$options = array();
-			$ETSWP_from_email_field = "tarot@emogic.com";
-			$options["ETSWP_from_email_field"] = $ETSWP_from_email_field;
-			//update_option( string $option, mixed $value, string|bool $autoload = null ): bool
-			update_option( 'ETSWP_options' ,  $options );
-			//set_options('ETSWP_options' , $options);
-		}
-		else{
-			$ETSWP_from_email_field = $options["ETSWP_from_email_field"];
-		}
+		$ETSWP_from_email_field = $options["ETSWP_from_email_field"];
 		//name must be the option_name[option_field]
 		echo "<input type='text' name='ETSWP_options[ETSWP_from_email_field]' value='{$ETSWP_from_email_field}'>";
 	}
 
-
+	public static function email_display_name_field_render(  ) {
+		$options = get_option( 'ETSWP_options' );
+		$ETSWP_email_display_name_field = $options["ETSWP_email_display_name_field"];
+		//name must be the option_name[option_field]
+		echo "<input type='text' name='ETSWP_options[ETSWP_email_display_name_field]' value='{$ETSWP_email_display_name_field}'>";
+	}
 
 }
 

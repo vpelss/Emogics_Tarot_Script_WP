@@ -265,12 +265,22 @@ class EmogicTarotReader_Core {
     
     // Function to change email address
     public static function sender_email( $original_email_address ) {
-        return 'tarot@tarot.emogic.com';
+         $options = get_option( 'ETSWP_options' );
+         $email_address = "tarot@tarot.emogic.com";
+        if($options != false){
+            $email_address = $options["ETSWP_from_email_field"];
+        }
+        return $email_address;
     }
  
     // Function to change sender name
     public static function sender_name( $original_email_from ) {
-        return 'Tarot';
+         $options = get_option( 'ETSWP_options' );
+         $email_display_name = "Tarot Mailer";
+        if($options != false){
+            $email_display_name = $options["ETSWP_email_display_name_field"];
+        }
+        return $email_display_name;
     }
      
 	//for quick short code retrieval
