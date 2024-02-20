@@ -3,76 +3,87 @@
 class EmogicTarotReader_Admin {
 
 	public static function run() {
-		//set up setting link in plugin menu
-		add_filter( "plugin_action_links_" . EMOGIC_TAROT_PLUGIN_NAME , 'EmogicTarotReader_Admin::settings_link' ); 
-		//set up admin form field(s)
-		add_action( 'admin_init', 'EmogicTarotReader_Admin::settings_init' ); //admin_init is triggered before any other hook when a user accesses the admin area.
-		//page title , menu title , capability , menu_slug , callback
-		add_action( 'admin_menu', 'EmogicTarotReader_Admin::add_admin_menu' );
-		//add_options_page( 'Emogic Tarot Reader Settings 2', 'ETSWP Settings', 'manage_options', 'ETSWP_settings2', 'EmogicTarotReader_Admin::imok_settings_section_callback' ); 
+		//set up wp section and fields for our admin settings page
+		add_action( 'admin_init', 'EmogicTarotReader_Admin::register_settings_and_fields_for_admin_page' ); //admin_init is triggered before any other hook when a user accesses the admin area.
+		//create admin settings page and a slug to it
+		add_action( 'admin_menu', 'EmogicTarotReader_Admin::create_admin_page_and_slug' );
+		//set up 'settings' link in plugin menu
+		add_filter( "plugin_action_links_" . EMOGIC_TAROT_PLUGIN_NAME , 'EmogicTarotReader_Admin::create_plugin_setting_link' ); 
 	}
 	
-	
-	public static function add_admin_menu(  ) {
+		public static function create_admin_page_and_slug() { //create menu page and a slug to it
 		//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):
-		add_options_page( 'Emogic Tarot Reader Settings 2', 'ETSWP', 'manage_options', 'ETSWP_settings', 'EmogicTarotReader_Admin::options_page' ); 
-		//add_options_page( 'imok settings', 'imok', 'manage_options', 'imok_settings', 'imok_options_page' );
+		add_options_page( 'Emogic Tarot Reader Settings', 'Emogic Tarot Reader Settings', 'manage_options', 'ETSWP_settings', 'EmogicTarotReader_Admin::build_form_options_page' ); 
 		}
+		
+	public static function build_form_options_page(  ) {
+		//ob_start();//allow return with same code
+	   echo"<form action='options.php' method='post'>";
+	   //settings_fields( string $option_group ) Outputs nonce, action, and option_page fields for a settings page.
+	   settings_fields( 'ETSWP_option_group' );
+	   //do_settings_sections( string $page ) Prints out all settings sections added to a particular settings page.
+	   do_settings_sections( 'ETSWP_option_group' );
+	   //submit_button( string $text = null, string $type = ‘primary’, string $name = ‘submit’, bool $wrap = true, array|string $other_attributes = null )
+		//Echoes a submit button, with provided text and appropriate class(es).
+	   submit_button();
+	   echo"</form>";
+	   //return ob_get_clean(); //allow return with same code
+   }
 
-	//add custom settings link next to plugin deactivate link
-	public static function settings_link($links){
+	//set up 'settings' link in plugin menu
+	public static function create_plugin_setting_link($links){
 		//$settings_link = '<a href="admin.php?page=ETSWP_settings">Settings</a>';
 		$settings_link = '<a href="admin.php?page=ETSWP_settings">Settings</a>';
 		array_push($links , $settings_link);
 		return $links;
 	}
 	
-	//set up admin field(s)
-	public static function settings_init(  ) {
-		//register_setting(string $option_group=ETSWP_admin_page , string $option_name=ETSWP_admin_settings)
+	//set up wp section and fields for our admin settings page
+	public static function register_settings_and_fields_for_admin_page(  ) {
+		//register_setting(string $option_group, string $option_name) Registers a setting and its data.
 		//creates an array ETSWP_admin_settings in wp_options and wp will update it according to our added setting fields
-		register_setting( 'ETSWP_admin_page', 'ETSWP_admin_settings' );
+		//register_setting( 'ETSWP_admin_page', 'ETSWP_admin_settings' );
+		register_setting( 'ETSWP_option_group', 'ETSWP_options' );
+		//add_settings_section( string $id, string $title, callable $callback, string $page, array $args = array() )
 		add_settings_section(
 			'ETSWP_pluginPage_section',
 			'Emogic Tarot Reader Settings', // section title , 
 			'EmogicTarotReader_Admin::imok_settings_section_callback',
-			'ETSWP_admin_page' //slug-name of the settings page on which to show the section
-			//'General' //slug-name of the settings page on which to show the section
+			'ETSWP_option_group' //slug-name of the settings page on which to show the section
 		);
+		//add_settings_field( string $id, string $title, callable $callback, string $page, string $section = ‘default’, array $args = array() )
 		add_settings_field(
 			'ETSWP_from_email_field', //Slug-name to identify the field
 			'From Email', //field label
 			'EmogicTarotReader_Admin::email_field_render', //callback to create field
-			'ETSWP_admin_page', //slug-name of the settings page on which to show the section
+			'ETSWP_option_group', //slug-name of the settings page on which to show the section
 			'ETSWP_pluginPage_section'
 		);
 	}
 	
 	public static function imok_settings_section_callback(  ) {
 		//more text for Section title area
-		echo 'This section description'; 
+		echo 'These settings affect the email from address'; 
 	}
 
 	public static function email_field_render(  ) {
-		$options = get_option( 'ETSWP_admin_settings' );
-		$option1 = "";
-		//$option1 = $options['ETSWP_from_email_field'];
-		if($options != 0){
-			$option1 = $options['ETSWP_from_email_field'];
+		$options = get_option( 'ETSWP_options' );
+		if($options == false || $options == ""){
+			$options = array();
+			$ETSWP_from_email_field = "tarot@emogic.com";
+			$options["ETSWP_from_email_field"] = $ETSWP_from_email_field;
+			//update_option( string $option, mixed $value, string|bool $autoload = null ): bool
+			update_option( 'ETSWP_options' ,  $options );
+			//set_options('ETSWP_options' , $options);
 		}
-		//echo "<input type='text' name='imok_admin_settings[ETSWP_from_email_field]' value='{$options['imok_from_email_field']}'>";
-		echo "<input type='text' name='ETSWP_from_email_field' value='{$option1}'>";
+		else{
+			$ETSWP_from_email_field = $options["ETSWP_from_email_field"];
+		}
+		//name must be the option_name[option_field]
+		echo "<input type='text' name='ETSWP_options[ETSWP_from_email_field]' value='{$ETSWP_from_email_field}'>";
 	}
 
-	public static function options_page(  ) {
-	 //ob_start();//allow return with same code
-	echo"<form action='options.php' method='post'>";
-	settings_fields( 'ETSWP_admin_page' );
-	do_settings_sections( 'ETSWP_admin_page' );
-	submit_button();
-	echo"</form>";
-	//return ob_get_clean(); //allow return with same code
-}
+
 
 }
 
