@@ -13,9 +13,10 @@ class EmogicTarotReader_Activator{
 	public static function activate(){
 		self::read_and_create_pages();
 		self::images_to_media_library();
+		//self::set_ETSWP_options();
 		flush_rewrite_rules();
 	}
-
+	
 	public static function read_and_create_pages(){
 	$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
 	$parent_id = 0;

@@ -238,8 +238,8 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
--one email only
--email comes from Wordpress  wordpress@tarot.emogic.com : allow users to change in admin
+-test one email only
+-sanitize options
 
 -make a post welcome message...
 

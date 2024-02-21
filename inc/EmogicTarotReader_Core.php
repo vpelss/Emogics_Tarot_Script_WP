@@ -23,8 +23,8 @@ class EmogicTarotReader_Core {
         add_shortcode("ETSWP_spread", ["EmogicTarotReader_Core", "get_spread"]); //eg [ETSWP_spread] will return the spread page for the current reading. For use in the email template page.
         add_filter("the_content", ["EmogicTarotReader_Core", "filter_block_html_display_on_email"], 1); //for sending email in html
         // Hooking up our functions to WordPress filters 
-        add_filter( 'wp_mail_from', ["EmogicTarotReader_Core", 'sender_email'] );
-        add_filter( 'wp_mail_from_name', ["EmogicTarotReader_Core",'sender_name'] );
+        add_filter( 'wp_mail_from', ["EmogicTarotReader_Core", 'mail_from'] );
+        add_filter( 'wp_mail_from_name', ["EmogicTarotReader_Core",'mail_from_name'] );
     }
     
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
@@ -264,23 +264,22 @@ class EmogicTarotReader_Core {
     }
     
     // Function to change email address
-    public static function sender_email( $original_email_address ) {
-         $options = get_option( 'ETSWP_options' );
-         $email_address = "tarot@tarot.emogic.com";
-        if($options != false){
-            $email_address = $options["ETSWP_from_email_field"];
+    public static function mail_from( $original_email_address ) {
+         $option = get_option( 'ETSWP_from_email_field' );
+         //$email_address = "tarot@tarot.emogic.com";
+        if(isset($option) == false || $option == ""){
+            return $original_email_address;
         }
-        return $email_address;
+        return $option;
     }
  
     // Function to change sender name
-    public static function sender_name( $original_email_from ) {
-         $options = get_option( 'ETSWP_options' );
-         $email_display_name = "Tarot Mailer";
-        if($options != false){
-            $email_display_name = $options["ETSWP_email_display_name_field"];
+    public static function mail_from_name( $original_email_from ) {
+         $option = get_option( 'ETSWP_email_display_name_field' );
+        if(isset($option) == false || $option == ""){
+            return $original_email_from;
         }
-        return $email_display_name;
+        return $option;
     }
      
 	//for quick short code retrieval
