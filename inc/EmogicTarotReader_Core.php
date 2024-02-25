@@ -1,37 +1,43 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
+
 //input: main form data: name, deck, spread, question : cookies for daily cards
 //output: shortcodes
 class EmogicTarotReader_Core {
     //run everytime a page is opened
-    function run() {
+     public static function run() {
         //both actions set cookies, so we need to do this late enough to have post data (for page and ancestor checks), but early enough before header is sent. thus template_redirect
         //template_redirect: Fires before determining which template to load.
         //template_redirect: This action hook executes just before WordPress determines which template page to load. It is a good hook to use if you need to do a redirect with full knowledge of the content that has been queried.
         //template_redirect: best time to get form data
         add_action("template_redirect", ["EmogicTarotReader_Core", "shuffle"]); //if on a spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
-        //add_action( 'template_redirect', array('EmogicTarotReader_Core','set_shuffled_db_in_cookie') ); //set our shuffled card cookies
-        //add_action("wp_print_footer_scripts", ["EmogicTarotReader_Core", "email_it", ]); //if on an email spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
         add_action("template_redirect", ["EmogicTarotReader_Core", "email_it", ]); //if on an email spread page, get deck and spread from form, shuffle cards, set up shortcodes, set cookies based on calling form fields.
-        add_shortcode("ETSWP_deck_options", ["EmogicTarotReader_Core", "deck_options", ]); //get stored options for main tarot page [ETSWP_deck_options]
-        add_shortcode("ETSWP_spread_options", ["EmogicTarotReader_Core", "spread_options", ]); //get stored options for main page [ETSWP_spread_options]
+   
         add_shortcode("ETSWP_get_item", ["EmogicTarotReader_Core", "get_item"]); ////this is how we place cards on spread pages [ETSWP_get_item item='1' column='itemname']
-        add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Core", "get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
         add_shortcode("ETSWP_get_cookie", ["EmogicTarotReader_Core", "get_cookie", ]); //for reading display page [ETSWP_get_cookie name='cookie name']
         add_shortcode("ETSWP_get_input", ["EmogicTarotReader_Core", "get_input", ]); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
         //for email, but can be used elsewhere
         add_shortcode("ETSWP_link_to_reading", ["EmogicTarotReader_Core", "get_link_to_reading", ]); //eg [ETSWP_link_to_reading] will return a GET URL to the current reading. For use in email readings
-        add_shortcode("ETSWP_spread", ["EmogicTarotReader_Core", "get_spread"]); //eg [ETSWP_spread] will return the spread page for the current reading. For use in the email template page.
+        add_shortcode("ETSWP_spread", ["EmogicTarotReader_Core", "get_spread"]); //eg [ETSWP_spread] will return the spread page url for the current reading. For use in the email template page.      
+        EmogicTarotReader_Core::shortcodes();
+   
+        //email filters
         add_filter("the_content", ["EmogicTarotReader_Core", "filter_block_html_display_on_email"], 1); //for sending email in html
-        // Hooking up our functions to WordPress filters 
         add_filter( 'wp_mail_from', ["EmogicTarotReader_Core", 'mail_from'] );
         add_filter( 'wp_mail_from_name', ["EmogicTarotReader_Core",'mail_from_name'] );
     }
     
+     public static function shortcodes(){
+        add_shortcode("ETSWP_deck_options", ["EmogicTarotReader_Core", "deck_options", ]); //get stored options for main tarot page [ETSWP_deck_options]
+        add_shortcode("ETSWP_spread_options", ["EmogicTarotReader_Core", "spread_options", ]); //get stored options for main page [ETSWP_spread_options]
+        add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Core", "get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
+     }
+    
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
     public static function shuffle() {
         self::options(); //build options for main form page. Always run it for all pages KISS
-        if (!self::is_descendent_page_of(EMOGIC_TAROT_PLUGIN_READING_FOLDER)) {
-            // no need to shuffle if not on a spread page
+        if (!self::is_descendent_page_of(EMOGIC_TAROT_PLUGIN_READING_FOLDER)) { // no need to shuffle if not on a spread page
             return;
         }
         //if here, we are a emogic-readings sub page
@@ -96,14 +102,10 @@ class EmogicTarotReader_Core {
         }
         //shuffled order is in cookie or we need to shuffle
         $hash = self::build_cookie_name();
-        if (isset($_COOKIE[$hash])) {
-            //simply convert cookie to cards
-            //if( isset($_REQUEST[$hash]) ){//simply convert cookie to cards
+        if (isset($_COOKIE[$hash])) { //simply convert cookie to cards
             $json = sanitize_text_field($_COOKIE[$hash]);
-            //$json = sanitize_text_field( $_REQUEST[$hash] );
             $ETSWP_keys_shuffled = json_decode($json);
-        } else {
-            //no cookies, shuffle cards
+        } else {  //no cookies, shuffle cards
             //create a key array and shuffle it
             $ETSWP_keys_shuffled = array_keys($ETSWP_items_array); //$ETSWP_keys_shuffled is in order at this time
             shuffle($ETSWP_keys_shuffled);
@@ -112,8 +114,7 @@ class EmogicTarotReader_Core {
             foreach ($ETSWP_keys_shuffled as $key) {
                 $itemnumber = $ETSWP_items_array[$key]["itemnumber"];
                 if (isset($key_exists[$itemnumber])) {
-                    unset($ETSWP_keys_shuffled[$key]); //remove item from $ETSWP_keys_shuffled array
-                    
+                    unset($ETSWP_keys_shuffled[$key]); //remove item from $ETSWP_keys_shuffled array        
                 }
                 $key_exists[$itemnumber] = 1;
             }
@@ -135,7 +136,6 @@ class EmogicTarotReader_Core {
         //need to globalize it so we can use it in shortcode. shortcodes are called later!
         wp_cache_set("ETSWP_items_array", $ETSWP_items_array); //need to globalize it so we can use it in shortcode
         wp_cache_set("ETSWP_keys_shuffled", $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
-        
     }
     
 	//shuffle() calls this
@@ -380,105 +380,13 @@ class EmogicTarotReader_Core {
                 $content = do_shortcode($wp_post->post_content);
             }
             //return $content . esc_html__( 'I’m filtering the content inside the main loop', 'wporg');
-            
+            //else{
+               //$content = do_shortcode($content);
+            //}
         }
+       
         return $content;
     }
 	
-	/* Import media from url
- *
- * @param string $file_url URL of the existing file from the original site
- * @param int $post_id The post ID of the post to which the imported media is to be attached
- *
- * @return boolean True on success, false on failure
- */
 
-function fetch_media($file_url, $post_id) {
-	require_once(ABSPATH . 'wp-load.php');
-	require_once(ABSPATH . 'wp-admin/includes/image.php');
-	global $wpdb;
-
-	if(!$post_id) {
-		return false;
-	}
-
-	//directory to import to	
-	$artDir = 'wp-content/uploads/importedmedia/';
-
-	//if the directory doesn't exist, create it	
-	if(!file_exists(ABSPATH.$artDir)) {
-		mkdir(ABSPATH.$artDir);
-	}
-
-	//rename the file... alternatively, you could explode on "/" and keep the original file name
-	$ext = array_pop(explode(".", $file_url));
-	$new_filename = 'blogmedia-'.$post_id.".".$ext; //if your post has multiple files, you may need to add a random number to the file name to prevent overwrites
-
-	if (@fclose(@fopen($file_url, "r"))) { //make sure the file actually exists
-		copy($file_url, ABSPATH.$artDir.$new_filename);
-
-		$siteurl = get_option('siteurl');
-		$file_info = getimagesize(ABSPATH.$artDir.$new_filename);
-
-		//create an array of attachment data to insert into wp_posts table
-		$artdata = array();
-		$artdata = array(
-			'post_author' => 1, 
-			'post_date' => current_time('mysql'),
-			'post_date_gmt' => current_time('mysql'),
-			'post_title' => $new_filename, 
-			'post_status' => 'inherit',
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $new_filename)),											'post_modified' => current_time('mysql'),
-			'post_modified_gmt' => current_time('mysql'),
-			'post_parent' => $post_id,
-			'post_type' => 'attachment',
-			'guid' => $siteurl.'/'.$artDir.$new_filename,
-			'post_mime_type' => $file_info['mime'],
-			'post_excerpt' => '',
-			'post_content' => ''
-		);
-
-		$uploads = wp_upload_dir();
-		$save_path = $uploads['basedir'].'/importedmedia/'.$new_filename;
-
-		//insert the database record
-		$attach_id = wp_insert_attachment( $artdata, $save_path, $post_id );
-
-		//generate metadata and thumbnails
-		if ($attach_data = wp_generate_attachment_metadata( $attach_id, $save_path)) {
-			wp_update_attachment_metadata($attach_id, $attach_data);
-		}
-
-		//optional make it the featured image of the post it's attached to
-		$rows_affected = $wpdb->insert($wpdb->prefix.'postmeta', array('post_id' => $post_id, 'meta_key' => '_thumbnail_id', 'meta_value' => $attach_id));
-	}
-	else {
-		return false;
-	}
-	return true;
-}
-	
-/* 
-* This function copy $source directory and all files 
-* and sub directories to $destination folder
-*/
-
-	function recursive_copy($src,$dst) {
-		$dir = opendir($src);
-		@mkdir($dst);
-		while(( $file = readdir($dir)) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ) {
-					$this->recursive_copy($src .'/'. $file, $dst .'/'. $file);
-				}
-				else {
-					copy($src .'/'. $file,$dst .'/'. $file);
-				}
-			}
-		}
-		closedir($dir);
-	}
-	
 }

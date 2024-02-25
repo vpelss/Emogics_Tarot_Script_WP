@@ -12,40 +12,48 @@
 
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
-// define variable for path to this plugin file.
-define( 'EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME' , __file__ ); // c:\*********\EMOGIC_TAROT_pulgin_folder\imok.php
-define( 'EMOGIC_TAROT_PLUGIN_PATH', dirname( __FILE__ ) ); // c:\************\EMOGIC_TAROT_pulgin_folder
-define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url( '', __FILE__ ) ); // http://wp_url/wp-content/plugins/EMOGIC_TAROT_pulgin_folder
-define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // EMOGIC_TAROT_wp (or other if renamed)
-define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
-//same as folder structure under /pages/ in plugin
-define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 
-define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "emogic-readings" ); // will be emogic_readings
-define( 'EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER' , "emogic-reading-email-template" ); // will be emogic_readings
-define( 'EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER' , "|" ); // delimeter in flat file db 
+   // define variable for path to this plugin file.
+    define( 'EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME' , __file__ ); // c:\*********\EMOGIC_TAROT_pulgin_folder\imok.php
+    define( 'EMOGIC_TAROT_PLUGIN_PATH', dirname( __FILE__ ) ); // c:\************\EMOGIC_TAROT_pulgin_folder
+    define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url( '', __FILE__ ) ); // http://wp_url/wp-content/plugins/EMOGIC_TAROT_pulgin_folder
+    define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // EMOGIC_TAROT_wp (or other if renamed)
+    define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
+    //same as folder structure under /pages/ in plugin
+    define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 
+    define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "emogic-readings" ); // will be emogic_readings
+    define( 'EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER' , "emogic-reading-email-template" ); // will be emogic_readings
+    define( 'EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER' , "|" ); // delimeter in flat file db 
 
-register_activation_hook( __FILE__, 'EmogicTarotReader_activate' );
-function EmogicTarotReader_activate() {
-	require_once plugin_dir_path( __FILE__ ) . 'inc/EmogicTarotReader_Activator.php';
-	EmogicTarotReader_Activator::activate();
-}
+     register_activation_hook( __FILE__, ['EmogicTarotReader_Plugin' , 'EmogicTarotReader_activate'] );
+     register_deactivation_hook( __FILE__, ['EmogicTarotReader_Plugin' , 'EmogicTarotReader_deactivate'] );
+     add_action("admin_init", ["EmogicTarotReader_Plugin" , "set_deactivate_warn"] );
+     
+class EmogicTarotReader_Plugin {
 
-register_deactivation_hook( __FILE__, 'EmogicTarotReader_deactivate' );
-function EmogicTarotReader_deactivate() {
-	require_once plugin_dir_path( __FILE__ ) . 'inc/EmogicTarotReader_Deactivator.php';
-	EmogicTarotReader_Deactivator::deactivate();
+    public static function set_deactivate_warn(){
+        wp_enqueue_script('ETSWP__wp-deactivation-message', plugins_url('js/ETSWP_JS.js', __FILE__) , array());
+   }
+     
+    public static function EmogicTarotReader_activate() {
+        require_once plugin_dir_path( __FILE__ ) . 'inc/EmogicTarotReader_Activator.php';
+        EmogicTarotReader_Activator::activate();
+    }
+    
+    public static function EmogicTarotReader_deactivate() {
+        require_once plugin_dir_path( __FILE__ ) . 'inc/EmogicTarotReader_Deactivator.php';
+        EmogicTarotReader_Deactivator::deactivate();
+    }
+    
 }
 
 if( is_admin() ){
-	require_once plugin_dir_path( __FILE__ ) . 'admin/EmogicTarotReader_Admin.php';
-	EmogicTarotReader_Admin::run();
-	return;
-	}  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
-
-require_once plugin_dir_path(__file__) . 'inc/EmogicTarotReader_Core.php' ; //
-function EmogicTarotReader__run() {
-	$plugin = new EmogicTarotReader_Core();
-	$plugin->run();
+    //require_once plugin_dir_path(__file__) . 'inc/EmogicTarotReader_Core.php' ;
+    //EmogicTarotReader_Core::shortcodes();
+    require_once plugin_dir_path( __FILE__ ) . 'admin/EmogicTarotReader_Admin.php';
+    EmogicTarotReader_Admin::run(); //set up admin option(s)
+    //return;
+    }  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
+else{
+    require_once plugin_dir_path(__file__) . 'inc/EmogicTarotReader_Core.php' ; 
+    EmogicTarotReader_Core::run();
 }
-EmogicTarotReader__run();
-

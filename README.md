@@ -170,7 +170,7 @@ Other:
 
 [ETSWP_pluginpath] Returns the URL path to this plugin. eg: https://mysite.com/tarot/wp-content/plugins/Emogics_Tarot_Script_WP. I use this shortcode so I do not need to have the full URL path of my images in the deck databases.
 
-##Cookies
+## Cookies
 After the main form calls a spread, the following cookies are set:
 
 ETSWP_first_name
@@ -188,7 +188,36 @@ You can choose your oewn time in hours, or set it to zero to disable it.
 eg:
 <input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
 
-##What happens in a typical reading
+##Email Readings
+
+To make yor reading template send by email, it must contain:
+<!-- just_say_yes_to_email -->
+
+To stop the reading from being shown on the website, and ONLY send it in email, you must also add the following to your reading page.
+<!-- redirect_to_email_has_been_sent -->
+
+Sending email readings is fraught with formatting challenges.
+The easiest solution is just don't allow them.
+However if you insist:
+
+All css in email should be 'inline css'.
+Wordpress formatting will not help  much with email formatting as it does not use inline css.
+Be creative.
+Keep it simple is a good motto.
+Tables are a good solution for spreads.
+
+Anchors 'may' or 'may not' work in email.
+Gmail requires that the anchor be:
+<a href="#PastLink">Link</a>
+....
+<a name="PastLink"></a> 
+
+This plugin comes with an admin setting to change the From email address and name.
+
+To avoid your sent emails ending up in spam folders set up your from email address with appropriate DKIM and DMARC settings for your internet provider.
+This is outside the scope of this plugin.
+
+## What happens in a typical reading
 
 A visitor will typically start at your main form page.
 If they have visited before, their browser session may have cookies that can be used to pre fill in some of the form data using Javascript
@@ -211,7 +240,7 @@ Card images, text, fields, etc are displayed using shortcodes.
 
 ## FAQs
 
-#Why am I not seeing your images on the Wordpress edit page?
+Why am I not seeing your images on the Wordpress edit page?
 
 To distibute the plugin to multiple sites this is required. When you add images from your site, you will see them in the eit page.
 
@@ -238,12 +267,9 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
--test one email only
--sanitize options
+-DKIM DMARC instructions
 
 -make a post welcome message...
-
--warn on deactivate
 
 -better front form option? Use shortcodes for form and text fields? - show example...
 

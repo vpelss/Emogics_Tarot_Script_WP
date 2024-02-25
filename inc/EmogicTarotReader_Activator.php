@@ -9,23 +9,25 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
 //only root folder files will be published. the databases are in draft as some may not want their databases exposed
 
 class EmogicTarotReader_Activator{
-
+	
 	public static function activate(){
+		//add_action so warnings do mot show on admin page
+		//add_action(  'activated_plugin', ['EmogicTarotReader_Activator' , 'read_and_create_pages()'] );
 		self::read_and_create_pages();
+		//add_action( 'activated_plugin', ['EmogicTarotReader_Activator' , 'images_to_media_library()'] ); //add_action so warnings do mot show on admin page
 		self::images_to_media_library();
-		//self::set_ETSWP_options();
 		flush_rewrite_rules();
 	}
 	
 	public static function read_and_create_pages(){
-	$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
-	$parent_id = 0;
-	$page_path_parent = '';
-
-	$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
-	self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
-	//stored in wp db
-	add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array));
+		$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
+		$parent_id = 0;
+		$page_path_parent = '';
+	
+		$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
+		self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
+		//stored in wp db
+		add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array));
 	}
 
 	public static function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){
@@ -81,44 +83,33 @@ class EmogicTarotReader_Activator{
 		$from = EMOGIC_TAROT_PLUGIN_PATH . "/images/";
 		$to = get_home_path() . "wp-content/uploads/Emogic-Images";
 		
-		$result = mkdir($to, 0755); //create dest dir
-		self::recursive_copy($from,$to,$deactivate_media_array); //copy files
-		
-		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));
-		$t = 9;
-		
+		@mkdir($to, 0755); //create dest dir
+		self::recursive_copy($from,$to,$deactivate_media_array); //copy files		
+		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));	
 	}
 	
 	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
 	public static function recursive_copy($source,$dest,&$deactivate_media_array) {	
-		mkdir($dest, 0755);
+		@mkdir($dest, 0755);
+		//wp_mkdir_p( $dest );
 		foreach (
 		 $iterator = new \RecursiveIteratorIterator(
 		  new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
 		  \RecursiveIteratorIterator::SELF_FIRST) as $item
 		) {
 		  if ($item->isDir()) {
-			mkdir($dest . "/" . $iterator->getSubPathname());
+			@mkdir($dest . "/" . $iterator->getSubPathname());
 		  } else {
 			copy($item, $dest . "/" . $iterator->getSubPathname());
 			$filename = $iterator->getSubPathname();
 			$file_path =  $dest . "/" . $filename;
-			//$file_path =  $source . "/" . $filename;
 			$file_path= str_replace("\\","/",$file_path);
 			self::copy_image_to_media_library($file_path,$filename,$deactivate_media_array);
 		  }
 		}
 	}
 
-	public static function copy_image_to_media_library($file_path,$filename,&$deactivate_media_array){
-			//copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname());
-			//$filename = $item->getFilename();
-			//$path = $item->getPath();
-			//$file_path =  $path."/".$filename;
-			
-			//$rr = EMOGIC_TAROT_PLUGIN_WP_ROOT_URL."/"."wp-content/uploads/Emogic-Images"."/".$filename;
-			 //self::rudr_upload_file_by_url( $rr );
-			 
+	public static function copy_image_to_media_library($file_path,$filename,&$deactivate_media_array){			 
 			$artdata = array(
 				'post_author' => 1, 
 				//'post_date' => current_time('mysql'),
@@ -144,27 +135,24 @@ class EmogicTarotReader_Activator{
 			if ($attach_data = wp_generate_attachment_metadata( $attach_id,$file_path)) {
 				wp_update_attachment_metadata($attach_id, $attach_data);
 			}
-			
 			array_push( $deactivate_media_array , $attach_id );
-			//set_post_thumbnail
-			//$post_id = wp_insert_post( $my_post_data ); 
 	}
 	
 	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
 	public static function recurse_copy_alt($src,$dst) { 
-    $dir = opendir($src); 
-    @mkdir($dst); 
-    while(false !== ( $file = readdir($dir)) ) { 
-        if (( $file != '.' ) && ( $file != '..' )) { 
-            if ( is_dir($src . '/' . $file) ) { 
-                recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-            else { 
-                copy($src . '/' . $file,$dst . '/' . $file); 
-            } 
-        } 
-    } 
-    closedir($dir); 
-}
+		$dir = opendir($src); 
+		@mkdir($dst); 
+		while(false !== ( $file = readdir($dir)) ) { 
+			if (( $file != '.' ) && ( $file != '..' )) { 
+				if ( is_dir($src . '/' . $file) ) { 
+					recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+				} 
+				else { 
+					copy($src . '/' . $file,$dst . '/' . $file); 
+				} 
+			} 
+		} 
+		closedir($dir); 
+	}
 
 }

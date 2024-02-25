@@ -1,21 +1,24 @@
 <!-- wp:html -->
 <!-- just_say_yes_to_email -->
 <!-- the line above is required to send this reading in email  -->
+
+<!-- redirect_to_email_has_been_sent -->
+<!-- the line above is required if we want to block the HTML display unless from an email link-->
 <!-- /wp:html -->
 
 <!-- wp:html -->
 <!-- 
-Sending email readings are fraught with formatting challenges. 
+Sending email readings is fraught with formatting challenges.
 The easiest solution is just don't allow them.
 However if you insist:
 
-All css in email should be 'inline css' to work. So Wordpress formatting will not help  much with email formatting. You will need to be comfortable with css. Be creative. Keep it simple is a good moto. Tables are a good solution. 
+All css in email should be 'inline css'.
+Wordpress formatting will not help  much with email formatting as it does not use inline css.
+Be creative.
+Keep it simple is a good motto.
+Tables are a good solution for spreads.
 
-Anchors 'may' work in email. gmail requires that the anchor be:
-<a href="#PastLink">Link</a>
-<a name="PastLink"></a> 
-
-An even easier solution is shown in the Email Template wrapper page. 
+See the "Emogic Reading Email Template" page for how I use that. 
 -->
 <!-- /wp:html -->
 
@@ -37,21 +40,13 @@ a , a:visited{
 </style>
 <!-- /wp:html -->
 
-<!-- wp:html -->
-<a name="top"></a>
-<!-- /wp:html -->
-
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_input name='ETSWP_first_name'], your question is: [ETSWP_get_input name='ETSWP_question']</p>
+<p class="has-text-align-center" id="top">[ETSWP_get_input name='ETSWP_first_name'], your question is: [ETSWP_get_input name='ETSWP_question']</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:table {"hasFixedLayout":true,"style":{"border":{"width":"0px","style":"none"}}} -->
-<figure class="wp-block-table"><table class="has-fixed-layout" style="border-style:none;border-width:0px"><tbody><tr><td class="has-text-align-center" data-align="center">Past<br><a href="#PastLink"><img class="wp-image-25" style="width: 50px;" src="https://tarot.emogic.com/wp-content/uploads/2023/08/backsmall.jpg" alt=""></a></td><td class="has-text-align-center" data-align="center">Present<br><a href="#PresentLink"><img class="wp-image-25" style="width: 50px;" src="https://tarot.emogic.com/wp-content/uploads/2023/08/backsmall.jpg" alt=""></a></td><td class="has-text-align-center" data-align="center">Future<br><a href="#FutureLink"><img class="wp-image-25" style="width: 50px;" src="https://tarot.emogic.com/wp-content/uploads/2023/08/backsmall.jpg" alt=""></a></td></tr></tbody></table></figure>
+<figure class="wp-block-table"><table class="has-fixed-layout" style="border-style:none;border-width:0px"><tbody><tr><td class="has-text-align-center" data-align="center">Past<br><a href="#Past"><img class="wp-image-25" style="width: 50px;" src="[ETSWP_pluginpath]/images/backsmall.jpg" alt=""></a></td><td class="has-text-align-center" data-align="center">Present<br><a href="#Present"><img class="wp-image-25" style="width: 50px;" src="[ETSWP_pluginpath]/images/backsmall.jpg" alt=""></a></td><td class="has-text-align-center" data-align="center">Future<br><a href="#Future"><img class="wp-image-25" style="width: 50px;" src="[ETSWP_pluginpath]/images/backsmall.jpg" alt=""></a></td></tr></tbody></table></figure>
 <!-- /wp:table -->
-
-<!-- wp:html -->
-<a name="PastLink"></a>
-<!-- /wp:html -->
 
 <!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"layout":{"type":"constrained"}} -->
 <div id="Past" class="wp-block-group" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
@@ -71,10 +66,6 @@ a , a:visited{
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:html -->
-<a name="PresentLink"></a>
-<!-- /wp:html -->
-
 <!-- wp:group {"style":{"border":{"radius":"5px","width":"1px"}},"layout":{"type":"constrained"}} -->
 <div id="Present" class="wp-block-group" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
 <p class="has-text-align-center">Present</p>
@@ -93,11 +84,7 @@ a , a:visited{
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:html -->
-<a name="FutureLink"></a>
-<!-- /wp:html -->
-
-<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"layout":{"type":"constrained"},"metadata":{"name":""}} -->
+<!-- wp:group {"style":{"border":{"width":"1px","radius":"5px"}},"layout":{"type":"constrained"}} -->
 <div id="Future" class="wp-block-group" style="border-width:1px;border-radius:5px"><!-- wp:paragraph {"align":"center"} -->
 <p class="has-text-align-center">Future</p>
 <!-- /wp:paragraph -->
