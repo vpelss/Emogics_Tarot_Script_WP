@@ -188,7 +188,7 @@ You can choose your oewn time in hours, or set it to zero to disable it.
 eg:
 <input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
 
-##Email Readings
+## Email Readings
 
 To make yor reading template send by email, it must contain:
 <!-- just_say_yes_to_email -->
