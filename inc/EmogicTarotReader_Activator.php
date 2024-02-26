@@ -11,23 +11,19 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
 class EmogicTarotReader_Activator{
 	
 	public static function activate(){
-		//add_action so warnings do mot show on admin page
-		//add_action(  'activated_plugin', ['EmogicTarotReader_Activator' , 'read_and_create_pages()'] );
 		self::read_and_create_pages();
-		//add_action( 'activated_plugin', ['EmogicTarotReader_Activator' , 'images_to_media_library()'] ); //add_action so warnings do mot show on admin page
 		self::images_to_media_library();
 		flush_rewrite_rules();
 	}
 	
 	public static function read_and_create_pages(){
-		$dir = EMOGIC_TAROT_PLUGIN_PATH . "/pages";
+		$dir = EMOGIC_TAROT_PLUGIN_PATH . "pages";
 		$parent_id = 0;
 		$page_path_parent = '';
 	
 		$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
-		self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference
-		//stored in wp db
-		add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array));
+		self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference		
+		add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array)); //store them in wp db
 	}
 
 	public static function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){
@@ -80,36 +76,34 @@ class EmogicTarotReader_Activator{
 	
 	public static function images_to_media_library(){
 		$deactivate_media_array = array();
-		$from = EMOGIC_TAROT_PLUGIN_PATH . "/images/";
-		$to = get_home_path() . "wp-content/uploads/Emogic-Images";
+		$from = EMOGIC_TAROT_PLUGIN_PATH . "images/";
+		$to = get_home_path() . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
 		
 		@mkdir($to, 0755); //create dest dir
+		//self::recursive_copy($from,$to,$deactivate_media_array); //copy files		
 		self::recursive_copy($from,$to,$deactivate_media_array); //copy files		
 		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));	
 	}
 	
-	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
-	public static function recursive_copy($source,$dest,&$deactivate_media_array) {	
-		@mkdir($dest, 0755);
-		//wp_mkdir_p( $dest );
-		foreach (
-		 $iterator = new \RecursiveIteratorIterator(
-		  new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
-		  \RecursiveIteratorIterator::SELF_FIRST) as $item
-		) {
-		  if ($item->isDir()) {
-			@mkdir($dest . "/" . $iterator->getSubPathname());
-		  } else {
-			copy($item, $dest . "/" . $iterator->getSubPathname());
-			$filename = $iterator->getSubPathname();
-			$file_path =  $dest . "/" . $filename;
-			$file_path= str_replace("\\","/",$file_path);
-			self::copy_image_to_media_library($file_path,$filename,$deactivate_media_array);
-		  }
-		}
+	public static function recursive_copy($src , $dst , &$deactivate_media_array) { //$src and $dst must have lagging slashes
+		$dir = opendir($src); 
+		@mkdir($dst); 
+		while(false !== ( $file = readdir($dir)) ) { 
+			if (( $file != '.' ) && ( $file != '..' )) { 
+				if ( is_dir($src . $file) ) { 
+					self::recursive_copy($src . $file . '/' , $dst . $file . '/' , $deactivate_media_array); 
+				} 
+				else { 
+					copy($src . $file , $dst . $file);
+					//$dst = str_replace("\\" , "/" , $dst ); //for windowz
+					self::copy_image_to_media_library($dst . $file , $file , $deactivate_media_array);
+				} 
+			} 
+		} 
+		closedir($dir); 
 	}
 
-	public static function copy_image_to_media_library($file_path,$filename,&$deactivate_media_array){			 
+	public static function copy_image_to_media_library($file_path , $filename , &$deactivate_media_array){			 
 			$artdata = array(
 				'post_author' => 1, 
 				//'post_date' => current_time('mysql'),
@@ -138,21 +132,4 @@ class EmogicTarotReader_Activator{
 			array_push( $deactivate_media_array , $attach_id );
 	}
 	
-	//https://stackoverflow.com/questions/5707806/recursive-copy-of-directory
-	public static function recurse_copy_alt($src,$dst) { 
-		$dir = opendir($src); 
-		@mkdir($dst); 
-		while(false !== ( $file = readdir($dir)) ) { 
-			if (( $file != '.' ) && ( $file != '..' )) { 
-				if ( is_dir($src . '/' . $file) ) { 
-					recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-				} 
-				else { 
-					copy($src . '/' . $file,$dst . '/' . $file); 
-				} 
-			} 
-		} 
-		closedir($dir); 
-	}
-
 }
