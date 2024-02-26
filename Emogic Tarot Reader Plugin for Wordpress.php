@@ -47,12 +47,9 @@ class EmogicTarotReader_Plugin {
 }
 
 if( is_admin() ){
-    //require_once plugin_dir_path(__file__) . 'inc/EmogicTarotReader_Core.php' ;
-    //EmogicTarotReader_Core::shortcodes();
     require_once plugin_dir_path( __FILE__ ) . 'admin/EmogicTarotReader_Admin.php';
     EmogicTarotReader_Admin::run(); //set up admin option(s)
-    //return;
-    }  // no need for any of this on an admin. for some reason wp calculates shortcode on edit screens causing errors
+    }  // no need for any of this on an admin. for some reason wp calculates shortcodes on edit screens causing errors even though it will not display them
 else{
     require_once plugin_dir_path(__file__) . 'inc/EmogicTarotReader_Core.php' ; 
     EmogicTarotReader_Core::run();

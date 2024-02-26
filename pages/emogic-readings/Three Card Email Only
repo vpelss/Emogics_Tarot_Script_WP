@@ -1,25 +1,16 @@
 <!-- wp:html -->
+<!-- 
+Please read:
+https://github.com/vpelss/Emogics_Tarot_Script_WP/blob/master/README.md#email-readings
+-->
+<!-- /wp:html -->
+
+<!-- wp:html -->
 <!-- just_say_yes_to_email -->
 <!-- the line above is required to send this reading in email  -->
 
 <!-- redirect_to_email_has_been_sent -->
 <!-- the line above is required if we want to block the HTML display unless from an email link-->
-<!-- /wp:html -->
-
-<!-- wp:html -->
-<!-- 
-Sending email readings is fraught with formatting challenges.
-The easiest solution is just don't allow them.
-However if you insist:
-
-All css in email should be 'inline css'.
-Wordpress formatting will not help  much with email formatting as it does not use inline css.
-Be creative.
-Keep it simple is a good motto.
-Tables are a good solution for spreads.
-
-See the "Emogic Reading Email Template" page for how I use that. 
--->
 <!-- /wp:html -->
 
 <!-- wp:html -->

@@ -1,6 +1,6 @@
 ## Emogic Tarot Reading plugin for Wordpress
 
-You can edit EVERYTHING. This is the most flexible Tarot Script.
+You can edit EVERYTHING. This is the most flexible Tarot Script. Flexibility comes with a price and that price is a moderate learning curve.
 
 Wordpress has some very amazing page editing tools.
 With Wordpress shortcodes, and this script you can easily create new spread layouts in minutes.
@@ -50,7 +50,14 @@ Your main tarot page will be: Emogic Tarot
 ?pagename=Emogic-Tarot
 You can rename this page.
 
-Important: If you deactivate or uninstall the plugin your tarot pages and databases will be deleted.
+On activation:
+
+The images will be imported to the media galery.
+
+Pages will be imported and created from the plugin's "/pages" folder.
+The pages will be created in a quazi folder structure (parent/child) which mirrors the plugin's "/pages" folder structure.
+
+Important: If you deactivate or uninstall the plugin your the tarot pages, databases and images the plugin installed will be deleted.
 If you edited the original plugin files, make copies or backup them if you want to save any changes you have made.
 
 ## Themes
@@ -61,7 +68,7 @@ It should work with any theme that can use shortcodes.
 
 If it does not work with your sites current theme, you can install a second Wordpress installation on your server in a sub folder (eg: 'Tarot') and install the plugin there with a theme that will work.
 
-##Main Calling Form
+## Main Calling Form
 
 The HTML form that calls the reading must have certain 'input' and 'select' tags. The tag id must remain the same.
 
@@ -184,7 +191,7 @@ ETSWP_question
 various cookies that look like "e276a1c4" :
 These are stored shuffles for a combination of ETSWP_first_name, ETSWP_deck, ETSWP_spread, ETSWP_question.
 The life of these cookies can be set by the following hidden field on the main calling form.
-You can choose your oewn time in hours, or set it to zero to disable it.
+You can choose your own time in hours, or set it to zero to disable it.
 eg:
 <input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
 
@@ -196,6 +203,13 @@ To make yor reading template send by email, it must contain:
 To stop the reading from being shown on the website, and ONLY send it in email, you must also add the following to your reading page.
 <!-- redirect_to_email_has_been_sent -->
 
+Every email sent will have a wrapper page applied to it. See the 'Emogic Reading Email Template' page.
+It can contain the following shortcodes:
+
+[ETSWP_link_to_reading] : this shortcode link will direct back to the website and show the reading sent in the email.
+
+[ETSWP_spread] : this shortcode will show the reading in the email. If you are having difficulty formatting decent email readings, just use [ETSWP_link_to_reading] and do not use [ETSWP_spread]
+
 Sending email readings is fraught with formatting challenges.
 The easiest solution is just don't allow them.
 However if you insist:
@@ -204,13 +218,17 @@ All css in email should be 'inline css'.
 Wordpress formatting will not help  much with email formatting as it does not use inline css.
 Be creative.
 Keep it simple is a good motto.
-Tables are a good solution for spreads.
+Tables are a good solution for spreads in emails.
+Javascript: No, no, no.
 
 Anchors 'may' or 'may not' work in email.
 Gmail requires that the anchor be:
-<a href="#PastLink">Link</a>
+
+\<a href="#PastLink">Link\</a>
+
 ....
-<a name="PastLink"></a> 
+
+\<a name="PastLink">\</a> 
 
 This plugin comes with an admin setting to change the From email address and name.
 
@@ -220,8 +238,8 @@ This is outside the scope of this plugin.
 ## What happens in a typical reading
 
 A visitor will typically start at your main form page.
-If they have visited before, their browser session may have cookies that can be used to pre fill in some of the form data using Javascript
-The main page will typically have user fillable fields that as for:
+If they have visited before, their browser session may have cookies that can be used to pre fill in some of the form data using Javascript.
+The main page will typically have user fillable fields that ask for:
 First Name
 Deck database
 Spread
@@ -231,9 +249,9 @@ There may also be cookies containing the deck shuffles for previous readings.
 Typically I set the life of these deck shuffle cookies to 24 hours.
 So if they enter the same name, deck, spread, and question, the reading will be the same for the next 24 hours.
 
-Some Wordpress shortcodes are used on this page to set, the decks and spreads availble.
+Some Wordpress shortcodes are used on this page to set the decks and spreads available.
 
-When they click on "Get Reading", their forms are sent to the spread they chose.
+When they click on "Get Reading", their forms are sent to the spread page they chose.
 
 When the spread page is displayed, the deck database is read and then shuffled. If there was an cookie for a deck shuffle that matches this reading, then that deck shuffle will be used.
 Card images, text, fields, etc are displayed using shortcodes.
@@ -242,7 +260,7 @@ Card images, text, fields, etc are displayed using shortcodes.
 
 Why am I not seeing your images on the Wordpress edit page?
 
-To distibute the plugin to multiple sites this is required. When you add images from your site, you will see them in the eit page.
+To distribute the plugin to multiple sites this is required. When you add images from your site, you will see them in your edit page.
 
 Note: the images where the selected cards will show will always be blank. In the edit screen a card has not been selected yet.
 
@@ -267,11 +285,8 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
 -allow email field or insist we have an account : account / field : enable / disable? account avoids spam
--DKIM DMARC instructions
 
 -make a post welcome message...
-
--better front form option? Use shortcodes for form and text fields? - show example...
 
 -more spreads
 -Numbers Speak reading

@@ -1,8 +1,13 @@
 <!-- wp:html -->
 <!-- 
-Sending email readings are fraught with formatting challenges. 
+Please read:
+https://github.com/vpelss/Emogics_Tarot_Script_WP/blob/master/README.md#email-readings
+-->
+<!-- /wp:html -->
 
-Here I use the outer div to inline css our email readings
+<!-- wp:html -->
+<!-- 
+Here I use the outer div to use inline css to set background color and text color to all our email readings
 -->
 
 <div style="color: yellow; background-color: black; padding: 25px;">

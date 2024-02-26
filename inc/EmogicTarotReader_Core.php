@@ -20,20 +20,16 @@ class EmogicTarotReader_Core {
         //for email, but can be used elsewhere
         add_shortcode("ETSWP_link_to_reading", ["EmogicTarotReader_Core", "get_link_to_reading", ]); //eg [ETSWP_link_to_reading] will return a GET URL to the current reading. For use in email readings
         add_shortcode("ETSWP_spread", ["EmogicTarotReader_Core", "get_spread"]); //eg [ETSWP_spread] will return the spread page url for the current reading. For use in the email template page.      
-        EmogicTarotReader_Core::shortcodes();
+        add_shortcode("ETSWP_deck_options", ["EmogicTarotReader_Core", "deck_options", ]); //get stored options for main tarot page [ETSWP_deck_options]
+        add_shortcode("ETSWP_spread_options", ["EmogicTarotReader_Core", "spread_options", ]); //get stored options for main page [ETSWP_spread_options]
+        add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Core", "get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
    
         //email filters
         add_filter("the_content", ["EmogicTarotReader_Core", "filter_block_html_display_on_email"], 1); //for sending email in html
         add_filter( 'wp_mail_from', ["EmogicTarotReader_Core", 'mail_from'] );
         add_filter( 'wp_mail_from_name', ["EmogicTarotReader_Core",'mail_from_name'] );
     }
-    
-     public static function shortcodes(){
-        add_shortcode("ETSWP_deck_options", ["EmogicTarotReader_Core", "deck_options", ]); //get stored options for main tarot page [ETSWP_deck_options]
-        add_shortcode("ETSWP_spread_options", ["EmogicTarotReader_Core", "spread_options", ]); //get stored options for main page [ETSWP_spread_options]
-        add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Core", "get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
-     }
-    
+     
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
     public static function shuffle() {
         self::options(); //build options for main form page. Always run it for all pages KISS
