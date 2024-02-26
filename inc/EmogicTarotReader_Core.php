@@ -261,7 +261,7 @@ class EmogicTarotReader_Core {
     
     // Function to change email address
     public static function mail_from( $original_email_address ) {
-         $option = get_option( 'ETSWP_from_email_field' );
+         $option = get_option( EmogicTarotReader_Admin::ETSWP_FROM_EMAIL_FIELD );
          //$email_address = "tarot@tarot.emogic.com";
         if(isset($option) == false || $option == ""){
             return $original_email_address;
@@ -271,7 +271,7 @@ class EmogicTarotReader_Core {
  
     // Function to change sender name
     public static function mail_from_name( $original_email_from ) {
-         $option = get_option( 'ETSWP_email_display_name_field' );
+        $option = get_option( EmogicTarotReader_Admin::ETSWP_EMAIL_DISPLAY_NAME_FIELD );
         if(isset($option) == false || $option == ""){
             return $original_email_from;
         }

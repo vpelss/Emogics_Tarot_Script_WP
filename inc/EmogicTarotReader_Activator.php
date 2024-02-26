@@ -17,33 +17,33 @@ class EmogicTarotReader_Activator{
 	}
 	
 	public static function read_and_create_pages(){
-		$dir = EMOGIC_TAROT_PLUGIN_PATH . "pages";
+		$dir = EMOGIC_TAROT_PLUGIN_PATH . "pages/";
 		$parent_id = 0;
-		$page_path_parent = '';
+		$page_path_parent = '/';
 	
 		$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
-		self::add_pages($dir,$parent_id,$page_path_parent,$deactivate_file_array);//$pages is by reference		
+		self::add_pages($dir , $parent_id , $page_path_parent , $deactivate_file_array);//$pages is by reference		
 		add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array)); //store them in wp db
 	}
 
-	public static function add_pages($dir,$parent_id,$page_path_parent,&$deactivate_file_array){
+	public static function add_pages($dir , $parent_id , $page_path_parent , &$deactivate_file_array){
 	//note: recursive routine, do not change arg values here!!!
 	$files = array_diff(scandir($dir), array('..', '.'));
 	foreach ($files as $file) {
 		//does file exist?
-		$page_path = $page_path_parent.'/'.$file;
-		$wp_post = get_page_by_path($page_path); //returns post object or null
-		if(is_file($dir.'/'.$file)){//for files
-			$post_status = 'draft';
-			if(! $parent_id)  //only publish if root pages
+		$page_path = $page_path_parent . $file;
+		$wp_post = get_page_by_path($page_path); //we will see if it exists later so we do not overwrite it!
+		if(is_file($dir . $file)){ //files
+			$post_status = 'draft'; //assume is db 
+			if($parent_id == 0)  // on start we set $parent_id = 0 : publish root pages
 				$post_status = 'publish';
-			if( str_starts_with($page_path , '/' . EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ) //oh, and files under EMOGIC_TAROT_PLUGIN_READING_FOLDER too
+			if( str_starts_with($page_path , '/' . EMOGIC_TAROT_PLUGIN_READING_FOLDER ) ) //files under EMOGIC_TAROT_PLUGIN_READING_FOLDER are published
 				$post_status = 'publish'; 
 			if(! isset($wp_post)) //file does not exist
 				$parent_id_temp =  self::post_page_if_required( $parent_id , $page_path_parent , $file , $dir , $post_status);
-			array_push( $deactivate_file_array , $page_path_parent.'/'.$file );
+			array_push( $deactivate_file_array , $page_path_parent . $file );
 		}
-		if(is_dir($dir.'/'.$file)){ //for directories create empty page
+		if(is_dir($dir . $file)){ //for directories create empty page
 			$post_status = 'draft';
 			if(isset($wp_post)){//dir exists
 				$parent_id_temp = $wp_post->ID;
@@ -51,16 +51,20 @@ class EmogicTarotReader_Activator{
 			else{//dir does not exist
 				$parent_id_temp =  self::post_page_if_required( $parent_id , $page_path_parent , $file , $dir , $post_status);
 			}
-			array_push( $deactivate_file_array , $page_path_parent.'/'.$file );
-			self::add_pages($dir.'/'.$file , $parent_id_temp , $page_path_parent.'/'.$file , $deactivate_file_array);
+			array_push( $deactivate_file_array , $page_path_parent . $file );
+			self::add_pages($dir . $file . '/' , $parent_id_temp , $page_path_parent . $file . '/' , $deactivate_file_array);
 		}
 	}
 	return;
 	}
 
 	public static function post_page_if_required( $post_parent , $page_path_parent , $file_name , $dir , $post_status){//$file is pagename, $path is page path with parents, $data is data for the page
-		if( is_file($dir.'/'.$file_name ) ){	$data = file_get_contents($dir.'/'.$file_name , true); }
-		else{ $data = ''; } //this is a directory. it has  no data
+		if( is_file($dir . $file_name ) ){
+			$data = file_get_contents($dir . $file_name , true);
+			}
+		else{
+			$data = '';
+			} //this is a directory. it has  no data
 		//create page
 		$postarr  = array(
 			//'ID' => $page_id,
@@ -80,8 +84,7 @@ class EmogicTarotReader_Activator{
 		$to = get_home_path() . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
 		
 		@mkdir($to, 0755); //create dest dir
-		//self::recursive_copy($from,$to,$deactivate_media_array); //copy files		
-		self::recursive_copy($from,$to,$deactivate_media_array); //copy files		
+		self::recursive_copy($from , $to , $deactivate_media_array); //copy files		
 		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));	
 	}
 	
@@ -95,7 +98,6 @@ class EmogicTarotReader_Activator{
 				} 
 				else { 
 					copy($src . $file , $dst . $file);
-					//$dst = str_replace("\\" , "/" , $dst ); //for windowz
 					self::copy_image_to_media_library($dst . $file , $file , $deactivate_media_array);
 				} 
 			} 
