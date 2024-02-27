@@ -136,9 +136,9 @@ The script randomly shuffles the order of the database records.
 If you have seven records with the same itemnumber, the script will chose one by random to use in the in the shuffled database.
 I use it so you can have upright, or upside down cards and matching reading text.
 
-Note: You can add your own database fields/columns. These new fields can easily be displayed on your custom created spreads. See Shortcodes. Our script is designed for you to do that!
+Note: You can add your own database columns. These new columns can easily be displayed on your custom created spreads. See Shortcodes. Our script is designed for you to do that!
 
-You may also note that [first_name] placed in the database will be replaced by the First Name given field if filled out by the visitor.
+You may also note that [first_name] placed in the database will be replaced by the First Name input if filled out by the visitor.
 
 ## Spreads
 
@@ -159,11 +159,11 @@ Before a spread page is displayed, our script reads the chosen database, shuffle
 
 Spread shortcodes:
 
-[ETSWP item='1' column='itemname'] This shortcode will return the itemname column data (column='itemname') from the first item (item=1) found in the shuffled database
+[ETSWP_get_db_item item='1' column='itemname'] This shortcode will return the itemname column data (column='itemname') from the first item (item=1) found in the shuffled database
 
-To display the 5th shuffled card itemimage column data use the following: [ETSWP item='5' column='itemimage']
+To display the 5th shuffled card itemimage column data use the following: [ETSWP_get_db_item item='5' column='itemimage']
 
-[ETSWP_get_input name='field name'] Returns the field data used in the form from the main page. 'field name' can be: 'ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'
+[ETSWP_get_input name='column name'] Returns the input data used in the form from the main page. 'column name' can be: 'ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'
 
 Main page shortcodes:
 
@@ -176,6 +176,22 @@ Main page shortcodes:
 Other:
 
 [ETSWP_pluginpath] Returns the URL path to this plugin. eg: https://mysite.com/tarot/wp-content/plugins/Emogics_Tarot_Script_WP. I use this shortcode so I do not need to have the full URL path of my images in the deck databases.
+
+## Advanced DB and Spreads
+
+Believe it or not, you can also add your own columns in the databases and use those columns in your spreads.
+
+eg:
+
+DB:
+
+- itemnumber|itemname|itemimage|itemblurb|mynewcolumn
+- 1|Ace of Cups|/images/Rider_Waite/normal/cups01.jpg|The start of love, joy and fruitfulness. Spirituality aids the material world.|new column stuff
+
+Spread shortcode:
+
+[ETSWP_get_input item='3' name='mynewcolumn']
+
 
 ## Cookies
 After the main form calls a spread, the following cookies are set:
@@ -190,7 +206,7 @@ ETSWP_question
 
 various cookies that look like "e276a1c4" :
 These are stored shuffles for a combination of ETSWP_first_name, ETSWP_deck, ETSWP_spread, ETSWP_question.
-The life of these cookies can be set by the following hidden field on the main calling form.
+The life of these cookies can be set by the following hidden input on the main calling form.
 You can choose your own time in hours, or set it to zero to disable it.
 eg:
 <input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
@@ -239,7 +255,7 @@ This is outside the scope of this plugin.
 
 A visitor will typically start at your main form page.
 If they have visited before, their browser session may have cookies that can be used to pre fill in some of the form data using Javascript.
-The main page will typically have user fillable fields that ask for:
+The main page will typically have user fillable inputs that ask for:
 First Name
 Deck database
 Spread
@@ -254,7 +270,7 @@ Some Wordpress shortcodes are used on this page to set the decks and spreads ava
 When they click on "Get Reading", their forms are sent to the spread page they chose.
 
 When the spread page is displayed, the deck database is read and then shuffled. If there was an cookie for a deck shuffle that matches this reading, then that deck shuffle will be used.
-Card images, text, fields, etc are displayed using shortcodes.
+Card images, text, db columns, etc are displayed using shortcodes.
 
 ## FAQs
 
@@ -284,7 +300,7 @@ Not for resale. Do not charge for this.
 
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
--allow email field or insist we have an account : account / field : enable / disable? account avoids spam
+-allow email input or insist we have an account : account / input : enable / disable? account avoids spam
 
 -make a post welcome message...
 

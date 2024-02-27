@@ -148,11 +148,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='1' column='itemimage']" alt="card1"/><figcaption class="wp-element-caption">[ETSWP_get_item item='1' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='1' column='itemimage']" alt="card1"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='1' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='1' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='1' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -162,11 +162,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='2' column='itemimage']" alt="card2"/><figcaption class="wp-element-caption">[ETSWP_get_item item='2' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='2' column='itemimage']" alt="card2"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='2' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='2' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='2' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -176,11 +176,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='3' column='itemimage']" alt="card3"/><figcaption class="wp-element-caption">[ETSWP_get_item item='3' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='3' column='itemimage']" alt="card3"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='3' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='3' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='3' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -190,11 +190,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='4' column='itemimage']" alt="card4"/><figcaption class="wp-element-caption">[ETSWP_get_item item='4' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='4' column='itemimage']" alt="card4"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='4' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='4' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='4' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -204,11 +204,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='5' column='itemimage']" alt="card5"/><figcaption class="wp-element-caption">[ETSWP_get_item item='5' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='5' column='itemimage']" alt="card5"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='5' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='5' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='5' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -218,11 +218,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='6' column='itemimage']" alt="card6"/><figcaption class="wp-element-caption">[ETSWP_get_item item='6' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='6' column='itemimage']" alt="card6"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='6' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='6' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='6' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -232,11 +232,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='7' column='itemimage']" alt="card7"/><figcaption class="wp-element-caption">[ETSWP_get_item item='7' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='7' column='itemimage']" alt="card7"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='7' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='7' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='7' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -246,11 +246,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='8' column='itemimage']" alt="card8"/><figcaption class="wp-element-caption">[ETSWP_get_item item='8' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='8' column='itemimage']" alt="card8"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='8' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='8' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='8' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -260,11 +260,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='9' column='itemimage']" alt="card9"/><figcaption class="wp-element-caption">[ETSWP_get_item item='9' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='9' column='itemimage']" alt="card9"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='9' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='9' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='9' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -274,11 +274,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='10' column='itemimage']" alt="card10"/><figcaption class="wp-element-caption">[ETSWP_get_item item='10' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='10' column='itemimage']" alt="card10"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='10' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='10' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='10' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -288,11 +288,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='11' column='itemimage']" alt="card11"/><figcaption class="wp-element-caption">[ETSWP_get_item item='11' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='11' column='itemimage']" alt="card11"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='11' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='11' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='11' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -302,11 +302,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='12' column='itemimage']" alt="card12"/><figcaption class="wp-element-caption">[ETSWP_get_item item='12' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='12' column='itemimage']" alt="card12"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='12' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='12' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='12' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -316,11 +316,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='13' column='itemimage']" alt="card13"/><figcaption class="wp-element-caption">[ETSWP_get_item item='13' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='13' column='itemimage']" alt="card13"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='13' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='13' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='13' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -330,11 +330,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='14' column='itemimage']" alt="card14"/><figcaption class="wp-element-caption">[ETSWP_get_item item='14' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='14' column='itemimage']" alt="card14"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='14' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='14' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='14' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -344,11 +344,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='15' column='itemimage']" alt="card15"/><figcaption class="wp-element-caption">[ETSWP_get_item item='15' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='15' column='itemimage']" alt="card15"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='15' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='15' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='15' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -358,11 +358,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='16' column='itemimage']" alt="card16"/><figcaption class="wp-element-caption">[ETSWP_get_item item='16' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='16' column='itemimage']" alt="card16"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='16' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='16' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='16' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -372,11 +372,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='17' column='itemimage']" alt="card17"/><figcaption class="wp-element-caption">[ETSWP_get_item item='17' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='17' column='itemimage']" alt="card17"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='17' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='17' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='17' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -386,11 +386,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='18' column='itemimage']" alt="card18"/><figcaption class="wp-element-caption">[ETSWP_get_item item='18' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='18' column='itemimage']" alt="card18"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='18' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='18' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='18' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -400,11 +400,11 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='19' column='itemimage']" alt="card19"/><figcaption class="wp-element-caption">[ETSWP_get_item item='19' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='19' column='itemimage']" alt="card19"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='19' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='19' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='19' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
@@ -414,10 +414,10 @@ circle('initialize');
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"align":"center","sizeSlug":"large"} -->
-<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_item item='20' column='itemimage']" alt="card20"/><figcaption class="wp-element-caption">[ETSWP_get_item item='20' column='itemname']</figcaption></figure>
+<figure class="wp-block-image aligncenter size-large"><img src="[ETSWP_pluginpath][ETSWP_get_db_item item='20' column='itemimage']" alt="card20"/><figcaption class="wp-element-caption">[ETSWP_get_db_item item='20' column='itemname']</figcaption></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">[ETSWP_get_item item='20' column='itemblurb']</p>
+<p class="has-text-align-center">[ETSWP_get_db_item item='20' column='itemblurb']</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

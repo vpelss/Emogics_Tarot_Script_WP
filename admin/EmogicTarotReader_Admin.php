@@ -6,7 +6,7 @@ class EmogicTarotReader_Admin {
 	const ETSWP_EMAIL_DISPLAY_NAME_FIELD = "ETSWP_email_display_name_field";
 	const ETSWP_FROM_EMAIL_FIELD = "ETSWP_from_email_field";
 	
-	public static function run() {
+	public static function init() {
 		//set up wp section and fields for our admin settings page
 		add_action( 'admin_init', 'EmogicTarotReader_Admin::register_settings_and_fields_for_admin_page' ); //admin_init is triggered before any other hook when a user accesses the admin area.
 		//create admin settings page and a slug to it
