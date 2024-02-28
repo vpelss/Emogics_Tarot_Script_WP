@@ -158,7 +158,9 @@ class EmogicTarotReader_Core {
         }        
         //set email to html
         add_filter("wp_mail_content_type", "EmogicTarotReader_Core::set_html_email_content_type");
-        $result = wp_mail( sanitize_email($_REQUEST["ETSWP_email"]) , "test", $email_template);
+        $to = sanitize_email($_REQUEST["ETSWP_email"]);
+        $subject = get_option( EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION );
+        $result = wp_mail( $to , $subject , $email_template);
         if($result == false){
             wp_die("Unknown email error.<p>" . $_REQUEST["ETSWP_email"] . "</p><p>Back to site <a href='/'>Site</a></p>");
         }

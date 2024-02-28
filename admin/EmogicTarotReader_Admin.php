@@ -4,8 +4,6 @@ class EmogicTarotReader_Admin {
 
 	const ADMIN_SLUG = "ETSWP_settings";
 	const HELP_SLUG = "emogic-tarot-help";
-	const ETSWP_EMAIL_DISPLAY_NAME_FIELD = "ETSWP_email_display_name_field";
-	const ETSWP_FROM_EMAIL_FIELD = "ETSWP_from_email_field";
 	
 	public static function init() {
 		//set up wp section and fields for our admin settings page
@@ -61,8 +59,9 @@ class EmogicTarotReader_Admin {
 	public static function register_settings_and_fields_for_admin_page(  ) {
 		//register_setting(string $option_group, string $option_name) Registers a setting and its data.
 		//creates an array ETSWP_admin_settings in wp_options and wp will update it according to our added setting fields
-		register_setting( 'ETSWP_option_group', self::ETSWP_EMAIL_DISPLAY_NAME_FIELD );
-		register_setting( 'ETSWP_option_group', self::ETSWP_FROM_EMAIL_FIELD );
+		register_setting( 'ETSWP_option_group', EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION );
+		register_setting( 'ETSWP_option_group', EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION );
+		register_setting( 'ETSWP_option_group', EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION );
 
 		//add_settings_section( string $id, string $title, callable $callback, string $page, array $args = array() )
  		add_settings_section(
@@ -73,16 +72,23 @@ class EmogicTarotReader_Admin {
 		);
 		//add_settings_field( string $id, string $title, callable $callback, string $page, string $section = ‘default’, array $args = array() )
 		add_settings_field(
-			self::ETSWP_EMAIL_DISPLAY_NAME_FIELD, //Slug-name to identify the field
+			EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION, //Slug-name to identify the field
 			'Email Display Name', //field label
 			'EmogicTarotReader_Admin::email_display_name_field_render', //callback to create field
 			'ETSWP_option_group', //slug-name of the settings page on which to show the section
 			'ETSWP_pluginPage_section'
 		);
 		add_settings_field(
-			self::ETSWP_FROM_EMAIL_FIELD, //Slug-name to identify the field
+			EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION, //Slug-name to identify the field
 			'From Email', //field label
 			'EmogicTarotReader_Admin::email_field_render', //callback to create field
+			'ETSWP_option_group', //slug-name of the settings page on which to show the section
+			'ETSWP_pluginPage_section'
+		);		
+		add_settings_field(
+			EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION, //Slug-name to identify the field
+			'Subject', //field label
+			'EmogicTarotReader_Admin::email_subject_field_render', //callback to create field
 			'ETSWP_option_group', //slug-name of the settings page on which to show the section
 			'ETSWP_pluginPage_section'
 		);		
@@ -93,14 +99,18 @@ class EmogicTarotReader_Admin {
 		echo 'These settings affect the email from address. If  left blank, Wordpress defaults will be set.'; 
 	}
 
+	public static function email_subject_field_render(  ) {
+		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION ) );
+		echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION . "' value='{$option}' placeholder='eg: Tarot Reading'>";
+	}
 	public static function email_field_render(  ) {
 		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION ) );
-		echo "<input type='email' name='" . self::ETSWP_FROM_EMAIL_FIELD . "' value='{$option}' placeholder='eg: tarot@yourdomain.com'>";
+		echo "<input type='email' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION . "' value='{$option}' placeholder='eg: tarot@yourdomain.com'>";
 	}
 
 	public static function email_display_name_field_render(  ) {
 		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION ) );
-		echo "<input type='text' name='" . self::ETSWP_EMAIL_DISPLAY_NAME_FIELD . "' value='{$option}' placeholder='eg: Tarot Mailer'>";
+		echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION . "' value='{$option}' placeholder='eg: Tarot Mailer'>";
 	}
 
 }

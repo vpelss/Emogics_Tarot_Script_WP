@@ -13,6 +13,7 @@ class EmogicTarotReader_Activator{
 	public static function activate(){
 		self::read_and_create_pages();
 		self::images_to_media_library();
+		add_option(EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION , 'Tarot Reading');
 		flush_rewrite_rules();
 	}
 	

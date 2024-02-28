@@ -303,6 +303,7 @@ Not for resale. Do not charge for this.
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
 -allow email input or insist we have an account : account / input : enable / disable? account avoids spam
+-pay for readings
 
 -make a post welcome message...
 

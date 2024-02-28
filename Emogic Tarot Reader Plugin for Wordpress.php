@@ -32,6 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
    define( 'EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION', 'ETSWP_media_array' );
    define( 'EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION', 'ETSWP_from_email' );
    define( 'EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION', 'ETSWP_from_email_display' );
+   define( 'EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION', 'ETSWP_email_subject' );
    define( 'EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE', 'ETSWP_db_array' );
    define( 'EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE', 'ETSWP_db_index_shuffled' );
     

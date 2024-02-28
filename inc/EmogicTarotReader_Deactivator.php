@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
 class EmogicTarotReader_Deactivator{
 
 	public static function deactivate(){
+						
 		//remove created pages
 		$pages = get_option( EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION );
 		if($pages != false){
@@ -29,11 +30,15 @@ class EmogicTarotReader_Deactivator{
 			$image_folder = get_home_path() . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
 			$wp_filesystem->rmdir($image_folder, true);
 		}
-		delete_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION ); //no longer needed
-		delete_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION ); //no longer needed
-		delete_option( EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION ); //no longer needed
-		delete_option( EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION ); //no longer needed
-			
+		
+		 //no longer needed
+		delete_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION ); 
+		delete_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION ); 
+		delete_option( EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION ); 
+		delete_option( EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION ); 
+		delete_option( EMOGIC_TAROT_PLUGIN_VERSION_OPTION ); 
+		delete_option( EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION ); 
+
 		flush_rewrite_rules();
 	}
 
