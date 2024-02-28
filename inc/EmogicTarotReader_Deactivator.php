@@ -9,7 +9,7 @@ class EmogicTarotReader_Deactivator{
 
 	public static function deactivate(){
 		//remove created pages
-		$pages = get_option('EmogicTarotReader_option_deactivate_file_array');
+		$pages = get_option( EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION );
 		if($pages != false){
 			foreach ($pages as $page_name) {
 				$page = get_page_by_path($page_name);
@@ -17,7 +17,7 @@ class EmogicTarotReader_Deactivator{
 				}
 		}
 		//remove images
-		$images_ids = get_option('EmogicTarotReader_option_deactivate_media_array');
+		$images_ids = get_option( EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION );
 		if($images_ids != false){
 			foreach ($images_ids as $images_id) {
 				$result = wp_delete_attachment( $images_id , true );
@@ -29,10 +29,10 @@ class EmogicTarotReader_Deactivator{
 			$image_folder = get_home_path() . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
 			$wp_filesystem->rmdir($image_folder, true);
 		}
-		delete_option( EmogicTarotReader_Admin::ETSWP_FROM_EMAIL_FIELD ); //no longer needed
-		delete_option( EmogicTarotReader_Admin::ETSWP_EMAIL_DISPLAY_NAME_FIELD ); //no longer needed
-		delete_option('EmogicTarotReader_option_deactivate_file_array'); //no longer needed
-		delete_option('EmogicTarotReader_option_deactivate_media_array'); //no longer needed
+		delete_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION ); //no longer needed
+		delete_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION ); //no longer needed
+		delete_option( EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION ); //no longer needed
+		delete_option( EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION ); //no longer needed
 			
 		flush_rewrite_rules();
 	}

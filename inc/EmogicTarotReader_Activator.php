@@ -23,7 +23,7 @@ class EmogicTarotReader_Activator{
 	
 		$deactivate_file_array = array(); //to use on deactivate so we can delete files plugin added
 		self::add_pages($dir , $parent_id , $page_path_parent , $deactivate_file_array);//$pages is by reference		
-		add_option('EmogicTarotReader_option_deactivate_file_array' , array_reverse($deactivate_file_array)); //store them in wp db
+		add_option(EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION , array_reverse($deactivate_file_array)); //store them in wp db
 	}
 
 	public static function add_pages($dir , $parent_id , $page_path_parent , &$deactivate_file_array){
@@ -85,7 +85,7 @@ class EmogicTarotReader_Activator{
 		
 		@mkdir($to, 0755); //create dest dir
 		self::recursive_copy($from , $to , $deactivate_media_array); //copy files		
-		add_option('EmogicTarotReader_option_deactivate_media_array' , array_reverse($deactivate_media_array));	
+		add_option( EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION , array_reverse($deactivate_media_array));	
 	}
 	
 	public static function recursive_copy($src , $dst , &$deactivate_media_array) { //$src and $dst must have lagging slashes

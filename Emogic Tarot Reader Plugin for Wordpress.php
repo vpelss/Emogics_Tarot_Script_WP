@@ -13,23 +13,40 @@
 if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if directly accessed
 
    // define variable for path to this plugin file.
-    define( 'EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME' , __file__ ); // c:\*********\EMOGIC_TAROT_pulgin_folder\Emogic Tarot Reader Plugin for Wordpress.php
-    define( 'EMOGIC_TAROT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) ); // c:\************\Emogic Tarot Reader Plugin for Wordpress/
+   define( 'EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME' , __file__ ); // c:\*********\EMOGIC_TAROT_pulgin_folder\Emogic Tarot Reader Plugin for Wordpress.php
+   define( 'EMOGIC_TAROT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) ); // c:\************\Emogic Tarot Reader Plugin for Wordpress/
+   
+   define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url('/' , __FILE__) ); // http://wp_url/wp-content/plugins/Emogic Tarot Reader Plugin for Wordpress/
+   define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // Emogic Tarot Reader Plugin for Wordpress (or other if renamed)
+   define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
+   //same as folder structure under /pages/ in plugin
+   define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 
+   define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "emogic-readings" ); // will be emogic_readings
+   define( 'EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER' , "emogic-reading-email-template" ); // will be emogic_readings
+   define( 'EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER' , "|" ); // delimeter in flat file db 
+   define( 'EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER' , "Emogic-Images" ); // Emogic-Images
+   define( 'EMOGIC_TAROT_PLUGIN_VERSION_OPTION', 'ETSWP_Version' );
+   define( 'EMOGIC_TAROT_PLUGIN_VERSION', '0.8.0' );
+   //option and cache names
+   define( 'EMOGIC_TAROT_PLUGIN_PAGES_ARRAY_OPTION', 'ETSWP_pages_array' );
+   define( 'EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION', 'ETSWP_media_array' );
+   define( 'EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION', 'ETSWP_from_email' );
+   define( 'EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION', 'ETSWP_from_email_display' );
+   define( 'EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE', 'ETSWP_db_array' );
+   define( 'EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE', 'ETSWP_db_index_shuffled' );
     
-    define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url('/' , __FILE__) ); // http://wp_url/wp-content/plugins/Emogic Tarot Reader Plugin for Wordpress/
-    define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // Emogic Tarot Reader Plugin for Wordpress (or other if renamed)
-    define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
-    //same as folder structure under /pages/ in plugin
-    define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 
-    define( 'EMOGIC_TAROT_PLUGIN_READING_FOLDER' , "emogic-readings" ); // will be emogic_readings
-    define( 'EMOGIC_TAROT_PLUGIN_EMAIL_TEMPLATE_FOLDER' , "emogic-reading-email-template" ); // will be emogic_readings
-    define( 'EMOGIC_TAROT_PLUGIN_DATABASE_DELIMITER' , "|" ); // delimeter in flat file db 
-    define( 'EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER' , "Emogic-Images" ); // Emogic-Images
+   register_activation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'activate'] );
+   register_deactivation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'deactivate'] );
+   add_action("admin_init", ["EmogicTarotReader_Plugin" , "enqueue_js_admin"] );
+   
+  //update check
+   if(get_option(EMOGIC_TAROT_PLUGIN_VERSION_OPTION) != EMOGIC_TAROT_PLUGIN_VERSION) { //see what version we had
+       // Execute your upgrade logic here
+   
+       // Then update the version value
+       update_option(EMOGIC_TAROT_PLUGIN_VERSION_OPTION, EMOGIC_TAROT_PLUGIN_VERSION);
+   }     
  
-     register_activation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'activate'] );
-     register_deactivation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'deactivate'] );
-     add_action("admin_init", ["EmogicTarotReader_Plugin" , "enqueue_js_admin"] );
-     
 class EmogicTarotReader_Plugin {
     
     public static function activate() {

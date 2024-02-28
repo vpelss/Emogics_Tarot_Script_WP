@@ -3,6 +3,7 @@
 class EmogicTarotReader_Admin {
 
 	const ADMIN_SLUG = "ETSWP_settings";
+	const HELP_SLUG = "emogic-tarot-help";
 	const ETSWP_EMAIL_DISPLAY_NAME_FIELD = "ETSWP_email_display_name_field";
 	const ETSWP_FROM_EMAIL_FIELD = "ETSWP_from_email_field";
 	
@@ -17,7 +18,25 @@ class EmogicTarotReader_Admin {
 	
 		public static function create_admin_page_and_slug() { //create menu page and a slug to it
 		//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):
-		add_options_page( 'Emogic Tarot Reader Settings', 'Emogic Tarot Reader Settings', 'manage_options', self::ADMIN_SLUG , 'EmogicTarotReader_Admin::build_form_options_page' );	
+		//add_options_page( 'Emogic Tarot Reader Settings', 'Emogic Tarot Reader Settings', 'manage_options', self::ADMIN_SLUG , 'EmogicTarotReader_Admin::build_form_options_page' );
+		
+		// Add the top-level admin menu
+		$page_title = 'Emogic Tarot Reader';
+		$menu_title = 'Emogic Tarot Reader';
+		$capability = 'manage_options';
+		$menu_slug = self::ADMIN_SLUG;
+		$function = 'EmogicTarotReader_Admin::build_form_options_page';
+		add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function);
+		// Add submenu page with same slug as parent to ensure no duplicates
+		$sub_menu_title = 'Settings';
+		add_submenu_page($menu_slug, $page_title, $sub_menu_title, $capability, $menu_slug, $function);
+		// Now add the submenu page for Help
+		$submenu_page_title = 'Emogic Tarot Reader';
+		$submenu_title = 'Help';
+		$submenu_slug = self::HELP_SLUG;
+		$submenu_function = '';
+		add_submenu_page($menu_slug, $submenu_page_title, $submenu_title, $capability, $submenu_slug, $submenu_function);
+
 		}
 		
 	public static function build_form_options_page(  ) {
@@ -33,7 +52,7 @@ class EmogicTarotReader_Admin {
 
 	//set up 'settings' link in plugin menu
 	public static function create_plugin_setting_link($links){
-		$settings_link = '<a href="admin.php?page=' .  self::ADMIN_SLUG . '">Settings</a>';
+		$settings_link = '<a href="admin.php?page=' . self::ADMIN_SLUG . '">Settings</a>&nbsp;|&nbsp;<a href="' . EMOGIC_TAROT_PLUGIN_WP_ROOT_URL . '/' . self::HELP_SLUG . '">Help</a>    ';
 		array_push($links , $settings_link);
 		return $links;
 	}
@@ -75,12 +94,12 @@ class EmogicTarotReader_Admin {
 	}
 
 	public static function email_field_render(  ) {
-		$option = sanitize_text_field( get_option( self::ETSWP_FROM_EMAIL_FIELD ) );
+		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION ) );
 		echo "<input type='email' name='" . self::ETSWP_FROM_EMAIL_FIELD . "' value='{$option}' placeholder='eg: tarot@yourdomain.com'>";
 	}
 
 	public static function email_display_name_field_render(  ) {
-		$option = sanitize_text_field( get_option( self::ETSWP_EMAIL_DISPLAY_NAME_FIELD ) );
+		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION ) );
 		echo "<input type='text' name='" . self::ETSWP_EMAIL_DISPLAY_NAME_FIELD . "' value='{$option}' placeholder='eg: Tarot Mailer'>";
 	}
 

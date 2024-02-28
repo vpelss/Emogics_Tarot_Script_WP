@@ -56,6 +56,8 @@ The images will be imported to the media galery.
 
 Pages will be imported and created from the plugin's "/pages" folder.
 The pages will be created in a quazi folder structure (parent/child) which mirrors the plugin's "/pages" folder structure.
+Pages with no content are considered 'folders'.
+To put pages with content into these 'folders', just make the 'folders' the page's parent.
 
 Important: If you deactivate or uninstall the plugin your the tarot pages, databases and images the plugin installed will be deleted.
 If you edited the original plugin files, make copies or backup them if you want to save any changes you have made.
@@ -308,7 +310,3 @@ Not for resale. Do not charge for this.
 -Numbers Speak reading
 -click to show popup card reading 
 
--setup instructions, use possibilities, etc
--explain cookies
--main form tips / instructions. path / inputs
--tarot, rune, other folder (all with main index page) to keeps decks separate?

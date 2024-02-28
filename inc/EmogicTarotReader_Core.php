@@ -88,8 +88,8 @@ class EmogicTarotReader_Core {
             $json = sanitize_text_field($_REQUEST["ETSWP_keys_shuffled"]);
             $ETSWP_keys_shuffled = json_decode($json);
             //need to globalize it so we can use it in shortcode. shortcodes are called later!
-            wp_cache_set("ETSWP_items_array", $ETSWP_items_array); //need to globalize it so we can use it in shortcode
-            wp_cache_set("ETSWP_keys_shuffled", $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
+            wp_cache_set(EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
+            wp_cache_set(EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
             return;
         }
         //shuffled order is in cookie or we need to shuffle
@@ -124,22 +124,11 @@ class EmogicTarotReader_Core {
                 $deck_life_in_hours = 24;
             }
             setcookie($hash, $json, time() + $deck_life_in_hours * 60 * 60, "/"); //cookie for a day
-            
-            
-            
             }
-        
-        
-        //store shuffled db in cookie in case we re-read
-        //$hash = self::build_cookie_name_based_on_inputs_and_store_inputs();
-        //if (!isset($_COOKIE[$hash])) {
-          
-        //}
-        
-        
+     
         //need to globalize it so we can use it in shortcode. shortcodes are called later!
-        wp_cache_set("ETSWP_items_array", $ETSWP_items_array); //need to globalize it so we can use it in shortcode
-        wp_cache_set("ETSWP_keys_shuffled", $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
+        wp_cache_set(EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE , $ETSWP_items_array); //need to globalize it so we can use it in shortcode
+        wp_cache_set(EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
     }
     
       public static function action_email_it() {
@@ -179,8 +168,8 @@ class EmogicTarotReader_Core {
 		        
 	//for quick short code retrieval
     public static function shortcode_get_db_item($atts = [], $content = null) {
-        $ETSWP_items_array = wp_cache_get("ETSWP_items_array");
-        $ETSWP_keys_shuffled = wp_cache_get("ETSWP_keys_shuffled");
+        $ETSWP_items_array = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE );
+        $ETSWP_keys_shuffled = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE );
         $item = $atts["item"] - 1; //the array starts at 0 so we want item 1 to point to that
         $column = $atts["column"];
         $output = $ETSWP_items_array[$ETSWP_keys_shuffled[$item]][$column];
@@ -235,7 +224,7 @@ class EmogicTarotReader_Core {
         $actual_link.= isset($_REQUEST["ETSWP_deck"]) ? "&" . "ETSWP_deck=" . sanitize_text_field($_REQUEST["ETSWP_deck"]) : "";
         $actual_link.= isset($_REQUEST["ETSWP_question"]) ? "&" . "ETSWP_question=" . sanitize_text_field($_REQUEST["ETSWP_question"]) : "";
         $actual_link.= "&" . "ETSWP_email_link=1";
-        $ETSWP_keys_shuffled = wp_cache_get("ETSWP_keys_shuffled");
+        $ETSWP_keys_shuffled = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE );
         $json = json_encode($ETSWP_keys_shuffled);
         $actual_link.= isset($json) ? "&" . "ETSWP_keys_shuffled=" . sanitize_text_field($json) : "";
         return $actual_link;
@@ -255,7 +244,7 @@ class EmogicTarotReader_Core {
     // Function to change email address
     public static function filter_email_from( $original_email_address ) {
         require_once EMOGIC_TAROT_PLUGIN_PATH . 'admin/EmogicTarotReader_Admin.php';
-         $option = get_option( EmogicTarotReader_Admin::ETSWP_FROM_EMAIL_FIELD );
+         $option = get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION );
         if(isset($option) == false || $option == ""){
             return $original_email_address;
         }
@@ -265,7 +254,7 @@ class EmogicTarotReader_Core {
     // Function to change sender name
     public static function filter_email_from_name( $original_email_from ) {
         require_once EMOGIC_TAROT_PLUGIN_PATH . 'admin/EmogicTarotReader_Admin.php';
-        $option = get_option( EmogicTarotReader_Admin::ETSWP_EMAIL_DISPLAY_NAME_FIELD );
+        $option = get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION );
         if(isset($option) == false || $option == ""){
             return $original_email_from;
         }
@@ -293,8 +282,7 @@ class EmogicTarotReader_Core {
         return $content;
     }
     
-
-	//action_shuffle_db() calls this
+    //action_shuffle_db() calls this
     //build both emogic-database and emogic-readings options from wp pages
     public static function build_select_options_for_form() {
         $page_paths = [EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER, EMOGIC_TAROT_PLUGIN_READING_FOLDER, ];
