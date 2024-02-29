@@ -143,7 +143,11 @@ class EmogicTarotReader_Core {
         if (!isset($wp_post)) {
             wp_die("No Email Template found.");
         } //if no email template stop everything.
-		//validate email
+        $email_template = do_shortcode($wp_post->post_content);    //email template will should have [ETSWP_link_to_reading] and/or [ETSWP_spread]
+        if ( ! str_contains( $email_template , "just_say_yes_to_email" ) ) { //see if this reading is set for email
+            return;
+        }
+        //validate email
 		if ( isset($_REQUEST["ETSWP_email"]) ) {
 			if ( ! is_email( sanitize_email($_REQUEST["ETSWP_email"]) ) ) {
 				wp_die("Email format incorrect." . $_REQUEST["ETSWP_email"]);
@@ -152,10 +156,6 @@ class EmogicTarotReader_Core {
 		else{//no email address
 			return;
 		}
-        $email_template = do_shortcode($wp_post->post_content);    //email template will should have [ETSWP_link_to_reading] and/or [ETSWP_spread]
-        if ( ! str_contains( $email_template , "just_say_yes_to_email" ) ) { //see if this reading is set for email
-            return;
-        }        
         //set email to html
         add_filter("wp_mail_content_type", "EmogicTarotReader_Core::set_html_email_content_type");
         $to = sanitize_email($_REQUEST["ETSWP_email"]);
@@ -341,15 +341,15 @@ class EmogicTarotReader_Core {
     //but also sets cookies for ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'] and ETSWP_email
     public static function build_cookie_name_based_on_inputs_and_store_inputs() {
         $cookie_name = "";
-        $cookie_array = ["ETSWP_first_name", "ETSWP_deck", "ETSWP_spread", "ETSWP_question", ];
+        $cookie_array = ["ETSWP_first_name", "ETSWP_deck", "ETSWP_spread", "ETSWP_question",];
         foreach ($cookie_array as $cookie) {
             if (isset($_REQUEST[$cookie])) {
                 $cookie_name = $cookie_name . sanitize_text_field($_REQUEST[$cookie]); //build cookie name for card reading
                 $result = setcookie($cookie, sanitize_text_field($_REQUEST[$cookie]), time() + 365 * 24 * 60 * 60, "/"); //save cookie of form fields from main tarot page    
             }
         }
-		if ( isset($_REQUEST["ETSWP_email"]) ){
-			if ( is_email($_REQUEST["ETSWP_email"]) ){
+		if ( isset($_REQUEST["ETSWP_email"]) ){ 
+			if ( is_email($_REQUEST["ETSWP_email"]) || ctype_space( $_REQUEST["ETSWP_email"] ) || ($_REQUEST["ETSWP_email"] == '') ){ //also check for blank email which is valid! 
 				$result = setcookie("ETSWP_email", sanitize_text_field($_REQUEST["ETSWP_email"]), time() + 365 * 24 * 60 * 60, "/"); //save cookie for ETSWP_email
 			}
 		}
