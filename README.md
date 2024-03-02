@@ -304,11 +304,6 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--tarot and rune and numerology folder?
-how to display and allow only correct spread to access correct databases?
-Should users have choice to db?
-db chosen by spread tag?
-
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
 -allow email input or insist we have an account : account / input : enable / disable? account avoids spam
