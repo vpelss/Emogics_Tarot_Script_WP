@@ -142,7 +142,7 @@ Note: You can add your own database columns. These new columns can easily be dis
 
 You may also note that [first_name] placed in the database will be replaced by the First Name input if filled out by the visitor.
 
-Note: Usually the choice of database to use will be set from the calling form in the input ETSWP_database.
+Note: Usually the database will be chosen by the input ETSWP_database in the calling form.
 You can override that by placing the following in your reading page <!-- ETSWPdb=database_name= -->.
 This forces a specific database to be used in this reading page.
 
