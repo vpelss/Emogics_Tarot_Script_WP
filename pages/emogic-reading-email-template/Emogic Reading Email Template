@@ -20,7 +20,7 @@ Here I use the outer div to use inline css to set background color and text colo
 <!-- /wp:paragraph -->
 
 <!-- wp:html -->
-[ETSWP_spread]
+[ETSWP_reading]
 <!--
 Use this if you want the reading to be added to the email. The formatting will likely be different from what shows on the website as WP does not use inline css. 
 

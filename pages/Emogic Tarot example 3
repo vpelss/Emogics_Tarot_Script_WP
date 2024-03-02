@@ -1,7 +1,7 @@
 <!-- wp:html -->
 <!--
-Wordpress does not provide for form tags like input, etc
-So we need to create forms using html ourselves
+This example chooses the database based on the Reading we chose.
+See Javascript below.
 -->
 <!-- /wp:html -->
 
@@ -28,17 +28,11 @@ a , a:visited{
 <form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
 <input type="hidden" name="action" value="ETSWP_process_form">
 <input type="hidden" name="ETSWP_database_life_in_hours" value="24">
-<center>
+<input type="hidden" name="ETSWP_database" id="ETSWP_database">
 
+<center>
 <p>
 <input type="text" name="ETSWP_first_name" id="ETSWP_first_name" placeholder="First Name">
-</p>
-
-<p>
-<label for="ETSWP_database">Choose a deck:</label>
-<select name="ETSWP_database" id="ETSWP_database">
-[ETSWP_database_options]
-</select>
 </p>
 
 <p>
@@ -66,7 +60,16 @@ a , a:visited{
 <script>
 
 function setAction(form){
-form.action = document.getElementById("ETSWP_reading").value;
+let form_url = document.getElementById("ETSWP_reading").value;
+form.action = form_url ;
+//set db 
+if( form_url .includes("three-card") ){
+  document.getElementById("ETSWP_database").value = 'Emogic';
+}
+else{
+//for readings we missed
+  document.getElementById("ETSWP_database").value = 'Leila';
+}
 }
 
 //remember previous choices

@@ -17,9 +17,9 @@ class EmogicTarotReader_Core {
         add_shortcode("ETSWP_get_input", ["EmogicTarotReader_Core", "shortcode_get_input", ]); //eg [ETSWP_get_input name='cookie name'] for reading display page. intended for just ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
         //for email, but can be used elsewhere
         add_shortcode("ETSWP_link_to_reading", ["EmogicTarotReader_Core", "shortcode_get_link_to_reading", ]); //eg [ETSWP_link_to_reading] will return a GET URL to the current reading. For use in email readings
-        add_shortcode("ETSWP_spread", ["EmogicTarotReader_Core", "shortcode_get_spread_html_for_email_template"]); //eg [ETSWP_spread] will return the spread page html for the current reading. For use in the email template page.      
-        add_shortcode("ETSWP_deck_options", ["EmogicTarotReader_Core", "shortcode_get_deck_options", ]); //get stored options for main tarot page [ETSWP_deck_options]
-        add_shortcode("ETSWP_spread_options", ["EmogicTarotReader_Core", "shortcode_get_spread_options", ]); //get stored options for main page [ETSWP_spread_options]
+        add_shortcode("ETSWP_reading", ["EmogicTarotReader_Core", "shortcode_get_spread_html_for_email_template"]); //eg [ETSWP_reading] will return the spread page html for the current reading. For use in the email template page.      
+        add_shortcode("ETSWP_database_options", ["EmogicTarotReader_Core", "shortcode_get_deck_options", ]); //get stored options for main tarot page [ETSWP_database_options]
+        add_shortcode("ETSWP_reading_options", ["EmogicTarotReader_Core", "shortcode_get_spread_options", ]); //get stored options for main page [ETSWP_reading_options]
         add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Core", "shortcode_get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
 
         add_filter("the_content", ["EmogicTarotReader_Core", "filter_block_html_display_on_email"], 1); //for sending email in html
@@ -33,11 +33,23 @@ class EmogicTarotReader_Core {
             self::build_select_options_for_form(); //build options for main form page. 
             return;
         }
+        
+        //get db from reading page if there is one set
+        //it overrides the db set in the calling form
+        //format: ETSWPdb=Leila=
+        $reading_text = get_post()->post_content; //get Reading text
+        //see if we have a database override in 
+        $exp = "/ETSWPdb=(\w+)=/i";
+        $result = preg_match( $exp , $reading_text , $matches );
+        if( isset($matches[1]) && ($matches != "") ){ //override database
+            $_REQUEST["ETSWP_database"] = $matches[1];
+        }      
+        
         //if here, we are a emogic-readings sub page
         //choose our deck
         $deck_chosen = "Emogic"; //default
-        if (isset($_REQUEST["ETSWP_deck"])) {
-            $deck_chosen = sanitize_text_field($_REQUEST["ETSWP_deck"]);
+        if (isset($_REQUEST["ETSWP_database"])) {
+            $deck_chosen = sanitize_text_field($_REQUEST["ETSWP_database"]);
             //strip ..
             $deck_chosen = str_replace("..", "", $deck_chosen);
         }
@@ -118,8 +130,8 @@ class EmogicTarotReader_Core {
             
             //set shuffled deck to cookie : store shuffled db in cookie in case we re-read
             $json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
-            if (isset($_REQUEST["ETSWP_deck_life_in_hours"])) {
-                $deck_life_in_hours = $_REQUEST["ETSWP_deck_life_in_hours"];
+            if (isset($_REQUEST["ETSWP_database_life_in_hours"])) {
+                $deck_life_in_hours = $_REQUEST["ETSWP_database_life_in_hours"];
             } else {
                 $deck_life_in_hours = 24;
             }
@@ -143,7 +155,7 @@ class EmogicTarotReader_Core {
         if (!isset($wp_post)) {
             wp_die("No Email Template found.");
         } //if no email template stop everything.
-        $email_template = do_shortcode($wp_post->post_content);    //email template will should have [ETSWP_link_to_reading] and/or [ETSWP_spread]
+        $email_template = do_shortcode($wp_post->post_content);    //email template will should have [ETSWP_link_to_reading] and/or [ETSWP_reading]
         if ( ! str_contains( $email_template , "just_say_yes_to_email" ) ) { //see if this reading is set for email
             return;
         }
@@ -203,7 +215,7 @@ class EmogicTarotReader_Core {
         return $options;
     }
     	
-    //eg: [ETSWP_get_cookie name='ETSWP_deck']
+    //eg: [ETSWP_get_cookie name='ETSWP_database']
     public static function shortcode_get_cookie($atts = [], $content = null) {
         $name = $atts["name"];
         isset($_COOKIE[$name]) ? ($cookie = sanitize_text_field($_COOKIE[$name])) : ($cookie = "");
@@ -223,7 +235,7 @@ class EmogicTarotReader_Core {
         $actual_link = $post_url;
         $actual_link.= "?";
         $actual_link.= isset($_REQUEST["ETSWP_first_name"]) ? "&" . "ETSWP_first_name=" . sanitize_text_field($_REQUEST["ETSWP_first_name"]) : "";
-        $actual_link.= isset($_REQUEST["ETSWP_deck"]) ? "&" . "ETSWP_deck=" . sanitize_text_field($_REQUEST["ETSWP_deck"]) : "";
+        $actual_link.= isset($_REQUEST["ETSWP_database"]) ? "&" . "ETSWP_database=" . sanitize_text_field($_REQUEST["ETSWP_database"]) : "";
         $actual_link.= isset($_REQUEST["ETSWP_question"]) ? "&" . "ETSWP_question=" . sanitize_text_field($_REQUEST["ETSWP_question"]) : "";
         $actual_link.= "&" . "ETSWP_email_link=1";
         $ETSWP_keys_shuffled = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE );
@@ -232,7 +244,7 @@ class EmogicTarotReader_Core {
         return $actual_link;
     }
     
-	public static function shortcode_get_spread_html_for_email_template() { //return the whole spread into the email teemplate using [ETSWP_spread]
+	public static function shortcode_get_spread_html_for_email_template() { //return the whole spread into the email template using [ETSWP_reading]
         $post = get_post();
         $html = do_shortcode($post->post_content);
         return $html;
@@ -337,11 +349,11 @@ class EmogicTarotReader_Core {
         return $html;
     }
     
-    //returns a  hash of form inputs of ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question']. this allows different readings for different names, questions, spreads
-    //but also sets cookies for ['ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'] and ETSWP_email
+    //returns a  hash of form inputs of ['ETSWP_first_name' , 'ETSWP_database' , 'ETSWP_reading' , 'ETSWP_question']. this allows different readings for different names, questions, spreads
+    //but also sets cookies for ['ETSWP_first_name' , 'ETSWP_database' , 'ETSWP_reading' , 'ETSWP_question'] and ETSWP_email
     public static function build_cookie_name_based_on_inputs_and_store_inputs() {
         $cookie_name = "";
-        $cookie_array = ["ETSWP_first_name", "ETSWP_deck", "ETSWP_spread", "ETSWP_question",];
+        $cookie_array = ["ETSWP_first_name", "ETSWP_database", "ETSWP_reading", "ETSWP_question",];
         foreach ($cookie_array as $cookie) {
             if (isset($_REQUEST[$cookie])) {
                 $cookie_name = $cookie_name . sanitize_text_field($_REQUEST[$cookie]); //build cookie name for card reading

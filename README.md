@@ -76,21 +76,21 @@ The HTML form that calls the reading must have certain 'input' and 'select' tags
 
 <input type="text" name="ETSWP_first_name" id="ETSWP_first_name" placeholder="First Name">
 
-\<select name="ETSWP_deck" id="ETSWP_deck">
-[ETSWP_deck_options]
+\<select name="ETSWP_database" id="ETSWP_database">
+[ETSWP_database_options]
 \</select>
 
-\<select name="ETSWP_spread" id="ETSWP_spread">
-[ETSWP_spread_options]
+\<select name="ETSWP_reading" id="ETSWP_reading">
+[ETSWP_reading_options]
 \</select>
 
 \<input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
 
 [ETSWP_get_cookie name='ETSWP_first_name']
 
-[ETSWP_get_cookie name='ETSWP_deck']
+[ETSWP_get_cookie name='ETSWP_database']
 
-[ETSWP_get_cookie name='ETSWP_spread']
+[ETSWP_get_cookie name='ETSWP_reading']
 
 [ETSWP_get_cookie name='ETSWP_question']
 
@@ -142,6 +142,10 @@ Note: You can add your own database columns. These new columns can easily be dis
 
 You may also note that [first_name] placed in the database will be replaced by the First Name input if filled out by the visitor.
 
+Note: Usually the choice of database to use will be set from the calling form in the input ETSWP_database.
+You can override that by placing the following in your reading page <!-- ETSWPdb=database_name= -->.
+This forces a specific database to be used in this reading page.
+
 ## Spreads
 
 Spreads are stored in Wordpress pages and displayed as such.
@@ -165,15 +169,15 @@ Spread shortcodes:
 
 To display the 5th shuffled card itemimage column data use the following: [ETSWP_get_db_item item='5' column='itemimage']
 
-[ETSWP_get_input name='column name'] Returns the input data used in the form from the main page. 'column name' can be: 'ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question'
+[ETSWP_get_input name='column name'] Returns the input data used in the form from the main page. 'column name' can be: 'ETSWP_first_name' , 'ETSWP_database' , 'ETSWP_reading' , 'ETSWP_question'
 
 Main page shortcodes:
 
-[ETSWP_deck_options] Returns the html options for all the deck sub pages found under your 'decks' page
+[ETSWP_database_options] Returns the html options for all the deck sub pages found under your 'decks' page
 
-[ETSWP_spread_options] Returns the html options for all the spread sub pages found under your 'spreads' page
+[ETSWP_reading_options] Returns the html options for all the spread sub pages found under your 'spreads' page
 
-[ETSWP_get_cookie name='cookie name'] Returns specific cookie data. This is used to retrieve and set (via JS) the previous tarot reading settings. 'cookie_name' can be: 'ETSWP_first_name' , 'ETSWP_deck' , 'ETSWP_spread' , 'ETSWP_question';
+[ETSWP_get_cookie name='cookie name'] Returns specific cookie data. This is used to retrieve and set (via JS) the previous tarot reading settings. 'cookie_name' can be: 'ETSWP_first_name' , 'ETSWP_database' , 'ETSWP_reading' , 'ETSWP_question';
 
 Other:
 
@@ -200,18 +204,18 @@ After the main form calls a spread, the following cookies are set:
 
 ETSWP_first_name
 
-ETSWP_deck
+ETSWP_database
 
-ETSWP_spread
+ETSWP_reading
 
 ETSWP_question
 
 various cookies that look like "e276a1c4" :
-These are stored shuffles for a combination of ETSWP_first_name, ETSWP_deck, ETSWP_spread, ETSWP_question.
+These are stored shuffles for a combination of ETSWP_first_name, ETSWP_database, ETSWP_reading, ETSWP_question.
 The life of these cookies can be set by the following hidden input on the main calling form.
 You can choose your own time in hours, or set it to zero to disable it.
 eg:
-<input type="hidden" name="ETSWP_deck_life_in_hours" value="24">
+<input type="hidden" name="ETSWP_database_life_in_hours" value="24">
 
 ## Email Readings
 
@@ -226,7 +230,7 @@ It can contain the following shortcodes:
 
 [ETSWP_link_to_reading] : this shortcode link will direct back to the website and show the reading sent in the email.
 
-[ETSWP_spread] : this shortcode will show the reading in the email. If you are having difficulty formatting decent email readings, just use [ETSWP_link_to_reading] and do not use [ETSWP_spread]
+[ETSWP_reading] : this shortcode will show the reading in the email. If you are having difficulty formatting decent email readings, just use [ETSWP_link_to_reading] and do not use [ETSWP_reading]
 
 Sending email readings is fraught with formatting challenges.
 The easiest solution is just don't allow them.
@@ -299,6 +303,11 @@ Not for resale. Do not charge for this.
 ## To Do
 
 -Everything
+
+-tarot and rune and numerology folder?
+how to display and allow only correct spread to access correct databases?
+Should users have choice to db?
+db chosen by spread tag?
 
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks
 
