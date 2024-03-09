@@ -101,16 +101,16 @@ class EmogicTarotReader_Admin {
 
 	public static function email_subject_field_render(  ) {
 		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION ) );
-		echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION . "' value='{$option}' placeholder='eg: Tarot Reading'>";
+		echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION . "' value='" . esc_attr( $option ) . "' placeholder='eg: Tarot Reading'>";
 	}
 	public static function email_field_render(  ) {
 		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION ) );
-		echo "<input type='email' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION . "' value='{$option}' placeholder='eg: tarot@yourdomain.com'>";
+		echo "<input type='email' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION . "' value=' " . esc_attr( $option ) . "' placeholder='eg: tarot@yourdomain.com'>";
 	}
 
 	public static function email_display_name_field_render(  ) {
 		$option = sanitize_text_field( get_option( EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION ) );
-		echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION . "' value='{$option}' placeholder='eg: Tarot Mailer'>";
+		echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION . "' value='" . esc_attr( $option ) . "' placeholder='eg: Tarot Mailer'>";
 	}
 
 }

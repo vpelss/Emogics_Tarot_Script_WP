@@ -131,7 +131,7 @@ class EmogicTarotReader_Core {
             //set shuffled deck to cookie : store shuffled db in cookie in case we re-read
             $json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
             if (isset($_REQUEST["ETSWP_database_life_in_hours"])) {
-                $deck_life_in_hours = $_REQUEST["ETSWP_database_life_in_hours"];
+                $deck_life_in_hours = sanitize_text_field( $_REQUEST["ETSWP_database_life_in_hours"] );
             } else {
                 $deck_life_in_hours = 24;
             }
@@ -161,8 +161,8 @@ class EmogicTarotReader_Core {
         }
         //validate email
 		if ( isset($_REQUEST["ETSWP_email"]) ) {
-			if ( ! is_email( sanitize_email($_REQUEST["ETSWP_email"]) ) ) {
-				wp_die("Email format incorrect." . $_REQUEST["ETSWP_email"]);
+			if ( ! is_email( $_REQUEST["ETSWP_email"] ) ) {
+				wp_die("Email format incorrect." . sanitize_email( $_REQUEST["ETSWP_email"] ));
 			}
 		}
 		else{//no email address
@@ -174,7 +174,7 @@ class EmogicTarotReader_Core {
         $subject = get_option( EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION );
         $result = wp_mail( $to , $subject , $email_template);
         if($result == false){
-            wp_die("Unknown email error.<p>" . $_REQUEST["ETSWP_email"] . "</p><p>Back to site <a href='/'>Site</a></p>");
+            wp_die("Unknown email error.<p>" . sanitize_email( $_REQUEST["ETSWP_email"] ) . "</p><p>Back to site <a href='/'>Site</a></p>");
         }
         // Reset content-type to avoid conflicts -- https://core.trac.wordpress.org/ticket/23578
         remove_filter("wp_mail_content_type", "EmogicTarotReader_Core::wpdocs_set_html_email_content_type");

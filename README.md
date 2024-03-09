@@ -46,21 +46,16 @@ eg: wp-content\plugins\Emogic-Tarot-Reader-Plugin-for-Wordpress
 
 Activate it
 
-Your main tarot page will be: Emogic Tarot
-?pagename=Emogic-Tarot
-You can rename this page.
-
 On activation:
 
-The images will be imported to the media galery.
+169 images will be copied from this plugin to the wordpress "uploads/Emogic-Images" folder.
+These images will be imported to the wordpress media galery.
+All the files under this plugin's "/pages" folder will be imported as wordpress pages.
+The pages will be created in a quasi folder structure (parent/child) and will mirrors the plugin's "/pages" folder structure.
+Your main tarot page will be: Emogic Tarot or ?pagename=Emogic-Tarot
+You can rename this page.
 
-Pages will be imported and created from the plugin's "/pages" folder.
-The pages will be created in a quazi folder structure (parent/child) which mirrors the plugin's "/pages" folder structure.
-Pages with no content are considered 'folders'.
-To put pages with content into these 'folders', just make the 'folders' the page's parent.
-
-Important: If you deactivate or uninstall the plugin your the tarot pages, databases and images the plugin installed will be deleted.
-If you edited the original plugin files, make copies or backup them if you want to save any changes you have made.
+Important: If you deactivate this plugin the tarot pages, databases, and images installed by this plugin will be deleted. Before disabling this script, make copies or backups if you want to save any changes you have made.
 
 ## Themes
 
@@ -304,7 +299,7 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--export and import spreads and decks -backup/restore spreads? -backup/restore decks
+-export and import spreads and decks -backup/restore spreads? -backup/restore decks JSON
 
 -allow email input or insist we have an account : account / input : enable / disable? account avoids spam
 -pay for readings

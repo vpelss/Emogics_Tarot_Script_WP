@@ -16,10 +16,16 @@ This plugin is for those who are serious about making their own spreads, reading
 You can create your own spreads and databases. Use any images. It can easily be used for other readings. Rune readings? You just need some graphics and a database. If anyone wants to donate a database or graphics you created, to this project I will consider adding it to the plugin.
 
 == Installation ==
-Place this directory under your Wordpress wp-content\\plugins folder
 
-Activate it
+On activation:
 
-Your main tarot page will be: Emogic Tarot ?pagename=Emogic-Tarot You can rename the page.
+169 images will be copied from this plugin to the wordpress "uploads/Emogic-Images" folder.
+These images will be imported to the wordpress media galery.
+All the files under this plugin's "/pages" folder will be imported as wordpress pages.
+The pages will be created in a quasi folder structure (parent/child) and will mirrors the plugin's "/pages" folder structure.
+Your main tarot page will be: Emogic Tarot or ?pagename=Emogic-Tarot
+You can rename this page.
 
-Important: If you uninstall the plugin your tarot pages and databases will be deleted. If you edited the original plugin files, make copies or backup if you want to save any changes you have made. There are many good plugins to backup your site
+Important:
+
+If you deactivate this plugin the tarot pages, databases, and images installed by this plugin will be deleted. Before disabling this script, make copies or backups if you want to save any changes you have made.

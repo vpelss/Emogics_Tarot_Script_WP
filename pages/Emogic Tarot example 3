@@ -1,6 +1,7 @@
 <!-- wp:html -->
 <!--
-This example chooses the database based on the Reading we chose.
+In this example we do not let the visitor chose the database to use.
+The database chosen is based on the Reading they chose.
 See Javascript below.
 -->
 <!-- /wp:html -->
