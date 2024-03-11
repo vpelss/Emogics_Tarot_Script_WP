@@ -126,8 +126,6 @@ class EmogicTarotReader_Core {
             //re-index $ETSWP_keys_shuffled as there are random holes in index as we deleted duplicate itemnumbers
             $ETSWP_keys_shuffled = array_values($ETSWP_keys_shuffled);
             
-            
-            
             //set shuffled deck to cookie : store shuffled db in cookie in case we re-read
             $json = json_encode($ETSWP_keys_shuffled); //save deck for specific ['first_name' , 'emogic_deck' , 'emogic_spread' , 'emogic_question']
             if (isset($_REQUEST["ETSWP_database_life_in_hours"])) {
@@ -143,7 +141,7 @@ class EmogicTarotReader_Core {
         wp_cache_set(EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE , $ETSWP_keys_shuffled); //need to globalize it so we can use it in shortcode
     }
     
-      public static function action_email_it() {
+    public static function action_email_it() {
         if (isset($_REQUEST["ETSWP_email_link"])) {//this is a reading from an email link. don't send another email please.
             return false;
         }
