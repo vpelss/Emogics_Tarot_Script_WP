@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
 
 class EmogicTarotReader_Activator{
 	
-	public static function activate(){
+	public static function activate(){	
 		self::read_and_create_pages();
 		self::images_to_media_library();
 		add_option(EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION , 'Tarot Reading');
@@ -80,26 +80,26 @@ class EmogicTarotReader_Activator{
 	}
 	
 	public static function images_to_media_library(){
-		$deactivate_media_array = array();
-		$from = EMOGIC_TAROT_PLUGIN_PATH . "images/";
-		$to = get_home_path() . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
-		
+		$deactivate_media_array = array();		
+		$from = EMOGIC_TAROT_PLUGIN_PATH . "images"; 
+		$to = ABSPATH . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER ;
+				
 		@mkdir($to, 0755); //create dest dir
 		self::recursive_copy($from , $to , $deactivate_media_array); //copy files		
 		add_option( EMOGIC_TAROT_PLUGIN_MEDIA_ARRAY_OPTION , array_reverse($deactivate_media_array));	
 	}
 	
-	public static function recursive_copy($src , $dst , &$deactivate_media_array) { //$src and $dst must have lagging slashes
-		$dir = opendir($src); 
+	public static function recursive_copy($src , $dst , &$deactivate_media_array) { //$src and $dst do not have lagging slashes	
+		$dir = opendir($src);
 		@mkdir($dst); 
 		while(false !== ( $file = readdir($dir)) ) { 
 			if (( $file != '.' ) && ( $file != '..' )) { 
-				if ( is_dir($src . $file) ) { 
-					self::recursive_copy($src . $file . '/' , $dst . $file . '/' , $deactivate_media_array); 
+				if ( is_dir($src . '/' . $file) ) { 
+					self::recursive_copy($src . '/' . $file, $dst  . '/' . $file , $deactivate_media_array ); 
 				} 
-				else { 
-					copy($src . $file , $dst . $file);
-					self::copy_image_to_media_library($dst . $file , $file , $deactivate_media_array);
+			if ( is_file($src . '/' . $file) )  {
+					copy($src . '/' . $file , $dst . '/' . $file);
+					self::copy_image_to_media_library($dst . '/' . $file , $file , $deactivate_media_array);
 				} 
 			} 
 		} 
@@ -107,30 +107,27 @@ class EmogicTarotReader_Activator{
 	}
 
 	public static function copy_image_to_media_library($file_path , $filename , &$deactivate_media_array){			 
+
 			$artdata = array(
 				'post_author' => 1, 
-				//'post_date' => current_time('mysql'),
-				//'post_date_gmt' => current_time('mysql'),
 				'post_title' => $filename, 
-				//'post_status' => 'inherit',
 				'comment_status' => 'closed',
 				'ping_status' => 'closed',
 				'post_name' => sanitize_title_with_dashes(str_replace("_", "-", $filename)),											'post_modified' => current_time('mysql'),
 				'post_modified_gmt' => current_time('mysql'),
 				'post_parent' => 0,
 				'post_type' => 'attachment',
-				//'guid' => $siteurl.'/'.$artDir.$new_filename,
 				'guid' => $file_path,
-				'post_mime_type' => mime_content_type( $file_path ),
+				'post_mime_type' => 'image/jpg',
 				'post_excerpt' => $filename,
 				'post_content' => $filename,
 				'size'     => filesize( $file_path ),
 			);
-			$attach_id = wp_insert_attachment( $artdata, $file_path , 0);
+			$attach_id = wp_insert_attachment( $artdata , $file_path , 0);
 	
 			//generate metadata and thumbnails
-			if ($attach_data = wp_generate_attachment_metadata( $attach_id,$file_path)) {
-				wp_update_attachment_metadata($attach_id, $attach_data);
+			if ($attach_data = wp_generate_attachment_metadata( $attach_id , $file_path)) {
+				wp_update_attachment_metadata($attach_id , $attach_data);
 			}
 			array_push( $deactivate_media_array , $attach_id );
 	}

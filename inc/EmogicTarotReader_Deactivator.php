@@ -27,7 +27,7 @@ class EmogicTarotReader_Deactivator{
 		//delete copied images
 		if( WP_Filesystem() ){
 			global $wp_filesystem;
-			$image_folder = get_home_path() . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
+			$image_folder = ABSPATH . "wp-content/uploads/" .EMOGIC_TAROT_PLUGIN_MEDIA_FOLDER . "/";
 			$wp_filesystem->rmdir($image_folder, true);
 		}
 		

@@ -1,15 +1,10 @@
 ## Emogic Tarot Reading plugin for Wordpress
 
-A Tarot Reading plugin for Wordpress
-
-For casual users:
-Easily add a Tarot reader to your wordpress site.
+Casual users will be able to easily add a Tarot reader to their wordpress site.
 We provide 2 databases, use the standard Rider-Waite deck images, and a few spreads.
 
-For advanced users:
-
-You will find this is the most flexible Tarot plugin.
-It was designed for those who are serious about making their own readings, databases, and using their own images.
+Advanced users will find this is a very flexible Tarot plugin.
+It was designed for those serious about making their own readings, databases, and using their own images.
 You can edit everything using the wordpress editor and shortcodes.
 It can easily be used for other types of readings. Rune readings for example.
 You just need some Rune graphics and a Rune database.
@@ -18,6 +13,7 @@ To make your own spreads you should have a working knowledge of Wordpress Shortc
 Knowledge of HTML, CSS, and Javascript is very helpful.
 
 If anyone would like to donate databases or graphics that you have created, I would consider adding it to this plugin.
+
 
 ## Benefits
 
@@ -51,7 +47,7 @@ Activate it
 
 On activation:
 
-169 images will be copied from this plugin to the wordpress "uploads/Emogic-Images" folder.
+169 images will be copied from the plugin to the "uploads/Emogic-Images" folder.
 These images will be imported to the wordpress media gallery.
 All the files under this plugin's "/pages" folder will be imported as wordpress pages.
 The pages will be created in a quasi folder structure (parent/child) and will mirror the plugin "/pages" folder structure.
@@ -304,16 +300,15 @@ Not for resale. Do not charge for this.
 
 -Everything
 
+-playgroud copy files causes errors....
 -add nonce for pay system, etc...
-
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks JSON
-
 -allow email input or insist we have an account : account / input : enable / disable? account avoids spam
 -pay for readings
-
--make a post welcome message...
+-make a post welcome message?
+-maybe a shortcode to read and add a form page? So we do not need to provide a starting link?
 
 -more spreads
--Numbers Speak reading
+-Numbers Speak For Themselves reading
 -click to show popup card reading 
 
