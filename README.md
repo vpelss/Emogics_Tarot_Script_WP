@@ -36,7 +36,7 @@ Email readings possible
 
 Currently running at https://tarot.emogic.com/
 Or try it as an admin on the Wordpress Playground:
-https://playground.wordpress.net/?plugin=emogics-tarot-reader-for-wp&login=yes&storage=browser&networking=yes
+https://playground.wordpress.net/?plugin=emogics-tarot-reader-for-wp&login=yes&storage=browser&networking=yes&theme=Twenty%20Twenty-Two
 
 ## Install
 
