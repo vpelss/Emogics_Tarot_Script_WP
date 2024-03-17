@@ -2,8 +2,8 @@
 /**
 * Plugin Name: Emogic Tarot Reader Plugin for Wordpress
 * Plugin URI: https://github.com/vpelss/Emogics_Tarot_Script_WP#readme
-* Description: Emogic Tarot Reader Plugin for Wordpress
-* Version: 0.8.0
+* Description: Emogic Tarot Reader
+* Version: 0.8.1
 * License: GPLv3
 * License URI: https://github.com/vpelss/Emogics_Tarot_Script_WP?tab=GPL-3.0-1-ov-file#readme
 * Author: Vince Pelss
@@ -17,7 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
    define( 'EMOGIC_TAROT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) ); // c:\************\Emogic Tarot Reader Plugin for Wordpress/
    
    define( 'EMOGIC_TAROT_PLUGIN_LOCATION_URL', plugins_url('/' , __FILE__) ); // http://wp_url/wp-content/plugins/Emogic Tarot Reader Plugin for Wordpress/
-   define( 'EMOGIC_TAROT_PLUGIN_NAME' , plugin_basename( __FILE__ ) ); // Emogic Tarot Reader Plugin for Wordpress (or other if renamed)
+   define( 'EMOGIC_TAROT_RELATIVE_PLUGIN_PATH' , plugin_basename( __FILE__ ) ); // Emogic Tarot Reader Plugin for Wordpress (or other if renamed)
+   define( 'EMOGIC_TAROT_PLUGIN_DIR_BASENAME' , basename( dirname( __FILE__ ) ) ); // Emogic-Tarot-Reader-Plugin-for-Wordpress unless changed
    define( 'EMOGIC_TAROT_PLUGIN_WP_ROOT_URL' , home_url() ); // http://wp_url/
    //same as folder structure under /pages/ in plugin
    define( 'EMOGIC_TAROT_PLUGIN_DATABASE_FOLDER' , "emogic-databases" ); // will be emogic_databases 

@@ -11,7 +11,7 @@ class EmogicTarotReader_Admin {
 		//create admin settings page and a slug to it
 		add_action( 'admin_menu', 'EmogicTarotReader_Admin::create_admin_page_and_slug' );
 		//set up 'settings' link in plugin menu
-		add_filter( "plugin_action_links_" . EMOGIC_TAROT_PLUGIN_NAME , 'EmogicTarotReader_Admin::create_plugin_setting_link' ); 
+		add_filter( "plugin_action_links_" . EMOGIC_TAROT_RELATIVE_PLUGIN_PATH , 'EmogicTarotReader_Admin::create_plugin_setting_link' ); 
 	}
 	
 		public static function create_admin_page_and_slug() { //create menu page and a slug to it

@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=26D64Y78Q96RJ
 Requires at least: 4.0
 Tested up to: 6.4.2
 Requires PHP: 5.6
-Stable tag: 0.8.0
+Stable tag: 0.8.1
 License: GPLv3
 License URI: https://github.com/vpelss/Emogics_Tarot_Script_WP?tab=GPL-3.0-1-ov-file#readme
 
@@ -53,9 +53,12 @@ Note: the images where the selected cards will show will always be blank. In the
 
 
 == Changelog ==
+= 0.8.1 =
+Attempt to make playground friendly.
+
 = 0.8.0 =
 * Initial release.
 
 == Upgrade Notice ==
-= 0.8.0 =
-* Initial release.
+= 0.8.1 =
+Attempt to make playground friendly.

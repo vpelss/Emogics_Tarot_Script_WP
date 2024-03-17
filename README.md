@@ -14,7 +14,6 @@ Knowledge of HTML, CSS, and Javascript is very helpful.
 
 If anyone would like to donate databases or graphics that you have created, I would consider adding it to this plugin.
 
-
 ## Benefits
 
 See the future
@@ -36,6 +35,8 @@ Email readings possible
 ## Try
 
 Currently running at https://tarot.emogic.com/
+Or try it as an admin on the Wordpress Playground:
+https://playground.wordpress.net/?plugin=emogics-tarot-reader-for-wp&login=yes&storage=browser&networking=yes
 
 ## Install
 
