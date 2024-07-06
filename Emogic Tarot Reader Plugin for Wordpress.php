@@ -41,6 +41,8 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
    register_deactivation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'deactivate'] );
    add_action("admin_init", ["EmogicTarotReader_Plugin" , "enqueue_js_admin"] );
    
+   add_action( 'wp_enqueue_scripts', ['EmogicTarotReader_Plugin' , 'my_enqueue_styles'] );
+   
   //update check
    if(get_option(EMOGIC_TAROT_PLUGIN_VERSION_OPTION) != EMOGIC_TAROT_PLUGIN_VERSION) { //see what version we had
        // Execute your upgrade logic here
@@ -50,6 +52,10 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
    }     
  
 class EmogicTarotReader_Plugin {
+
+   public static function my_enqueue_styles() {
+      wp_enqueue_style( 'EmogicWPTarotStyle',  EMOGIC_TAROT_PLUGIN_LOCATION_URL . "css/EmogicWPTarot.css");
+      }
     
     public static function activate() {
         require_once EMOGIC_TAROT_PLUGIN_PATH . 'inc/EmogicTarotReader_Activator.php';

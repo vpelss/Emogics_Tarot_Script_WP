@@ -3,7 +3,7 @@ Contributors: vpelss
 Tags: Tarot , Reader , Tarot Card , Tarot Reader , Card
 Donate link: https://www.paypal.com/donate/?hosted_button_id=26D64Y78Q96RJ
 Requires at least: 4.0
-Tested up to: 6.4.2
+Tested up to: 6.4.4
 Requires PHP: 5.6
 Stable tag: 0.8.1
 License: GPLv3
@@ -26,6 +26,9 @@ To make your own spreads you should have a working knowledge of Wordpress Shortc
 Knowledge of HTML, CSS, and Javascript is very helpful.
 
 If anyone would like to donate databases or graphics that you have created, I would consider adding it to this plugin.
+
+Try it in the Wordpress Playground first:
+https://playground.wordpress.net/?theme=twentytwentytwo&plugin=emogics-tarot-reader-for-wp&login=yes&storage=browser&networking=yes
 
 == Installation ==
 On activation:

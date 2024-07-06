@@ -8,15 +8,6 @@ BODY .ETSWP_cross{
 gap: 0rem;
 }
 
-BODY {
-  color: yellow;
-  background-color: black;
-}
-
-a , a:visited{
-  color: yellow;
-}
-
 </style>
 <!-- /wp:html -->
 

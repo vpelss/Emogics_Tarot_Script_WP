@@ -14,6 +14,9 @@ Knowledge of HTML, CSS, and Javascript is very helpful.
 
 If anyone would like to donate databases or graphics that you have created, I would consider adding it to this plugin.
 
+Try it in the Wordpress Playground first:
+https://playground.wordpress.net/?theme=twentytwentytwo&plugin=emogics-tarot-reader-for-wp&login=yes&storage=browser&networking=yes
+
 ## Benefits
 
 See the future
@@ -36,7 +39,7 @@ Email readings possible
 
 Currently running at https://tarot.emogic.com/
 Or try it as an admin on the Wordpress Playground:
-https://playground.wordpress.net/?plugin=emogics-tarot-reader-for-wp&login=yes&storage=browser&networking=yes&theme=Twenty%20Twenty-Two
+https://playground.wordpress.net/?theme=twentytwentytwo&plugin=emogics-tarot-reader-for-wp&login=yes&storage=none&networking=yes&networking=yes&plugin=query-monitor
 
 ## Install
 
@@ -301,7 +304,10 @@ Not for resale. Do not charge for this.
 
 -Everything
 
--playgroud copy files causes errors....
+-update installs images again!
+-deleted in fields in playgrund
+-add title to main page 'tarot reading online'
+
 -add nonce for pay system, etc...
 -export and import spreads and decks -backup/restore spreads? -backup/restore decks JSON
 -allow email input or insist we have an account : account / input : enable / disable? account avoids spam
