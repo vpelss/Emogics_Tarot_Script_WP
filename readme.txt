@@ -3,9 +3,9 @@ Contributors: vpelss
 Tags: Tarot , Reader , Tarot Card , Tarot Reader , Card
 Donate link: https://www.paypal.com/donate/?hosted_button_id=26D64Y78Q96RJ
 Requires at least: 4.0
-Tested up to: 6.4.4
+Tested up to: 6.6.0
 Requires PHP: 5.6
-Stable tag: 0.8.1
+Stable tag: 0.8.2
 License: GPLv3
 License URI: https://github.com/vpelss/Emogics_Tarot_Script_WP?tab=GPL-3.0-1-ov-file#readme
 
@@ -54,8 +54,20 @@ To distribute the plugin to multiple sites this is required. When you add images
 
 Note: the images where the selected cards will show will always be blank. In the edit screen a card has not been selected yet.
 
+= How do I change your awful css choices? =
+
+My css is in css/EmogicWPTarot.css
+I use that to distribute my brilliant css choices to your wordpress installation.
+To over ride them the css in the file.
+Then create a new Wordpress Page Template and add your CCS there.
+
+EmogicWPTarot.css
 
 == Changelog ==
+
+= 0.8.2 =
+Changed my css to enqueue as it should be.
+
 = 0.8.1 =
 Attempt to make playground friendly.
 

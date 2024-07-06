@@ -3,7 +3,7 @@
 * Plugin Name: Emogic Tarot Reader Plugin for Wordpress
 * Plugin URI: https://github.com/vpelss/Emogics_Tarot_Script_WP#readme
 * Description: Emogic Tarot Reader
-* Version: 0.8.1
+* Version: 0.8.2
 * License: GPLv3
 * License URI: https://github.com/vpelss/Emogics_Tarot_Script_WP?tab=GPL-3.0-1-ov-file#readme
 * Author: Vince Pelss

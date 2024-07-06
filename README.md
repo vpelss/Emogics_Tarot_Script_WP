@@ -286,6 +286,13 @@ To distribute the plugin to multiple sites this is required. When you add images
 
 Note: the images where the selected cards will show will always be blank. In the edit screen a card has not been selected yet.
 
+How do I change your awful css choices?
+
+My css is in css/EmogicWPTarot.css
+I use that to distribute my brilliant css choices to your wordpress installation.
+To over ride them the css in the file.
+Then create a new Wordpress Page Template and add your CCS there.
+
 ## Support
 
 Support is limited to bugs as time permits.
