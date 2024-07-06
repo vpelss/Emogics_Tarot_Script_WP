@@ -58,7 +58,7 @@ Note: the images where the selected cards will show will always be blank. In the
 
 My css is in css/EmogicWPTarot.css
 I use that to distribute my brilliant css choices to your wordpress installation.
-To over ride them the css in the file.
+To override them, delete them in the css in the file.
 Then create a new Wordpress Page Template and add your CCS there.
 
 EmogicWPTarot.css
