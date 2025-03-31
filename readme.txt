@@ -3,7 +3,7 @@ Contributors: vpelss
 Tags: Tarot , Reader , Tarot Card , Tarot Reader , Card
 Donate link: https://www.paypal.com/donate/?hosted_button_id=26D64Y78Q96RJ
 Requires at least: 4.0
-Tested up to: 6.6.0
+Tested up to: 6.7.2
 Requires PHP: 5.6
 Stable tag: 0.8.2
 License: GPLv3
@@ -24,6 +24,8 @@ You just need some Rune graphics and a Rune database.
 Flexibility comes with a price and that price is a moderate learning curve.
 To make your own spreads you should have a working knowledge of Wordpress Shortcodes.
 Knowledge of HTML, CSS, and Javascript is very helpful.
+
+If you like this plugin, consider writting a review.
 
 If anyone would like to donate databases or graphics that you have created, I would consider adding it to this plugin.
 
@@ -58,7 +60,7 @@ Note: the images where the selected cards will show will always be blank. In the
 
 My css is in css/EmogicWPTarot.css
 I use that to distribute my brilliant css choices to your wordpress installation.
-To override them, delete them in the css in the file.
+To over ride them the css in the file.
 Then create a new Wordpress Page Template and add your CCS there.
 
 EmogicWPTarot.css
