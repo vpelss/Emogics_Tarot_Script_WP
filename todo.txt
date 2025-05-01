@@ -1,0 +1,15 @@
+
+
+- admin::init() shortcode for card backs??
+<img src="[ETSWP_pluginpath][ETSWP_get_db_item item='3' column='itemimage']"
+[ETSWP_pluginpath] is good
+[ETSWP_get_db_item item='3' column='itemimage'] convert to <img src="[ETSWP_pluginpath]/images/backsmall.jpg" 
+- what about the card size?
+- how to allow admin to choose card back image?
+
+
+new instructions!!!!!!!!!
+css
+- css/EmogicWPTarot.css has global css settings. Change or remove as you like
+- you can use <style></style> tags on eacg readings page, but that is a lot of work.
+- Email css can only be set in the emogic-reading-email-template/Emogic Reading Email Template page see: <div style="color: yellow; background-color: black; padding: 25px;"> EMAIL HERE </div>

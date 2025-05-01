@@ -1,0 +1,114 @@
+<!-- wp:html -->
+<!--
+This example form breaks up the form html elements so you can easily position them using the Wordpress editor
+-->
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<style>
+/* this block is here so it is easier for me to distribute my css to your wordpress installation.
+This is not good practice. You should create a new Page Template and add your CCS there. */
+
+BODY {
+  color: yellow;
+  background-color: black;
+  background-image: url([ETSWP_pluginpath]/images/ball.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+a , a:visited{
+  color: yellow;
+}
+</style>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
+<input type="hidden" name="action" value="ETSWP_process_form">
+<input type="hidden" name="ETSWP_database_life_in_hours" value="24">
+<!-- /wp:html -->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:html -->
+<input type="text" name="ETSWP_first_name" id="ETSWP_first_name" placeholder="First Name">
+<!-- /wp:html --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"10px"} -->
+<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:html -->
+<label for="ETSWP_database">Choose a deck:</label>
+<select name="ETSWP_database" id="ETSWP_database">
+[ETSWP_database_options]
+</select>
+<!-- /wp:html --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"10px"} -->
+<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:html -->
+<label for="ETSWP_reading">Choose a spread:</label>
+<select name="ETSWP_reading" id="ETSWP_reading">
+[ETSWP_reading_options]
+</select>
+<!-- /wp:html --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"10px"} -->
+<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:html -->
+<input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
+<!-- /wp:html --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"10px"} -->
+<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:html -->
+<input type="email" size="40" name="ETSWP_email" id="ETSWP_email" placeholder="Your Email. Only required for email enabled spreads.">
+<!-- /wp:html --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"10px","width":"0px","style":{"layout":{}}} -->
+<div style="height:10px;width:0px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
+<div class="wp-block-group"><!-- wp:html -->
+<input type="submit" name="submit" id="submit" value="Get Tarot Reading">
+<!-- /wp:html --></div>
+<!-- /wp:group -->
+
+<!-- wp:html -->
+<script>
+function setAction(form){
+form.action = document.getElementById("ETSWP_reading").value;
+}
+
+//remember previous choices
+document.getElementById("ETSWP_first_name").value = '[ETSWP_get_cookie name='ETSWP_first_name']';
+document.getElementById("ETSWP_database").value = '[ETSWP_get_cookie name='ETSWP_database']' || 'Emogic';
+document.getElementById("ETSWP_database").value = "[ETSWP_get_cookie name='ETSWP_database']" || document.getElementById("ETSWP_database").value;
+document.getElementById("ETSWP_reading").value = "[ETSWP_get_cookie name='ETSWP_reading']" || document.getElementById("ETSWP_reading").value;
+document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP_question']';
+document.getElementById("ETSWP_email").value = '[ETSWP_get_cookie name='ETSWP_email']';
+
+</script>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+</form>
+<!-- /wp:html -->

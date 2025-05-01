@@ -39,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {	exit($staus='ABSPATH not defn'); } //exit if dir
     
    register_activation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'activate'] );
    register_deactivation_hook( EMOGIC_TAROT_PLUGIN_PATH_AND_FILENAME , ['EmogicTarotReader_Plugin' , 'deactivate'] );
+   
    add_action("admin_init", ["EmogicTarotReader_Plugin" , "enqueue_js_admin"] );
    
    add_action( 'wp_enqueue_scripts', ['EmogicTarotReader_Plugin' , 'my_enqueue_styles'] );

@@ -1,0 +1,178 @@
+Hello,
+
+There are issues with your plugin code preventing it from being approved immediately. We have pended your submission in order to help you correct all issues so that it may be approved and published.
+
+We ask you read this email in its entirety, address all listed issues, and reply to this email with your corrected code attached (or linked). You have three (3) months to make all corrections, before your plugin will be rejected. Even so, as long as you reply to this email, we will be able to continue with your review and eventually publish your code.
+
+Remember in addition to code quality, security and functionality, we require all plugins adhere to our guidelines. If you have not yet, please read them:
+
+https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/
+
+We know it can be long, but you must follow the directions at the end as not doing so will result in your review being delayed. It is required for you to read and reply to these emails, and failure to do so will result in significant delays with your plugin being accepted.
+
+Finally, should you at any time wish to alter your permalink (aka the plugin slug), you must explicitly tell us what you want it to be. Just changing the display name is not sufficient, and we require to you clearly state your desired permalink. Remember, permalinks cannot be altered after approval.
+
+//Emogics Tarot Reader for WP : To : Emogic Tarot Reader Plugin for Wordpress
+
+Be aware that you will not be able to submit another plugin while this one is being reviewed.
+
+## Incorrect Stable Tag : DONE
+
+In your readme, your 'Stable Tag' does not match the Plugin Version as indicated in your main plugin file.
+
+ERROR: Stable tag not found on readme file
+index.php - Version: 1.0
+
+Your Stable Tag is meant to be the stable version of your plugin, not of WordPress. For your plugin to be properly downloaded from WordPress.org, those values need to be the same. If they're out of sync, your users won't get the right version of your code.
+
+We recommend you use Semantic Versioning (aka SemVer) for managing versions:
+
+https://en.wikipedia.org/wiki/Software_versioning
+https://semver.org/
+
+Please note: While currently using the stable tag of trunk currently works in the Plugin Directory, it's not actually a supported or recommended method to indicate new versions and has been known to cause issues with automatic updates.
+
+We ask you please properly use tags and increment them when you release new versions of your plugin, just like you update the plugin version in the main file. Having them match is the best way to be fully forward supporting.
+
+## Tested Up To Value is Out of Date, Invalid, or Missing : DONE
+
+The tested up to value in your plugin is not set to the current version of WordPress. This means your plugin will not show up in searches, as we require plugins to be compatible and documented as tested up to the most recent version of WordPress.
+
+Please update your readme to show that it is tested up to the most recent stable major version of WordPress. For example if WordPress said that version 99.0.1 was the current release, you would be able to set your value to 99.0 or 99.0.1, as 99.0.1 would be considered a minor release.
+
+The following links will assist you in understanding WordPress's versioning and the latest version:
+
+https://wordpress.org/download/
+https://make.wordpress.org/core/handbook/about/release-cycle/version-numbering/
+
+You cannot set it beyond the current version, as that will cause your plugin not to be available on searches. Also remember that WordPress has made late changes in releases, so claiming compatibility with an incomplete version is likely to land you in trouble.
+
+From your readme file:
+
+ERROR: Tested up: Value not found on readme file
+
+## No GPL-compatible license declared : DONE
+
+It is necessary to declare the license of this plugin. You can do this using the fields available both in the plugin readme and in the plugin headers.
+
+Remember that all code, data, and images — anything stored in the plugin directory hosted on WordPress.org — must comply with the GPL or a GPL-Compatible license. Included third-party libraries, code, images, or otherwise, must be also compatible
+
+For a specific list of compatible licenses, please read the GPL-Compatible license list on gnu.org.
+
+The license declared on this plugin is either no present or it's not GPL compatible:
+
+ERROR: License declaration not found on index.php
+Please check the header requirements in order to correctly declare the license of the plugin: https://developer.wordpress.org/plugins/plugin-basics/header-requirements/
+It is necessary to configure the "License: " field in the plugin header with a valid, GPL-compliant license name.
+
+## The main file of the plugin has a name that does not follow the convention. : DONE
+
+We expect the main plugin file (the file containing the plugin headers) to have the same name as the plugin folder, which is also the same name as the slug / permalink of the plugin.
+
+For example, if your plugin slug is ecpt-social-manager we expect your main plugin filename to be ecpt-social-manager.php
+
+Also, note that using some common names as the filename for the main plugin file can lead to issues in some configurations.
+
+Please check out our tips on how to structure files and folders in a plugin.
+
+The main file of this plugin is named index.php
+
+## Data Must be Sanitized, Escaped, and Validated : DONE
+
+When you include POST/GET/REQUEST/FILE calls in your plugin, it's important to sanitize, validate, and escape them. The goal here is to prevent a user from accidentally sending trash data through the system, as well as protecting them from potential security issues.
+
+SANITIZE: Data that is input (either by a user or automatically) must be sanitized as soon as possible. This lessens the possibility of XSS vulnerabilities and MITM attacks where posted data is subverted.
+
+VALIDATE: All data should be validated, no matter what. Even when you sanitize, remember that you don’t want someone putting in ‘dog’ when the only valid values are numbers.
+
+ESCAPE: Data that is output must be escaped properly when it is echo'd, so it can't hijack admin screens. There are many esc_*() functions you can use to make sure you don't show people the wrong data.
+
+To help you with this, WordPress comes with a number of sanitization and escaping functions. You can read about those here:
+
+https://developer.wordpress.org/apis/security/sanitizing/
+https://developer.wordpress.org/apis/security/escaping/
+
+Remember: You must use the most appropriate functions for the context. If you’re sanitizing email, use sanitize_email(), if you’re outputting HTML, use wp_kses_post(), and so on.
+
+An easy mantra here is this:
+
+Sanitize early
+Escape Late
+Always Validate
+
+Clean everything, check everything, escape everything, and never trust the users to always have input sane data. After all, users come from all walks of life.
+
+Example(s) from your plugin:
+
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:207 $cookie_name = $cookie_name . $_REQUEST[$cookie]; //build cookie name for card reading
+ -----> $cookie_name . $_REQUEST[$cookie]
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:223 isset($_REQUEST[$name]) ? $input = $_REQUEST[$name] : $input = '' ;
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:139 $json = $_COOKIE[$hash];
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:208 setcookie( $cookie , $_REQUEST[$cookie] , time()+(365*24*60*60) ); //save cookie of form field from main tarot page
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:217 isset($_COOKIE[$name]) ? $cookie = $_COOKIE[$name] : $cookie = '' ;
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:174 $first_name = $_REQUEST["ETSWP_first_name"];
+30_22-24-20_Emogics_Tarot_Script_WP/inc/ETSWP.php:99 $deck_chosen = $_REQUEST["ETSWP_database"];
+
+
+## Generic function/class/define/namespace/option names : DONE
+
+All plugins must have unique function names, namespaces, defines, class and option names. This prevents your plugin from conflicting with other plugins or themes. We need you to update your plugin to use more unique and distinct names.
+
+A good way to do this is with a prefix. For example, if your plugin is called "Easy Custom Post Types" then you could use names like these:
+function ecpt_save_post()
+define( 'ECPT_LICENSE', true );
+class ECPT_Admin{}
+namespace ECPT;
+update_option( 'ecpt_settings', $settings );
+
+Don't try to use two (2) or three (3) letter prefixes anymore. We host nearly 100-thousand plugins on WordPress.org alone. There are tens of thousands more outside our servers. Believe us, you’re going to run into conflicts.
+
+You also need to avoid the use of __ (double underscores), wp_ , or _ (single underscore) as a prefix. Those are reserved for WordPress itself. You can use them inside your classes, but not as stand-alone function.
+
+Please remember, if you're using _n() or __() for translation, that's fine. We're only talking about functions you've created for your plugin, not the core functions from WordPress. In fact, those core features are why you need to not use those prefixes in your own plugin! You don't want to break WordPress for your users.
+
+Related to this, using if (!function_exists('NAME')) { around all your functions and classes sounds like a great idea until you realize the fatal flaw. If something else has a function with the same name and their code loads first, your plugin will break. Using if-exists should be reserved for shared libraries only.
+
+Remember: Good prefix names are unique and distinct to your plugin. This will help you and the next person in debugging, as well as prevent conflicts.
+
+Analysis result:
+
+# This plugin is using the prefix "emogic_tarot" for 5 element(s).
+# This plugin is using the prefix "etswp" for 10 element(s).
+
+# Cannot use "plugin" as a prefix.
+30_22-24-20_Emogics_Tarot_Script_WP/admin/class-plugin-name-admin.php:23 class Plugin_Name_Admin
+
+# Looks like there are elements not using common prefixes.
+30_22-24-20_Emogics_Tarot_Script_WP/index.php:21 function activate_ETSWP
+30_22-24-20_Emogics_Tarot_Script_WP/index.php:27 function deactivate_ETSWP
+30_22-24-20_Emogics_Tarot_Script_WP/index.php:36 function run_ETSWP
+
+
+----------------------------------------------
+
+Please note that due to the significant backlog the Plugin Review team is facing, we have only done a basic review of your plugin. Once the issues we shared above are fixed, we will do a more in-depth review that might surface other issues. In order to prevent further delays, we strongly urge you to review the guidelines again before you resubmit it.
+
+If the corrections we requested in this initial review are not completed within 3 months (90 days), we will reject this submission in order to keep our queue manageable and you will need to resubmit the plugin from scratch.
+
+Your next steps are:
+
+Make all the corrections related to the issues we listed.
+Review your entire code following the guidelines to ensure there are no other related concerns.
+Attach your corrected plugin as a zip file OR provide a link to a public location (Dropbox, GitHub, etc) from where we can download the code. A direct link to the zip is best.
+Please do not send it using services where the download expires after a short period of time (such as WeTransfer-Free).
+Once we receive your updated code, we will re-review it from top down.
+
+Be aware that if your zip contains JavaScript files, you may not be able to email it as many hosts block that in the interests of security. Keep in mind, all version control directories (like GitHub) will auto-generate a zip for you, so you do not need to upload a zip file to their systems. You can just link to the repository.
+
+We again remind you that should you wish to alter your permalink (not the display name, the plugin slug), you must explicitly tell us what you want it to be. We require to you clearly state in the body of your email what your desired permalink is. Permalinks cannot be altered after approval, and we generally do not accept requests to rename should you fail to inform us during the review.
+
+If you previously asked for a permalink change and got a reply that is has been processed, you’re all good! While these emails will still use the original display name, you don’t need to panic. If you did not get a reply that we processed the permalink, let us know immediately. While we have tried to make this review as exhaustive as possible we, like you, are humans and may have missed things. As such, we will re-review the entire plugin when you send it back to us. We appreciate your patience and understanding.
+
+If you have questions, concerns, or need clarification, please reply to this email and just ask us.
+
+
+--
+WordPress Plugin Review Team | plugins@wordpress.org
+https://make.wordpress.org/plugins/
+https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/

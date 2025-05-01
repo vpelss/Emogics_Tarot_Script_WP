@@ -12,7 +12,36 @@ class EmogicTarotReader_Admin {
 		add_action( 'admin_menu', 'EmogicTarotReader_Admin::create_admin_page_and_slug' );
 		//set up 'settings' link in plugin menu
 		add_filter( "plugin_action_links_" . EMOGIC_TAROT_RELATIVE_PLUGIN_PATH , 'EmogicTarotReader_Admin::create_plugin_setting_link' ); 
+
+		// NEW card backs on admin
+		//add_shortcode("ETSWP_get_db_item", ["EmogicTarotReader_Admin", "shortcode_get_db_item"]); ////this is how we place cards on spread pages [ETSWP_get_db_item item='1' column='itemname']
+		add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Admin", "shortcode_get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
 	}
+
+		// NEW card backs on admin
+		//for quick short code retrieval
+		public static function shortcode_get_db_item($atts = [], $content = null) {
+			//recover previously stored shuffle data and deck db from wp_cache_get
+			//$ETSWP_items_array = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE );
+			//$ETSWP_keys_shuffled = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE );
+			$item = $atts["item"] - 1; //the array starts at 0 so we want item 1, in shortcode, to point to 0 in the db
+			$column = $atts["column"];
+			$output = $ETSWP_items_array[$ETSWP_keys_shuffled[$item]][$column];
+			//first_name replace
+			$first_name = "Seeker";
+			if (isset($_REQUEST["ETSWP_first_name"]) and $_REQUEST["ETSWP_first_name"] != "") {
+				$first_name = sanitize_text_field($_REQUEST["ETSWP_first_name"]);
+			}
+			$output = str_replace("[first_name]", $first_name, $output);
+			return $output;
+		}
+
+			//for quick short code retrieval
+			public static function shortcode_get_pluginpath($atts = [], $content = null) {
+				return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
+			}
+
+			//the_editor_content edit_form_after_editor  : wp hook
 	
 		public static function create_admin_page_and_slug() { //create menu page and a slug to it
 		//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):

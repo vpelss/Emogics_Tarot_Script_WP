@@ -1,0 +1,61 @@
+<!-- wp:html -->
+<!--
+Wordpress does not provide for form tags like input, etc
+So we need to create forms using html ourselves
+-->
+<!-- /wp:html -->
+
+<!-- wp:html -->
+
+<form method="post" action="" id="ETSWP_form_settings" onsubmit="return setAction(this)">
+<input type="hidden" name="action" value="ETSWP_process_form">
+<input type="hidden" name="ETSWP_database_life_in_hours" value="24">
+<center>
+
+<p>
+<input type="text" name="ETSWP_first_name" id="ETSWP_first_name" placeholder="First Name">
+</p>
+
+<p>
+<label for="ETSWP_database">Choose a deck:</label>
+<select name="ETSWP_database" id="ETSWP_database">
+[ETSWP_database_options]
+</select>
+</p>
+
+<p>
+<label for="ETSWP_reading">Choose a spread:</label>
+<select name="ETSWP_reading" id="ETSWP_reading">
+[ETSWP_reading_options]
+</select>
+</p>
+
+<p>
+<input type="text" size="40" name="ETSWP_question" id="ETSWP_question" placeholder="Your Question">
+</p>
+
+<p>
+<input type="email" size="40" name="ETSWP_email" id="ETSWP_email" placeholder="Your Email. Only required for email enabled spreads.">
+</p>
+
+<p>
+<input type="submit" name="submit" id="submit" value="Get Tarot Reading">
+</p>
+
+</center>
+</form>
+
+<script>
+
+function setAction(form){
+form.action = document.getElementById("ETSWP_reading").value;
+}
+
+//remember previous choices
+document.getElementById("ETSWP_first_name").value = '[ETSWP_get_cookie name='ETSWP_first_name']';
+document.getElementById("ETSWP_database").value = "[ETSWP_get_cookie name='ETSWP_database']" || document.getElementById("ETSWP_database").value;
+document.getElementById("ETSWP_reading").value = "[ETSWP_get_cookie name='ETSWP_reading']" || document.getElementById("ETSWP_reading").value;
+document.getElementById("ETSWP_question").value = '[ETSWP_get_cookie name='ETSWP_question']';
+document.getElementById("ETSWP_email").value = '[ETSWP_get_cookie name='ETSWP_email']';
+
+</script>

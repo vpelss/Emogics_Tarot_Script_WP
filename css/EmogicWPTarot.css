@@ -1,4 +1,6 @@
-/* this is here so it is easier for me to distribute my css to your wordpress installation.
+/* 
+- will not affect email readings. css for email radings must be added to the 'Emogic Reading Email Template' page
+this is here so it is easier for me to distribute my css to your wordpress installation.
 You should create a new Page Template and add your CCS there.
 Then erase this css
 */
@@ -6,12 +8,12 @@ Then erase this css
 :root BODY {
   color: yellow;
   background-color: black;
+  _background-image: url("[ETSWP_pluginpath]/images/ball.jpg");
   background-image: url("../images/ball.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
 }
-
 a:link , a:visited{
   color: yellow;
 }

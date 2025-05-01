@@ -1,0 +1,7 @@
+svn is in emogics-tarot-reader-for-wp
+do not forget to update version in app, and readme.txt
+add new upload to tag folder in new version
+add new upload to trunk
+make sure readme.txt shows new tag version
+right click and commit
+select all files

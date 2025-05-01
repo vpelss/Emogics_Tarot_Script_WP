@@ -52,9 +52,9 @@ If you deactivate this plugin tarot pages, databases, and images installed by th
 == Frequently Asked Questions ==
 = Why am I not seeing images on the Wordpress edit page? =
 
-To distribute the plugin to multiple sites this is required. When you add images from your site, you will see them in your edit page.
+Shortcodes do not work in the page editor. Images you add without shortcodes will show in the edit page.
 
-Note: the images where the selected cards will show will always be blank. In the edit screen a card has not been selected yet.
+Note: the images locations where the delt cards will show will always be blank. In the edit screen a card has not been selected yet. If you set card images with a width and a height (I do not as I want my pages to be scalable), and set a border on the image, you can visually see the outline where the card is. But I recommend against this.
 
 = How do I change your awful css choices? =
 

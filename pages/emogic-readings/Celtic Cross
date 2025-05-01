@@ -1,9 +1,7 @@
 <!-- wp:html -->
 <style>
-
-/* this block is here so it is easier for me to distribute my css to your wordpress installation.
-This is not good practice. You should create a new Page Template and add your CCS there. */
-
+    
+/*for crossing card to work in this spread*/
 BODY .ETSWP_cross{
 gap: 0rem;
 }

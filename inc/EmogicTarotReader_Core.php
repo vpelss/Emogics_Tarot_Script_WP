@@ -28,13 +28,15 @@ class EmogicTarotReader_Core {
     }
      
 	//this runs before wp templates are applied. We have access to data such as $post->post_parent , etc
+    //stores shuffle results (or cookie shuffles) AND the deck database in wp_cache_set
+    //also checks db and makes sure each line has the correct number of fields 
     public static function action_shuffle_db() {
         if (!self::current_page_is_descendent_of(EMOGIC_TAROT_PLUGIN_READING_FOLDER)) { // no need to shuffle if not on a spread page
             self::build_select_options_for_form(); //build options for main form page. 
             return;
         }
         
-        //get db from reading page if there is one set
+        //get db from (template) reading's page if there is one set
         //it overrides the db set in the calling form
         //format: ETSWPdb=Leila=
         $reading_text = get_post()->post_content; //get Reading text
@@ -180,9 +182,10 @@ class EmogicTarotReader_Core {
 		        
 	//for quick short code retrieval
     public static function shortcode_get_db_item($atts = [], $content = null) {
+        //recover previously stored shuffle data and deck db from wp_cache_get
         $ETSWP_items_array = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_ARRAY_CACHE );
         $ETSWP_keys_shuffled = wp_cache_get( EMOGIC_TAROT_PLUGIN_DB_INDEX_SHUFFLED_CACHE );
-        $item = $atts["item"] - 1; //the array starts at 0 so we want item 1 to point to that
+        $item = $atts["item"] - 1; //the array starts at 0 so we want item 1, in shortcode, to point to 0 in the db
         $column = $atts["column"];
         $output = $ETSWP_items_array[$ETSWP_keys_shuffled[$item]][$column];
         //first_name replace

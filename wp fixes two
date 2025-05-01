@@ -1,0 +1,83 @@
+
+Conversation opened. 1 read message.
+
+Skip to content
+Using Gmail with screen readers
+5 of 24
+Re: [WordPress Plugin Directory] Review in Progress: Emogics Tarot Reader for WP
+Inbox
+
+WordPress.org Plugin Directory
+Fri, Mar 8, 3:16 PM (18 hours ago)
+to me
+
+Hi, thank you for fixing this, there are still some final small issues, please fix them and this plugin will be good to go.
+
+## Please explain what happens on activation. : DONE
+
+We see that you explain the import of information in your readme.md
+
+Pages will be imported and created from the plugin's "/pages" folder.
+The pages will be created in a quazi folder structure (parent/child) which mirrors the plugin's "/pages" folder structure.
+Pages with no content are considered 'folders'.
+To put pages with content into these 'folders', just make the 'folders' the page's parent.
+
+We need you to include this information in the readme.txt as this will be visible in the repository and it's important information for users.
+
+## Data Must be Sanitized, Escaped, and Validated : DONE
+
+When you include POST/GET/REQUEST/FILE calls in your plugin, it's important to sanitize, validate, and escape them. The goal here is to prevent a user from accidentally sending trash data through the system, as well as protecting them from potential security issues.
+
+SANITIZE: Data that is input (either by a user or automatically) must be sanitized as soon as possible. This lessens the possibility of XSS vulnerabilities and MITM attacks where posted data is subverted.
+
+VALIDATE: All data should be validated, no matter what. Even when you sanitize, remember that you don’t want someone putting in ‘dog’ when the only valid values are numbers.
+
+ESCAPE: Data that is output must be escaped properly when it is echo'd, so it can't hijack admin screens. There are many esc_*() functions you can use to make sure you don't show people the wrong data.
+
+To help you with this, WordPress comes with a number of sanitization and escaping functions. You can read about those here:
+
+https://developer.wordpress.org/apis/security/sanitizing/
+https://developer.wordpress.org/apis/security/escaping/
+
+Remember: You must use the most appropriate functions for the context. If you’re sanitizing email, use sanitize_email(), if you’re outputting HTML, use wp_kses_post(), and so on.
+
+An easy mantra here is this:
+
+Sanitize early
+Escape Late
+Always Validate
+
+Clean everything, check everything, escape everything, and never trust the users to always have input sane data. After all, users come from all walks of life.
+
+Example(s) from your plugin:
+
+Emogics_Tarot_Script_WP-992758085a28536fc03e11bcfbf3d819c4874197/inc/EmogicTarotReader_Core.php:165 wp_die("Unknown email error.<p>" . $_REQUEST["ETSWP_email"] . "</p><p>Back to site <a href='/'>Site</a></p>");
+ -----> "Unknown email error.<p>" . $_REQUEST["ETSWP_email"]
+Emogics_Tarot_Script_WP-992758085a28536fc03e11bcfbf3d819c4874197/inc/EmogicTarotReader_Core.php:149 wp_die("Email format incorrect." . $_REQUEST["ETSWP_email"]);
+Emogics_Tarot_Script_WP-992758085a28536fc03e11bcfbf3d819c4874197/inc/EmogicTarotReader_Core.php:122 $deck_life_in_hours = $_REQUEST["ETSWP_deck_life_in_hours"];
+
+
+## Variables and options must be escaped when echo'd : DONE
+
+Much related to sanitizing everything, all variables that are echoed need to be escaped when they're echoed, so it can't hijack users or (worse) admin screens. There are many esc_*() functions you can use to make sure you don't show people the wrong data, as well as some that will allow you to echo HTML safely.
+
+At this time, we ask you escape all $-variables, options, and any sort of generated data when it is being echoed. That means you should not be escaping when you build a variable, but when you output it at the end. We call this 'escaping late.'
+
+Besides protecting yourself from a possible XSS vulnerability, escaping late makes sure that you're keeping the future you safe. While today your code may be only outputted hardcoded content, that may not be true in the future. By taking the time to properly escape when you echo, you prevent a mistake in the future from becoming a critical security issue.
+
+This remains true of options you've saved to the database. Even if you've properly sanitized when you saved, the tools for sanitizing and escaping aren't interchangeable. Sanitizing makes sure it's safe for processing and storing in the database. Escaping makes it safe to output.
+
+Also keep in mind that sometimes a function is echoing when it should really be returning content instead. This is a common mistake when it comes to returning JSON encoded content. Very rarely is that actually something you should be echoing at all. Echoing is because it needs to be on the screen, read by a human. Returning (which is what you would do with an API) can be json encoded, though remember to sanitize when you save to that json object!
+
+There are a number of options to secure all types of content (html, email, etc). Yes, even HTML needs to be properly escaped.
+
+https://developer.wordpress.org/apis/security/escaping/
+
+Remember: You must use the most appropriate functions for the context. There is pretty much an option for everything you could echo. Even echoing HTML safely.
+
+Example(s) from your plugin:
+
+Emogics_Tarot_Script_WP-992758085a28536fc03e11bcfbf3d819c4874197/admin/EmogicTarotReader_Admin.php:113 echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_DISPLAY_OPTION . "' value='{$option}' placeholder='eg: Tarot Mailer'>";
+Emogics_Tarot_Script_WP-992758085a28536fc03e11bcfbf3d819c4874197/admin/EmogicTarotReader_Admin.php:104 echo "<input type='text' name='" . EMOGIC_TAROT_PLUGIN_EMAIL_SUBJECT_OPTION . "' value='{$option}' placeholder='eg: Tarot Reading'>";
+Emogics_Tarot_Script_WP-992758085a28536fc03e11bcfbf3d819c4874197/admin/EmogicTarotReader_Admin.php:108 echo "<input type='email' name='" . EMOGIC_TAROT_PLUGIN_FROM_EMAIL_OPTION . "' value='{$option}' placeholder='eg: tarot@yourdomain.com'>";
+
