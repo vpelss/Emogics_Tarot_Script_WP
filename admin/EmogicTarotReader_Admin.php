@@ -1,5 +1,10 @@
 <?php
  
+ add_action( 'edit_form_after_title', 'my_new_elem_after_title' );
+function my_new_elem_after_title() {
+    return '<h2>Your new element after title</h2>';
+}
+
 class EmogicTarotReader_Admin {
 
 	const ADMIN_SLUG = "ETSWP_settings";
@@ -16,7 +21,15 @@ class EmogicTarotReader_Admin {
 		// NEW card backs on admin
 		//add_shortcode("ETSWP_get_db_item", ["EmogicTarotReader_Admin", "shortcode_get_db_item"]); ////this is how we place cards on spread pages [ETSWP_get_db_item item='1' column='itemname']
 		add_shortcode("ETSWP_pluginpath", ["EmogicTarotReader_Admin", "shortcode_get_pluginpath", ]); // I use this so we can find my image folder in plugin. [ETSWP_pluginpath]
+	
+		add_action( 'admin_post_nopriv', ["EmogicTarotReader_Admin",'wporg_filter_title'] );
+	//the_editor_content edit_form_after_editor wp_loaded the_post : wp hook
 	}
+
+	function wporg_filter_title( $post ) {
+		echo 'bbop' . $post. var_dump($post);
+	}
+	
 
 		// NEW card backs on admin
 		//for quick short code retrieval
@@ -41,7 +54,9 @@ class EmogicTarotReader_Admin {
 				return EMOGIC_TAROT_PLUGIN_LOCATION_URL;
 			}
 
-			//the_editor_content edit_form_after_editor  : wp hook
+	//Your best bet is to create a custom page template using PHP for the specific page and
+	// then use <?php echo do_shortcode( '[grid class="center-xs]Hello World[/grid]' ); inside there.
+		
 	
 		public static function create_admin_page_and_slug() { //create menu page and a slug to it
 		//add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback = '', int $position = null ):

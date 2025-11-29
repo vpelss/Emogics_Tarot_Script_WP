@@ -3,7 +3,7 @@ Contributors: vpelss
 Tags: Tarot , Reader , Tarot Card , Tarot Reader , Card
 Donate link: https://www.paypal.com/donate/?hosted_button_id=26D64Y78Q96RJ
 Requires at least: 4.0
-Tested up to: 6.7.2
+Tested up to: 6.9
 Requires PHP: 5.6
 Stable tag: 0.8.2
 License: GPLv3
