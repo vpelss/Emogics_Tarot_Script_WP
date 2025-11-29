@@ -25,7 +25,7 @@ Flexibility comes with a price and that price is a moderate learning curve.
 To make your own spreads you should have a working knowledge of Wordpress Shortcodes.
 Knowledge of HTML, CSS, and Javascript is very helpful.
 
-If you like this plugin, consider writting a review.
+If you like this plugin, please consider writting a review.
 
 If anyone would like to donate databases or graphics that you have created, I would consider adding it to this plugin.
 
